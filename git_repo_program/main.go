@@ -74,7 +74,7 @@ func main() {
 	if destroy {
 		fmt.Println("Starting stack destroy")
 		// destroy our stack and exit early
-		err := destroyStack(s)
+		_, err := s.Destroy(ctx)
 		if err != nil {
 			fmt.Printf("Failed to destroy stack: %v", err)
 		}
@@ -101,8 +101,4 @@ func main() {
 	}
 
 	fmt.Printf("URL: %s\n", url)
-}
-
-func destroyStack(stack auto.Stack) error {
-	return nil
 }
