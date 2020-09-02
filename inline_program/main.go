@@ -92,11 +92,11 @@ func main() {
 	// create an local workspace with our project and inline program
 	w, err := auto.NewLocalWorkspace(ctx, auto.Program(deployFunc), auto.Project(project))
 	if err != nil {
-		fmt.Printf("Failed to create workspace from git repo: %v\n", err)
+		fmt.Printf("Failed to create workspace: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Successfully cloned project and setup workspace")
+	fmt.Println("Successfully setup workspace")
 	fmt.Println("Installing the AWS plugin")
 
 	// for inline source programs, we must manage plugins ourselves
