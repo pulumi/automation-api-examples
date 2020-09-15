@@ -6,10 +6,10 @@ import (
 	"os"
 
 	"github.com/pulumi/pulumi-aws/sdk/v3/go/aws/s3"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"
 )
 
 func main() {
@@ -32,6 +32,10 @@ func main() {
 		// for destroying, we must remove stack in reverse order
 		// this means retrieving any dependend outputs first
 		fmt.Println("getting bucketID for object stack")
+
+		// wire up our destroy to stream progress to stdout
+		stdoutStreamer := optdestroy.ProgressStreams(os.Stdout)
+
 		outs, err := websiteStack.Outputs(ctx)
 		if err != nil {
 			fmt.Printf("failed to get website outputs: %v\n", err)
@@ -50,14 +54,14 @@ func main() {
 
 		// destroy our two stacks and exit early
 		fmt.Println("Starting object stack destroy")
-		_, err = objectStack.Destroy(ctx)
+		_, err = objectStack.Destroy(ctx, stdoutStreamer)
 		if err != nil {
 			fmt.Printf("Failed to destroy object stack: %v", err)
 		}
 		fmt.Println("Object stack successfully destroyed")
 
 		fmt.Println("Starting website stack destroy")
-		_, err = websiteStack.Destroy(ctx)
+		_, err = websiteStack.Destroy(ctx, stdoutStreamer)
 		if err != nil {
 			fmt.Printf("Failed to destroy website stack: %v", err)
 		}
@@ -67,8 +71,12 @@ func main() {
 	}
 
 	fmt.Println("Starting website stack update")
+
+	// wire up our update to stream progress to stdout
+	stdoutStreamer := optup.ProgressStreams(os.Stdout)
+
 	// run the update to deploy our s3 website
-	webRes, err := websiteStack.Up(ctx)
+	webRes, err := websiteStack.Up(ctx, stdoutStreamer)
 	if err != nil {
 		fmt.Printf("Failed to update stack: %v\n\n", err)
 		os.Exit(1)
@@ -90,7 +98,7 @@ func main() {
 
 	fmt.Println("Starting object stack update")
 	// run the update to deploy our object
-	_, err = objectStack.Up(ctx)
+	_, err = objectStack.Up(ctx, stdoutStreamer)
 	if err != nil {
 		fmt.Printf("Failed to update stack: %v\n\n", err)
 		os.Exit(1)
@@ -122,19 +130,17 @@ func createOrSelectObjectStack(ctx context.Context, stackName, bucketID string) 
 // this function gets our stack ready for update/destroy by prepping the workspace, init/selecting the stack
 // and doing a refresh to make sure state and cloud resources are in sync
 func createOrSelectStack(ctx context.Context, projectName, stackName string, deployFunc pulumi.RunFunc) auto.Stack {
-	project := workspace.Project{
-		Name:    tokens.PackageName(projectName),
-		Runtime: workspace.NewProjectRuntimeInfo("go", nil),
-	}
-
-	// create an local workspace with our project and inline program
-	w, err := auto.NewLocalWorkspace(ctx, auto.Program(deployFunc), auto.Project(project))
+	// create or select a stack with an inline Pulumi program
+	s, err := auto.UpsertStackInlineSource(ctx, stackName, projectName, deployFunc)
 	if err != nil {
-		fmt.Printf("Failed to create workspace: %v\n", err)
+		fmt.Printf("Failed to create or select stack: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Successfully setup workspace")
+	fmt.Printf("Created/Selected stack %q\n", stackName)
+
+	w := s.Workspace()
+
 	fmt.Println("Installing the AWS plugin")
 
 	// for inline source programs, we must manage plugins ourselves
@@ -145,30 +151,6 @@ func createOrSelectStack(ctx context.Context, projectName, stackName string, dep
 	}
 
 	fmt.Println("Successfully installed AWS plugin")
-
-	// lookup the authenticated user to use in stack creation
-	user, err := w.WhoAmI(ctx)
-	if err != nil {
-		fmt.Printf("Failed to get authenticated user: %v\n", err)
-		os.Exit(1)
-	}
-
-	// create a fully qualified stack name in the form "org/project/stack".
-	// this full name is required when creating and selecting stack with automation API
-	fqsn := auto.FullyQualifiedStackName(user, projectName, stackName)
-
-	// try to create a new stack from our local workspace
-	s, err := auto.NewStack(ctx, fqsn, w)
-	if err != nil {
-		// we'll encounter an error if the stack already exists. try to select it before giving up
-		s, err = auto.SelectStack(ctx, fqsn, w)
-		if err != nil {
-			fmt.Printf("Failed to create or select stack: %v\n", err)
-			os.Exit(1)
-		}
-	}
-
-	fmt.Printf("Created/Select stack %q\n", fqsn)
 
 	// set stack configuration specifying the AWS region to deploy
 	s.SetConfig(ctx, "aws:region", auto.ConfigValue{Value: "us-west-2"})

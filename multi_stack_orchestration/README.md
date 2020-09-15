@@ -14,30 +14,63 @@ Running this program is just like any other Go program. No invocation through th
 ```shell
 $ go run main.go
 preparing website stack
-Successfully setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/inlineMultiStackWebsite/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
 website stack ready to deploy
 Starting website stack update
+Updating (dev)
+
+View Live: https://app.pulumi.com/EvanBoyle/inlineMultiStackWebsite/dev/updates/7
+
+
+ +  pulumi:pulumi:Stack inlineMultiStackWebsite-dev creating 
+ +  aws:s3:Bucket s3-website-bucket creating 
+ +  aws:s3:Bucket s3-website-bucket created 
+ +  aws:s3:BucketPolicy bucketPolicy creating 
+ +  aws:s3:BucketPolicy bucketPolicy created 
+ +  pulumi:pulumi:Stack inlineMultiStackWebsite-dev created 
+ 
+Outputs:
+    bucketID  : "s3-website-bucket-9bddf39"
+    websiteUrl: "s3-website-bucket-9bddf39.s3-website-us-west-2.amazonaws.com"
+
+Resources:
+    + 3 created
+
+Duration: 5s
+
 Website stack update succeeded!
 go bucketID for object stack
 preparing object stack
-Successfully setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/inlineMultiStackObject/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
 object stack ready to deploy
 Starting object stack update
-Object stack update succeeded!
-URL: s3-website-bucket-0a4ed53.s3-website-us-west-2.amazonaws.com
+Updating (dev)
 
+View Live: https://app.pulumi.com/EvanBoyle/inlineMultiStackObject/dev/updates/6
+
+
+ +  pulumi:pulumi:Stack inlineMultiStackObject-dev creating 
+ +  aws:s3:BucketObject index creating 
+ +  aws:s3:BucketObject index created 
+ +  pulumi:pulumi:Stack inlineMultiStackObject-dev created 
+ 
+Resources:
+    + 2 created
+
+Duration: 2s
+
+Object stack update succeeded!
+URL: s3-website-bucket-9bddf39.s3-website-us-west-2.amazonaws.com
 ```
 
 To destroy the stack when you're done, invoke the program with an additional `destroy` argument:
@@ -45,10 +78,9 @@ To destroy the stack when you're done, invoke the program with an additional `de
 ```shell
 $ go run main.go destroy
 preparing website stack
-Successfully setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/inlineMultiStackWebsite/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
@@ -56,17 +88,55 @@ website stack ready to deploy
 getting bucketID for object stack
 go bucketID for object stack
 preparing object stack
-Successfully setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/inlineMultiStackObject/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
 object stack ready to deploy
 Starting object stack destroy
+Destroying (dev)
+
+View Live: https://app.pulumi.com/EvanBoyle/inlineMultiStackObject/dev/updates/8
+
+
+ -  aws:s3:BucketObject index deleting 
+ -  aws:s3:BucketObject index deleted 
+ -  pulumi:pulumi:Stack inlineMultiStackObject-dev deleting 
+ -  pulumi:pulumi:Stack inlineMultiStackObject-dev deleted 
+ 
+Resources:
+    - 2 deleted
+
+Duration: 2s
+
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+If you want to remove the stack completely, run 'pulumi stack rm dev'.
 Object stack successfully destroyed
 Starting website stack destroy
-Website stack successfully destroyed
+Destroying (dev)
 
+View Live: https://app.pulumi.com/EvanBoyle/inlineMultiStackWebsite/dev/updates/9
+
+
+ -  aws:s3:BucketPolicy bucketPolicy deleting 
+ -  aws:s3:BucketPolicy bucketPolicy deleted 
+ -  aws:s3:Bucket s3-website-bucket deleting 
+ -  aws:s3:Bucket s3-website-bucket deleted 
+ -  pulumi:pulumi:Stack inlineMultiStackWebsite-dev deleting 
+ -  pulumi:pulumi:Stack inlineMultiStackWebsite-dev deleted 
+ 
+Outputs:
+  - bucketID  : "s3-website-bucket-9bddf39"
+  - websiteUrl: "s3-website-bucket-9bddf39.s3-website-us-west-2.amazonaws.com"
+
+Resources:
+    - 3 deleted
+
+Duration: 3s
+
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+If you want to remove the stack completely, run 'pulumi stack rm dev'.
+Website stack successfully destroyed
 ```
