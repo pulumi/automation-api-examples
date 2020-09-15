@@ -10,29 +10,73 @@ Running this program is just like any other Go program. No invocation through th
 
 ```shell
 $ go run main.go
-Successfully cloned project and setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/inlineS3Project/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
 Starting update
+Updating (dev)
+
+View Live: https://app.pulumi.com/EvanBoyle/inlineS3Project/dev/updates/22
+
+
+ +  pulumi:pulumi:Stack inlineS3Project-dev creating 
+ +  aws:s3:Bucket s3-website-bucket creating 
+ +  aws:s3:Bucket s3-website-bucket created 
+ +  aws:s3:BucketObject index creating 
+ +  aws:s3:BucketPolicy bucketPolicy creating 
+ +  aws:s3:BucketObject index created 
+ +  aws:s3:BucketPolicy bucketPolicy created 
+ +  pulumi:pulumi:Stack inlineS3Project-dev created 
+ 
+Outputs:
+    websiteUrl: "s3-website-bucket-bf7e357.s3-website-us-west-2.amazonaws.com"
+
+Resources:
+    + 4 created
+
+Duration: 10s
+
 Update succeeded!
-URL: s3-website-bucket-xxxxxxxx.s3-website-us-west-2.amazonaws.com
+URL: s3-website-bucket-bf7e357.s3-website-us-west-2.amazonaws.com
 ```
 
 To destroy the stack when you're done, invoke the program with an additional `destroy` argument:
 
 ```shell
 $ go run main.go destroy
-Successfully cloned project and setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/inlineS3Project/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
 Starting stack destroy
+Destroying (dev)
+
+View Live: https://app.pulumi.com/EvanBoyle/inlineS3Project/dev/updates/24
+
+
+ -  aws:s3:BucketPolicy bucketPolicy deleting 
+ -  aws:s3:BucketObject index deleting 
+ -  aws:s3:BucketObject index deleted 
+ -  aws:s3:BucketPolicy bucketPolicy deleted 
+ -  aws:s3:Bucket s3-website-bucket deleting 
+ -  aws:s3:Bucket s3-website-bucket deleted 
+ -  pulumi:pulumi:Stack inlineS3Project-dev deleting 
+ -  pulumi:pulumi:Stack inlineS3Project-dev deleted 
+ 
+Outputs:
+  - websiteUrl: "s3-website-bucket-bf7e357.s3-website-us-west-2.amazonaws.com"
+
+Resources:
+    - 4 deleted
+
+Duration: 3s
+
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+If you want to remove the stack completely, run 'pulumi stack rm dev'.
 Stack successfully destroyed
 ```
