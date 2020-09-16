@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"
 )
 
 func main() {
@@ -20,55 +22,25 @@ func main() {
 	}
 	ctx := context.Background()
 
+	// we use a simple stack name here, but recommend using auto.FullyQualifiedStackName for maximum specificity.
+	stackName := "dev"
+	// stackName := auto.FullyQualifiedStackName("myOrgOrUser", projectName, stackName)
+
 	// in this example our automation driver is being added to an exising local Pulumi project.
-	// we'll create a workspace from the working directory that contains our "fargate" CLI program.
+	// we'll create/select a stack from the working directory that contains our "fargate" CLI program.
 	// this program creates an ecs cluster, an erc registry, builds and uploads the docker image in
 	// ../app, creates a fargate task, and exposes it behind a load balancer.
 	workDir := filepath.Join("..", "fargate")
 
-	// create an local workspace with CLI program, using the ../fargate workDir.
-	// the Pulumi program, and any project or stack settings will be used by our workspace.
-	w, err := auto.NewLocalWorkspace(ctx, auto.WorkDir(workDir))
+	// create or select a stack from a local workspace with CLI program, using the ../fargate workDir.
+	// the Pulumi program, and any project or stack settings will be used by our stack.
+	s, err := auto.UpsertStackLocalSource(ctx, stackName, workDir)
 	if err != nil {
-		fmt.Printf("Failed to create workspace: %v\n", err)
+		fmt.Printf("Failed to create or select stack: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Successfully setup workspace")
-
-	// lookup the authenticated user to use in stack creation
-	user, err := w.WhoAmI(ctx)
-	if err != nil {
-		fmt.Printf("Failed to get authenticated user: %v\n", err)
-		os.Exit(1)
-	}
-
-	// read in the existing project settings detected from the workdir (../fargate)
-	// and grab the project name for our FQSN
-	project, err := w.ProjectSettings(ctx)
-	if err != nil {
-		fmt.Printf("failed to read project settings from workspace: %s\n", err)
-	}
-
-	projectName := project.Name.String()
-
-	stackName := "dev"
-	// create a fully qualified stack name in the form "org/project/stack".
-	// this full name is required when creating and selecting stack with automation API
-	fqsn := auto.FullyQualifiedStackName(user, projectName, stackName)
-
-	// try to create a new stack from our local workspace
-	s, err := auto.NewStack(ctx, fqsn, w)
-	if err != nil {
-		// we'll encounter an error if the stack already exists. try to select it before giving up
-		s, err = auto.SelectStack(ctx, fqsn, w)
-		if err != nil {
-			fmt.Printf("Failed to create or select stack: %v\n", err)
-			os.Exit(1)
-		}
-	}
-
-	fmt.Printf("Created/Select stack %q\n", fqsn)
+	fmt.Printf("Created/Selected stack %q\n", stackName)
 
 	// set stack configuration specifying the AWS region to deploy
 	s.SetConfig(ctx, "aws:region", auto.ConfigValue{Value: "us-west-2"})
@@ -86,8 +58,10 @@ func main() {
 
 	if destroy {
 		fmt.Println("Starting stack destroy")
+		// wire up our destroy to stream progress to stdout
+		stdoutStreamer := optdestroy.ProgressStreams(os.Stdout)
 		// destroy our stack and exit early
-		_, err := s.Destroy(ctx)
+		_, err := s.Destroy(ctx, stdoutStreamer)
 		if err != nil {
 			fmt.Printf("Failed to destroy stack: %v", err)
 		}
@@ -97,8 +71,11 @@ func main() {
 
 	fmt.Println("Starting update")
 
+	// wire up our update to stream progress to stdout
+	stdoutStreamer := optup.ProgressStreams(os.Stdout)
+
 	// run the update to deploy our fargate web service
-	res, err := s.Up(ctx)
+	res, err := s.Up(ctx, stdoutStreamer)
 	if err != nil {
 		fmt.Printf("Failed to update stack: %v\n\n", err)
 		os.Exit(1)

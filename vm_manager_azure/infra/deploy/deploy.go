@@ -11,28 +11,20 @@ import (
 	"github.com/pulumi/pulumi-azure/sdk/v3/go/azure/core"
 	"github.com/pulumi/pulumi-azure/sdk/v3/go/azure/network"
 	"github.com/pulumi/pulumi-random/sdk/v2/go/random"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"
 )
 
 func Deploy() {
 	ctx := context.Background()
 	projectName := "vmgr"
 	stackName := fmt.Sprintf("vmgr%d", rangeIn(10000000, 99999999))
-	project := workspace.Project{
-		Name:    tokens.PackageName(projectName),
-		Runtime: workspace.NewProjectRuntimeInfo("go", nil),
-	}
+	// create a new stack for our VM with an Inline program.
+	// the program is nil for now, but we'll set it later after retrieving some dependent outputs.
+	s, err := auto.NewStackInlineSource(ctx, stackName, projectName, nil /* Program */)
 
-	fmt.Println("setting up webserver stack...")
-
-	w, err := auto.NewLocalWorkspace(ctx, auto.Project(project))
-	if err != nil {
-		fmt.Printf("Failed to create workspace: %v\n", err)
-		os.Exit(1)
-	}
+	w := s.Workspace()
 
 	err = w.InstallPlugin(ctx, "azure", "v3.19.0")
 	if err != nil {
@@ -42,20 +34,6 @@ func Deploy() {
 	err = w.InstallPlugin(ctx, "random", "v2.3.1")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
-		os.Exit(1)
-	}
-
-	user, err := w.WhoAmI(ctx)
-	if err != nil {
-		fmt.Printf("Failed to get authenticated user: %v\n", err)
-		os.Exit(1)
-	}
-
-	// create the stack user/vmgr/vmgrXXXXXXXX, could create these stacks under an org instead
-	fqsn := auto.FullyQualifiedStackName(user, projectName, stackName)
-	s, err := auto.NewStack(ctx, fqsn, w)
-	if err != nil {
-		fmt.Printf("failed to create stack: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -73,7 +51,10 @@ func Deploy() {
 
 	fmt.Println("deploying vm webserver...")
 
-	res, err := s.Up(ctx)
+	// wire up our update to stream progress to stdout
+	stdoutStreamer := optup.ProgressStreams(os.Stdout)
+
+	res, err := s.Up(ctx, stdoutStreamer)
 	if err != nil {
 		fmt.Printf("Failed to deploy vm stack: %v\n", err)
 		os.Exit(1)
@@ -118,38 +99,11 @@ func GetDeployVMFunc(subnetID, rgName string) pulumi.RunFunc {
 // EnsureNetwork deploys the network stack if none exists, or simply returns the associated
 // subnetID and resourceGroupName
 func EnsureNetwork(ctx context.Context, projectName string) (string, string, error) {
-	project := workspace.Project{
-		Name:    tokens.PackageName(projectName),
-		Runtime: workspace.NewProjectRuntimeInfo("go", nil),
-	}
-	w, err := auto.NewLocalWorkspace(ctx, auto.Program(DeployNetworkFunc), auto.Project(project))
+	stackName := "networking"
+	// create or select a stack with the inline networking program
+	s, err := auto.UpsertStackInlineSource(ctx, stackName, projectName, DeployNetworkFunc)
 	if err != nil {
-		fmt.Printf("Failed to create workspace: %v\n", err)
-		os.Exit(1)
-	}
-
-	err = w.InstallPlugin(ctx, "azure", "v3.19.0")
-	if err != nil {
-		fmt.Printf("Failed to install program plugins: %v\n", err)
-		os.Exit(1)
-	}
-
-	user, err := w.WhoAmI(ctx)
-	if err != nil {
-		fmt.Printf("Failed to get authenticated user: %v\n", err)
-		os.Exit(1)
-	}
-
-	// create the special networking stack
-	fqsn := auto.FullyQualifiedStackName(user, projectName, "networking")
-	s, err := auto.NewStack(ctx, fqsn, w)
-	if err != nil {
-		s, err = auto.SelectStack(ctx, fqsn, w)
-		if err != nil {
-			fmt.Printf("failed to create new or select existing network stack: %v\n", err)
-			os.Exit(1)
-		}
-		fmt.Println("found existing network stack")
+		fmt.Printf("failed to create or select stack: %v\n", err)
 	}
 
 	outs, err := s.Outputs(ctx)
@@ -169,7 +123,10 @@ func EnsureNetwork(ctx context.Context, projectName string) (string, string, err
 		os.Exit(1)
 	}
 
-	res, err := s.Up(ctx)
+	// wire up our update to stream progress to stdout
+	stdoutStreamer := optup.ProgressStreams(os.Stdout)
+
+	res, err := s.Up(ctx, stdoutStreamer)
 	if err != nil {
 		fmt.Printf("Failed to deploy network stack: %v\n", err)
 		os.Exit(1)

@@ -6,10 +6,10 @@ import (
 	"os"
 
 	"github.com/pulumi/pulumi-aws/sdk/v3/go/aws/s3"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"
 )
 
 func main() {
@@ -20,14 +20,6 @@ func main() {
 		if argsWithoutProg[0] == "destroy" {
 			destroy = true
 		}
-	}
-	ctx := context.Background()
-
-	// define the project, this includes name and runtime metadata
-	projectName := "inlineS3Project"
-	project := workspace.Project{
-		Name:    tokens.PackageName(projectName),
-		Runtime: workspace.NewProjectRuntimeInfo("go", nil),
 	}
 
 	// define our program that creates our pulumi resources.
@@ -89,14 +81,21 @@ func main() {
 		return nil
 	}
 
-	// create an local workspace with our project and inline program
-	w, err := auto.NewLocalWorkspace(ctx, auto.Program(deployFunc), auto.Project(project))
-	if err != nil {
-		fmt.Printf("Failed to create workspace: %v\n", err)
-		os.Exit(1)
-	}
+	ctx := context.Background()
 
-	fmt.Println("Successfully setup workspace")
+	projectName := "inlineS3Project"
+	// we use a simple stack name here, but recommend using auto.FullyQualifiedStackName for maximum specificity.
+	stackName := "dev"
+	// stackName := auto.FullyQualifiedStackName("myOrgOrUser", projectName, stackName)
+
+	// create or select a stack matching the specified name and project.
+	// this will set up a workspace with everything necessary to run our inline program (deployFunc)
+	s, err := auto.UpsertStackInlineSource(ctx, stackName, projectName, deployFunc)
+
+	fmt.Printf("Created/Selected stack %q\n", stackName)
+
+	w := s.Workspace()
+
 	fmt.Println("Installing the AWS plugin")
 
 	// for inline source programs, we must manage plugins ourselves
@@ -107,30 +106,6 @@ func main() {
 	}
 
 	fmt.Println("Successfully installed AWS plugin")
-
-	// lookup the authenticated user to use in stack creation
-	user, err := w.WhoAmI(ctx)
-	if err != nil {
-		fmt.Printf("Failed to get authenticated user: %v\n", err)
-		os.Exit(1)
-	}
-	stackName := "dev"
-	// create a fully qualified stack name in the form "org/project/stack".
-	// this full name is required when creating and selecting stack with automation API
-	fqsn := auto.FullyQualifiedStackName(user, projectName, stackName)
-
-	// try to create a new stack from our local workspace
-	s, err := auto.NewStack(ctx, fqsn, w)
-	if err != nil {
-		// we'll encounter an error if the stack already exists. try to select it before giving up
-		s, err = auto.SelectStack(ctx, fqsn, w)
-		if err != nil {
-			fmt.Printf("Failed to create or select stack: %v\n", err)
-			os.Exit(1)
-		}
-	}
-
-	fmt.Printf("Created/Select stack %q\n", fqsn)
 
 	// set stack configuration specifying the AWS region to deploy
 	s.SetConfig(ctx, "aws:region", auto.ConfigValue{Value: "us-west-2"})
@@ -148,8 +123,12 @@ func main() {
 
 	if destroy {
 		fmt.Println("Starting stack destroy")
+
+		// wire up our destroy to stream progress to stdout
+		stdoutStreamer := optdestroy.ProgressStreams(os.Stdout)
+
 		// destroy our stack and exit early
-		_, err := s.Destroy(ctx)
+		_, err := s.Destroy(ctx, stdoutStreamer)
 		if err != nil {
 			fmt.Printf("Failed to destroy stack: %v", err)
 		}
@@ -159,8 +138,11 @@ func main() {
 
 	fmt.Println("Starting update")
 
+	// wire up our update to stream progress to stdout
+	stdoutStreamer := optup.ProgressStreams(os.Stdout)
+
 	// run the update to deploy our s3 website
-	res, err := s.Up(ctx)
+	res, err := s.Up(ctx, stdoutStreamer)
 	if err != nil {
 		fmt.Printf("Failed to update stack: %v\n\n", err)
 		os.Exit(1)

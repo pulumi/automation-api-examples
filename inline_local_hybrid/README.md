@@ -8,7 +8,7 @@ This program demonstrates how to setup a project to get the best of both worlds 
 
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.9.2](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 
 First we'll run our automation program:
@@ -16,16 +16,37 @@ First we'll run our automation program:
 ```shell
 $ cd ./automation
 $ go run main.go
-Successfully setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/hybridS3Project/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
 Starting update
+Updating (dev)
+
+View Live: https://app.pulumi.com/EvanBoyle/hybridS3Project/dev/updates/22
+
+
+ +  pulumi:pulumi:Stack hybridS3Project-dev creating 
+ +  aws:s3:Bucket s3-website-bucket creating 
+ +  aws:s3:Bucket s3-website-bucket created 
+ +  aws:s3:BucketObject index creating 
+ +  aws:s3:BucketPolicy bucketPolicy creating 
+ +  aws:s3:BucketObject index created 
+ +  aws:s3:BucketPolicy bucketPolicy created 
+ +  pulumi:pulumi:Stack hybridS3Project-dev created 
+ 
+Outputs:
+    websiteUrl: "s3-website-bucket-8878c34.s3-website-us-west-2.amazonaws.com"
+
+Resources:
+    + 4 created
+
+Duration: 5s
+
 Update succeeded!
-URL: s3-website-bucket-xxxxxxx.s3-website-us-west-2.amazonaws.com
+URL: s3-website-bucket-8878c34.s3-website-us-west-2.amazonaws.com
 ```
 
 Next we'll move to the CLI wrapper, and use the CLI to inspect the outputs:
@@ -44,7 +65,7 @@ $ pulumi stack
 Current stack is dev:
     Owner: EvanBoyle
     Last updated: 1 minute ago (2020-09-01 19:59:54.837555 -0700 PDT)
-    Pulumi version: v2.9.2
+    Pulumi version: v2.10.1
 Current stack resources (5):
     TYPE                                     NAME
     pulumi:pulumi:Stack                      hybridS3Project-EvanBoyle/hybridS3Project/dev
@@ -65,13 +86,36 @@ Finally we'll go back to our automation program to destroy the stack via `go run
 ```shell
 $ cd ../automation
 $ go run main.go destroy
-Successfully setup workspace
+Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
-Created/Select stack "EvanBoyle/hybridS3Project/dev"
 Successfully set config
 Starting refresh
 Refresh succeeded!
 Starting stack destroy
+Destroying (dev)
+
+View Live: https://app.pulumi.com/EvanBoyle/hybridS3Project/dev/updates/24
+
+
+ -  aws:s3:BucketPolicy bucketPolicy deleting 
+ -  aws:s3:BucketObject index deleting 
+ -  aws:s3:BucketObject index deleted 
+ -  aws:s3:BucketPolicy bucketPolicy deleted 
+ -  aws:s3:Bucket s3-website-bucket deleting 
+ -  aws:s3:Bucket s3-website-bucket deleted 
+ -  pulumi:pulumi:Stack hybridS3Project-dev deleting 
+ -  pulumi:pulumi:Stack hybridS3Project-dev deleted 
+ 
+Outputs:
+  - websiteUrl: "s3-website-bucket-8878c34.s3-website-us-west-2.amazonaws.com"
+
+Resources:
+    - 4 deleted
+
+Duration: 3s
+
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+If you want to remove the stack completely, run 'pulumi stack rm dev'.
 Stack successfully destroyed
 ```

@@ -10,6 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
+	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
 )
 
 // Reap cleans up all vmgr stacks that are older than the specified threshold
@@ -41,12 +42,6 @@ func Reap(threshold time.Duration) {
 		os.Exit(1)
 	}
 
-	user, err := w.WhoAmI(ctx)
-	if err != nil {
-		fmt.Printf("Failed to get authenticated user: %v\n", err)
-		os.Exit(1)
-	}
-
 	stacks, err := w.ListStacks(ctx)
 	if err != nil {
 		fmt.Printf("failed to list stacks: %v\n", err)
@@ -68,9 +63,8 @@ func Reap(threshold time.Duration) {
 		}
 
 		if lastUpdateTime.Before(expiration) {
-			fqsn := auto.FullyQualifiedStackName(user, "vmgr", stackSummary.Name)
-			stacksToDestroy = append(stacksToDestroy, fqsn)
-			fmt.Printf("Found expired stack %s last deployed at %s\n", fqsn, stackSummary.LastUpdate)
+			stacksToDestroy = append(stacksToDestroy, stackSummary.Name)
+			fmt.Printf("Found expired stack %s last deployed at %s\n", stackSummary.Name, stackSummary.LastUpdate)
 		}
 	}
 
@@ -88,7 +82,10 @@ func Reap(threshold time.Duration) {
 
 		fmt.Printf("destroying stack %s\n", sName)
 
-		_, err = s.Destroy(ctx)
+		// wire up our destroy to stream progress to stdout
+		stdoutStreamer := optdestroy.ProgressStreams(os.Stdout)
+
+		_, err = s.Destroy(ctx, stdoutStreamer)
 		if err != nil {
 			fmt.Printf("failed to clean up stack %s: %v\n", sName, err)
 			fmt.Println("will try again in 60 seconds")
