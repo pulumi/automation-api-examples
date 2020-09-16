@@ -3,7 +3,7 @@
 This program demonstrates how use automation API with a Pulumi program from git remote. This example deploys the [aws-go-s3 project from the pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-go-s3-folder). The Automation API takes care of all of the work of cloning and setting up the repo.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.9.2](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 
 Running this program is just like any other Go program. No invocation through the Pulumi CLI required:

@@ -6,7 +6,7 @@ This program demonstrates how use Automation API to orchestrate mutliple stacks,
 2. `inlineMultiStackObject`: this project deploys an object (our index.hmtl) to the bucket. It reads the bucket ID from the stack outputs of `inlineMultiStackWebsite`.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.9.2](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 
 Running this program is just like any other Go program. No invocation through the Pulumi CLI required:
