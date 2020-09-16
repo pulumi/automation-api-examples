@@ -8,3 +8,5 @@ require (
 	github.com/pulumi/pulumi/sdk/v2 v2.9.2
 	github.com/spf13/cobra v1.0.0
 )
+
+replace github.com/pulumi/pulumi/sdk/v2 => ../../../pulumi/pulumi/sdk
