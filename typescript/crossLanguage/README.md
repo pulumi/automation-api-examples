@@ -16,6 +16,7 @@ To run this example you'll need a few pre-reqs:
 To run our automation program we just `cd` to the `automation` directory and `yarn run start`:
 
 ```shell
+$ yarn install
 $ yarn start
 yarn run v1.19.1
 $ ./node_modules/ts-node/dist/bin.js index.ts

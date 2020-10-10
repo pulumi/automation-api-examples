@@ -10,9 +10,12 @@ To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation (built from latest source, with node packages linked)
 2. The AWS CLI, with appropriate credentials.
 
-To run our automation program we just `cd` to the `automation` directory and `yarn run start`:
+To run our automation program we just `cd` to the `automation` directory (after installing deps) and `yarn run start`:
 
 ```shell
+$ cd website
+$ yarn install
+$ cd ../automation
 $ yarn start
 yarn run v1.19.1
 $ ./node_modules/ts-node/dist/bin.js index.ts

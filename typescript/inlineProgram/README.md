@@ -12,6 +12,7 @@ To run this example you'll need a few pre-reqs:
 Running this program is just like any other typescript program. No invocation through the Pulumi CLI required:
 
 ```shell
+$ yarn install
 $ yarn start
 yarn run v1.19.1
 $ ./node_modules/ts-node/dist/bin.js index.ts
