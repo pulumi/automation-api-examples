@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Automation API - Debug - index.ts",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceRoot}",
+        "runtimeArgs": ["-r", "ts-node/register"],
+        "args": ["${workspaceRoot}/index.ts"]
+      }
+    ]
+  }
