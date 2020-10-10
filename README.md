@@ -21,4 +21,5 @@ Example   | Description |
 Example   | Description |
 --------- | --------- |
 [Inline Program](typescript/inlineProgram) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a single `index.ts` and support full debugging capabilities. In this demo we deploy the same static S3 website adapted from the [Pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-ts-s3-folder).
+[Local Program](typescript/localProgram) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven S3 website program.
 [Cross-Language Program](typescript/crossLanguage) | This example shows how to use Automation API in `typescript` with an existing traditional CLI-driven Pulumi program written in a __different__ language, in this case `go`. We add an Automation API deployment program to our Fargate program that deploys a web service via a Fargate task behind a load balancer.

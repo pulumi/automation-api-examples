@@ -154,3 +154,7 @@ If you want to remove the stack completely, run 'pulumi stack rm dev'.
 stack destroy complete
 ✨  Done in 13.73s.
 ```
+
+## Debugging
+
+This project includes VSCode debug configuration. Open VSCode from this directory and `F5` to start debugging, including `.apply` calls within the pulumi program itself. Give it a try!
