@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/evanboyle/automation-api-examples/go/inline_local_hybrid/infra"
+	"github.com/pulumi/automation-api-examples/go/inline_local_hybrid/infra"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 

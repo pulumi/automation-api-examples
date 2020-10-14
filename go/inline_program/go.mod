@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/inline_program
+module github.com/pulumi/automation-api-examples/go/inline_program
 
 go 1.14
 

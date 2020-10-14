@@ -11,7 +11,7 @@ In this example we use Automation API to build a high-level operational CLI that
 
 ```shell
 # install the binary
-$ go install github.com/evanboyle/automation-api-examples/go/vm_manager_azure/cmd/vmgr
+$ go install github.com/pulumi/automation-api-examples/go/vm_manager_azure/cmd/vmgr
 ```
 
 Note that this requires Pulumi CLI >= v2.10.1 and an authenticated Azure CLI.

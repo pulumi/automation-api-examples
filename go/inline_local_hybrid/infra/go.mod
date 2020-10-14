@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/inline_local_hybrid/infra
+module github.com/pulumi/automation-api-examples/go/inline_local_hybrid/infra
 
 go 1.14
 

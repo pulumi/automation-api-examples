@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/multi_stack_orchestration
+module github.com/pulumi/automation-api-examples/go/multi_stack_orchestration
 
 go 1.14
 

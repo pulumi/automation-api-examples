@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/nodejs/crossLanguage-tsnode/app
+module github.com/pulumi/automation-api-examples/nodejs/crossLanguage-tsnode/app
 
 go 1.14
 

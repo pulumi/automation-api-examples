@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/evanboyle/automation-api-examples/go/vm_manager_azure/infra/reap"
+	"github.com/pulumi/automation-api-examples/go/vm_manager_azure/infra/reap"
 	"github.com/spf13/cobra"
 )
 

@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/git_repo_program
+module github.com/pulumi/automation-api-examples/go/git_repo_program
 
 go 1.14
 

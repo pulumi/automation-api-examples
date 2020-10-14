@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/evanboyle/automation-api-examples/go/inline_local_hybrid/infra"
+	"github.com/pulumi/automation-api-examples/go/inline_local_hybrid/infra"
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
 	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"

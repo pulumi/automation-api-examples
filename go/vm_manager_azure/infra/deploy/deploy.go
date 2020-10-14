@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/evanboyle/automation-api-examples/go/vm_manager_azure/infra/webserver"
+	"github.com/pulumi/automation-api-examples/go/vm_manager_azure/infra/webserver"
 	"github.com/pulumi/pulumi-azure/sdk/v3/go/azure/core"
 	"github.com/pulumi/pulumi-azure/sdk/v3/go/azure/network"
 	"github.com/pulumi/pulumi-random/sdk/v2/go/random"

@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/vm_manager_azure
+module github.com/pulumi/automation-api-examples/go/vm_manager_azure
 
 go 1.14
 

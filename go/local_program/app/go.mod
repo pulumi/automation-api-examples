@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/local_program/app
+module github.com/pulumi/automation-api-examples/go/local_program/app
 
 go 1.14
 

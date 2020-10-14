@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/local_program/fargate
+module github.com/pulumi/automation-api-examples/go/local_program/fargate
 
 go 1.14
 

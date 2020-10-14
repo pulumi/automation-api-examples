@@ -2,7 +2,7 @@
   "name": "automation",
   "version": "1.0.0",
   "main": "index.ts",
-  "repository": "github.com/evanboyle/automation-api-examples",
+  "repository": "github.com/pulumi/automation-api-examples",
   "author": "EvanBoyle",
   "license": "MIT",
   "dependencies": {

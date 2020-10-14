@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/evanboyle/automation-api-examples/go/vm_manager_azure/infra/deploy"
+	"github.com/pulumi/automation-api-examples/go/vm_manager_azure/infra/deploy"
 	"github.com/spf13/cobra"
 )
 
