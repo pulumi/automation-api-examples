@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "@pulumi/aws": "^3.6.1",
-    "@pulumi/pulumi": "^2.11.2"
+    "@pulumi/pulumi": "^2.12.0"
   },
   "scripts": {
     "start": "node index.js"
