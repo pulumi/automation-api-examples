@@ -43,5 +43,4 @@ const run = async () => {
     console.log(`website url: ${upRes.outputs.url.value}`);
 };
 
-run();
-
+run().catch(err => console.log(err));

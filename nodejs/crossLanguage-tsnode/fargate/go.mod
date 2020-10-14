@@ -1,4 +1,4 @@
-module github.com/evanboyle/automation-api-examples/go/crossLanguage/fargate
+module github.com/evanboyle/automation-api-examples/nodejs/crossLanguage-tsnode/fargate
 
 go 1.14
 

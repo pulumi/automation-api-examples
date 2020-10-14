@@ -1,0 +1,16 @@
+{
+  "name": "inline_program",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "repository": "github.com/evanboyle/automation-api-examples",
+  "author": "EvanBoyle",
+  "license": "MIT",
+  "dependencies": {
+    "@pulumi/aws": "^3.6.1",
+    "@pulumi/pulumi": "^2.11.2"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
