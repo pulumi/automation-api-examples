@@ -79,6 +79,7 @@ func createHandler(w http.ResponseWriter, req *http.Request) {
 
 	s, err := auto.NewStackInlineSource(ctx, stackName, project, program)
 	if err != nil {
+		// if stack already exists, 409
 		if auto.IsCreateStack409Error(err) {
 			w.WriteHeader(409)
 			fmt.Fprintf(w, fmt.Sprintf("stack %q already exists", stackName))
@@ -148,6 +149,7 @@ func getHandler(w http.ResponseWriter, req *http.Request) {
 	ctx := context.Background()
 	s, err := auto.SelectStackInlineSource(ctx, stackName, project, program)
 	if err != nil {
+		// if the stack doesn't already exist, 404
 		if auto.IsSelectStack404Error(err) {
 			w.WriteHeader(404)
 			fmt.Fprintf(w, fmt.Sprintf("stack %q not found", stackName))
@@ -208,6 +210,13 @@ func updateHandler(w http.ResponseWriter, req *http.Request) {
 	// we'll write all of the update logs to st	out so we can watch requests get processed
 	upRes, err := s.Up(ctx, optup.ProgressStreams(os.Stdout))
 	if err != nil {
+		// if we already have another update in progress, return a 409
+		if auto.IsConcurrentUpdateError(err) {
+			w.WriteHeader(409)
+			fmt.Fprintf(w, "stack %q already has update in progress", stackName)
+			return
+		}
+
 		w.WriteHeader(500)
 		fmt.Fprintf(w, err.Error())
 		return
@@ -232,6 +241,7 @@ func deleteHandler(w http.ResponseWriter, req *http.Request) {
 
 	s, err := auto.SelectStackInlineSource(ctx, stackName, project, program)
 	if err != nil {
+		// if stack doesn't already exist, 404
 		if auto.IsSelectStack404Error(err) {
 			w.WriteHeader(404)
 			fmt.Fprintf(w, fmt.Sprintf("stack %q not found", stackName))
