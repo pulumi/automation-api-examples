@@ -21,6 +21,14 @@ const indexContent = `<html><head>
 </body></html>
 `
 
+// write our index.html into the site bucket
+let object = new aws.s3.BucketObject("index", {
+    bucket: siteBucket,
+    content: indexContent,
+    contentType: "text/html; charset=utf-8",
+    key: "index.html"
+});
+
 // Create an S3 Bucket Policy to allow public read of all objects in bucket
 function publicReadPolicyForBucket(bucketName: string): PolicyDocument {
     return {

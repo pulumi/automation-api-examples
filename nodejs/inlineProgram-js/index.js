@@ -23,6 +23,13 @@ const run = async () => {
 <body><p>Hello, world!</p><p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a></p>
 </body></html>
 `
+        // write our index.html into the site bucket
+        let object = new s3.BucketObject("index", {
+            bucket: siteBucket,
+            content: indexContent,
+            contentType: "text/html; charset=utf-8",
+            key: "index.html"
+        });
 
         // Create an S3 Bucket Policy to allow public read of all objects in bucket
         function publicReadPolicyForBucket(bucketName) {
@@ -75,7 +82,7 @@ const run = async () => {
 
     if (destroy) {
         console.info("destroying stack...");
-        await stack.destroy({onOutput: console.info});
+        await stack.destroy({ onOutput: console.info });
         console.info("stack destroy complete");
         process.exit(0);
     }
