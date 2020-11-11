@@ -1,11 +1,11 @@
 # Database Migration
 
-This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single program using an `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
+This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
 
-This example also has a VSCode debug configuration that enables setting breakpoints within both the Automation API code, and things like `.apply` calls within the Pulumi program.
+This example has a VSCode debug configuration that enables setting breakpoints within both the Automation API code, and things like `.apply` calls within the Pulumi program.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later) 
+1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. install deps: `yarn install`
 
@@ -35,19 +35,19 @@ Updating (dev)
 View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev/updates/28
 
 
- +  pulumi:pulumi:Stack databaseMigration-dev creating 
+ +  pulumi:pulumi:Stack databaseMigration-dev creating
 
- +  awsx:x:ec2:SecurityGroup publicGroup creating 
+ +  awsx:x:ec2:SecurityGroup publicGroup creating
 
- +  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 creating 
- +  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 creating 
+ +  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 creating
+ +  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 creating
 
- +  awsx:x:ec2:Vpc default-vpc creating 
+ +  awsx:x:ec2:Vpc default-vpc creating
 
- +  awsx:x:ec2:Subnet default-vpc-public-1 creating 
+ +  awsx:x:ec2:Subnet default-vpc-public-1 creating
 
  +  pulumi:pulumi:Stack databaseMigration-dev creating read aws:ec2:Subnet default-vpc-public-0
- +  awsx:x:ec2:Subnet default-vpc-public-0 creating 
+ +  awsx:x:ec2:Subnet default-vpc-public-0 creating
  +  pulumi:pulumi:Stack databaseMigration-dev creating read aws:ec2:Subnet default-vpc-public-1
  +  pulumi:pulumi:Stack databaseMigration-dev creating read aws:ec2:Vpc default-vpc
 
@@ -55,39 +55,39 @@ View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev/updates/28
 
  +  pulumi:pulumi:Stack databaseMigration-dev creating read aws:ec2:Subnet default-vpc-public-1
 
- +  aws:rds:SubnetGroup dbsubnet creating 
+ +  aws:rds:SubnetGroup dbsubnet creating
 
  +  pulumi:pulumi:Stack databaseMigration-dev creating read aws:ec2:Vpc default-vpc
 
- +  aws:rds:SubnetGroup dbsubnet created 
+ +  aws:rds:SubnetGroup dbsubnet created
 
- +  aws:ec2:SecurityGroup publicGroup creating 
+ +  aws:ec2:SecurityGroup publicGroup creating
 
- +  aws:ec2:SecurityGroup publicGroup created 
+ +  aws:ec2:SecurityGroup publicGroup created
 
- +  aws:ec2:SecurityGroupRule publicGroup-ingress-0 creating 
- +  aws:ec2:SecurityGroupRule publicGroup-egress-0 creating 
+ +  aws:ec2:SecurityGroupRule publicGroup-ingress-0 creating
+ +  aws:ec2:SecurityGroupRule publicGroup-egress-0 creating
 
- +  aws:rds:Cluster db creating 
+ +  aws:rds:Cluster db creating
 
- +  aws:ec2:SecurityGroupRule publicGroup-ingress-0 created 
+ +  aws:ec2:SecurityGroupRule publicGroup-ingress-0 created
 
- +  aws:ec2:SecurityGroupRule publicGroup-egress-0 created 
-
-@ Updating....
-.
-
- +  aws:rds:Cluster db created 
-
- +  aws:rds:ClusterInstance dbInstance creating 
+ +  aws:ec2:SecurityGroupRule publicGroup-egress-0 created
 
 @ Updating....
 .
 
- +  aws:rds:ClusterInstance dbInstance created 
+ +  aws:rds:Cluster db created
 
- +  pulumi:pulumi:Stack databaseMigration-dev created 
- 
+ +  aws:rds:ClusterInstance dbInstance creating
+
+@ Updating....
+.
+
+ +  aws:rds:ClusterInstance dbInstance created
+
+ +  pulumi:pulumi:Stack databaseMigration-dev created
+
 
 Outputs:
     dbName: "hellosql"
@@ -102,7 +102,7 @@ Resources:
 Duration: 4m53s
 
 
-update summary: 
+update summary:
 {
     "create": 13
 }
@@ -141,44 +141,44 @@ View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev/updates/29
 
 
 
- ~  awsx:x:ec2:SecurityGroup publicGroup refreshing 
+ ~  awsx:x:ec2:SecurityGroup publicGroup refreshing
 
- ~  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 refreshing 
- ~  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 refreshing 
+ ~  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 refreshing
+ ~  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 refreshing
 
-    awsx:x:ec2:SecurityGroup publicGroup  
+    awsx:x:ec2:SecurityGroup publicGroup
 
-    awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0  
- ~  pulumi:pulumi:Stack databaseMigration-dev refreshing 
+    awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0
+ ~  pulumi:pulumi:Stack databaseMigration-dev refreshing
 
-    pulumi:pulumi:Stack databaseMigration-dev running 
- ~  awsx:x:ec2:Vpc default-vpc refreshing 
-    awsx:x:ec2:Vpc default-vpc  
+    pulumi:pulumi:Stack databaseMigration-dev running
+ ~  awsx:x:ec2:Vpc default-vpc refreshing
+    awsx:x:ec2:Vpc default-vpc
 
-    awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0  
- ~  awsx:x:ec2:Subnet default-vpc-public-1 refreshing 
-    awsx:x:ec2:Subnet default-vpc-public-1  
+    awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0
+ ~  awsx:x:ec2:Subnet default-vpc-public-1 refreshing
+    awsx:x:ec2:Subnet default-vpc-public-1
 
- ~  awsx:x:ec2:Subnet default-vpc-public-0 refreshing 
-    awsx:x:ec2:Subnet default-vpc-public-0  
+ ~  awsx:x:ec2:Subnet default-vpc-public-0 refreshing
+    awsx:x:ec2:Subnet default-vpc-public-0
 
- ~  aws:ec2:SecurityGroupRule publicGroup-ingress-0 refreshing 
+ ~  aws:ec2:SecurityGroupRule publicGroup-ingress-0 refreshing
 
- ~  aws:ec2:Subnet default-vpc-public-0 refreshing 
+ ~  aws:ec2:Subnet default-vpc-public-0 refreshing
 
- ~  aws:ec2:Subnet default-vpc-public-1 refreshing 
+ ~  aws:ec2:Subnet default-vpc-public-1 refreshing
 
- ~  aws:ec2:SecurityGroup publicGroup refreshing 
+ ~  aws:ec2:SecurityGroup publicGroup refreshing
 
- ~  aws:ec2:Vpc default-vpc refreshing 
+ ~  aws:ec2:Vpc default-vpc refreshing
 
- ~  aws:rds:SubnetGroup dbsubnet refreshing 
+ ~  aws:rds:SubnetGroup dbsubnet refreshing
 
- ~  aws:ec2:SecurityGroupRule publicGroup-egress-0 refreshing 
+ ~  aws:ec2:SecurityGroupRule publicGroup-egress-0 refreshing
 
- ~  aws:rds:ClusterInstance dbInstance refreshing 
+ ~  aws:rds:ClusterInstance dbInstance refreshing
 
- ~  aws:rds:Cluster db refreshing 
+ ~  aws:rds:Cluster db refreshing
 
     aws:ec2:Subnet default-vpc-public-0  [diff: +assignIpv6AddressOnCreation,availabilityZone,availabilityZoneId,cidrBlock,ipv6CidrBlock,mapPublicIpOnLaunch,outpostArn,tags,vpcId]
 
@@ -198,8 +198,8 @@ View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev/updates/29
 
     aws:ec2:Vpc default-vpc  [diff: +assignGeneratedIpv6CidrBlock,cidrBlock,enableClassiclink,enableClassiclinkDnsSupport,enableDnsHostnames,enableDnsSupport,instanceTenancy,tags]
 
-    pulumi:pulumi:Stack databaseMigration-dev  
- 
+    pulumi:pulumi:Stack databaseMigration-dev
+
 
 Outputs:
     dbName: "hellosql"
@@ -225,7 +225,7 @@ View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev/updates/30
 
 
 
- -  aws:rds:ClusterInstance dbInstance deleting 
+ -  aws:rds:ClusterInstance dbInstance deleting
 
 @ Destroying....
 .
@@ -233,53 +233,53 @@ View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev/updates/30
 .
 .
 
- -  aws:rds:ClusterInstance dbInstance deleted 
+ -  aws:rds:ClusterInstance dbInstance deleted
 
- -  aws:rds:Cluster db deleting 
+ -  aws:rds:Cluster db deleting
 
 @ Destroying....
 .
 .
 
- -  aws:rds:Cluster db deleted 
+ -  aws:rds:Cluster db deleted
 
- -  aws:ec2:SecurityGroupRule publicGroup-ingress-0 deleting 
+ -  aws:ec2:SecurityGroupRule publicGroup-ingress-0 deleting
 
- -  aws:rds:SubnetGroup dbsubnet deleting 
+ -  aws:rds:SubnetGroup dbsubnet deleting
 
- -  aws:ec2:SecurityGroupRule publicGroup-egress-0 deleting 
+ -  aws:ec2:SecurityGroupRule publicGroup-egress-0 deleting
 
- -  aws:rds:SubnetGroup dbsubnet deleted 
+ -  aws:rds:SubnetGroup dbsubnet deleted
 
- -  aws:ec2:SecurityGroupRule publicGroup-ingress-0 deleted 
+ -  aws:ec2:SecurityGroupRule publicGroup-ingress-0 deleted
 
- -  aws:ec2:SecurityGroupRule publicGroup-egress-0 deleted 
+ -  aws:ec2:SecurityGroupRule publicGroup-egress-0 deleted
 
- -  awsx:x:ec2:Subnet default-vpc-public-1 deleting 
- -  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 deleting 
+ -  awsx:x:ec2:Subnet default-vpc-public-1 deleting
+ -  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 deleting
 
- -  awsx:x:ec2:Subnet default-vpc-public-0 deleting 
- -  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 deleting 
+ -  awsx:x:ec2:Subnet default-vpc-public-0 deleting
+ -  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 deleting
 
- -  aws:ec2:SecurityGroup publicGroup deleting 
+ -  aws:ec2:SecurityGroup publicGroup deleting
 
- -  aws:ec2:SecurityGroup publicGroup deleted 
+ -  aws:ec2:SecurityGroup publicGroup deleted
 
- -  awsx:x:ec2:Vpc default-vpc deleting 
+ -  awsx:x:ec2:Vpc default-vpc deleting
 
- -  awsx:x:ec2:SecurityGroup publicGroup deleting 
+ -  awsx:x:ec2:SecurityGroup publicGroup deleting
 
- -  pulumi:pulumi:Stack databaseMigration-dev deleting 
+ -  pulumi:pulumi:Stack databaseMigration-dev deleting
 
- -  awsx:x:ec2:Subnet default-vpc-public-0 deleted 
- -  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 deleted 
+ -  awsx:x:ec2:Subnet default-vpc-public-0 deleted
+ -  awsx:x:ec2:EgressSecurityGroupRule publicGroup-egress-0 deleted
 
- -  awsx:x:ec2:Vpc default-vpc deleted 
- -  awsx:x:ec2:SecurityGroup publicGroup deleted 
- -  pulumi:pulumi:Stack databaseMigration-dev deleted 
- -  awsx:x:ec2:Subnet default-vpc-public-1 deleted 
- -  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 deleted 
- 
+ -  awsx:x:ec2:Vpc default-vpc deleted
+ -  awsx:x:ec2:SecurityGroup publicGroup deleted
+ -  pulumi:pulumi:Stack databaseMigration-dev deleted
+ -  awsx:x:ec2:Subnet default-vpc-public-1 deleted
+ -  awsx:x:ec2:IngressSecurityGroupRule publicGroup-ingress-0 deleted
+
 Outputs:
   - dbName: "hellosql"
   - dbPass: "hellosql"
@@ -292,7 +292,7 @@ Resources:
 Duration: 2m47s
 
 
-The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained.
 If you want to remove the stack completely, run 'pulumi stack rm dev'.
 
 stack destroy complete

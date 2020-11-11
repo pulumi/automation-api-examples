@@ -22,19 +22,19 @@ Destroying (dev1)
 View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev1/updates/12
 
 
- -  aws:rds:ClusterInstance dbInstance deleting 
+ -  aws:rds:ClusterInstance dbInstance deleting
 @ Destroying.........
- -  aws:rds:ClusterInstance dbInstance deleted 
- -  aws:rds:Cluster db deleting 
+ -  aws:rds:ClusterInstance dbInstance deleted
+ -  aws:rds:Cluster db deleting
 @ Destroying......
- -  aws:rds:Cluster db deleted 
- -  aws:rds:SubnetGroup dbsubnet deleting 
- -  aws:ec2:SecurityGroup web-sg deleting 
- -  aws:rds:SubnetGroup dbsubnet deleted 
- -  aws:ec2:SecurityGroup web-sg deleted 
- -  pulumi:pulumi:Stack databaseMigration-dev1 deleting 
- -  pulumi:pulumi:Stack databaseMigration-dev1 deleted 
- 
+ -  aws:rds:Cluster db deleted
+ -  aws:rds:SubnetGroup dbsubnet deleting
+ -  aws:ec2:SecurityGroup web-sg deleting
+ -  aws:rds:SubnetGroup dbsubnet deleted
+ -  aws:ec2:SecurityGroup web-sg deleted
+ -  pulumi:pulumi:Stack databaseMigration-dev1 deleting
+ -  pulumi:pulumi:Stack databaseMigration-dev1 deleted
+
 Outputs:
   - dbName: "hellosql"
   - dbPass: "hellosql"
@@ -46,7 +46,7 @@ Resources:
 
 Duration: 3m5s
 
-The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained.
 If you want to remove the stack completely, run 'pulumi stack rm dev1'.
 Stack successfully destroyed
 Evans-MBP:database_migration evanboyle$ go run main.go
@@ -62,19 +62,19 @@ Updating (dev1)
 View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev1/updates/14
 
 
- +  pulumi:pulumi:Stack databaseMigration-dev1 creating 
- +  aws:rds:SubnetGroup dbsubnet creating 
- +  aws:ec2:SecurityGroup web-sg creating 
- +  aws:rds:SubnetGroup dbsubnet created 
- +  aws:ec2:SecurityGroup web-sg created 
- +  aws:rds:Cluster db creating 
+ +  pulumi:pulumi:Stack databaseMigration-dev1 creating
+ +  aws:rds:SubnetGroup dbsubnet creating
+ +  aws:ec2:SecurityGroup web-sg creating
+ +  aws:rds:SubnetGroup dbsubnet created
+ +  aws:ec2:SecurityGroup web-sg created
+ +  aws:rds:Cluster db creating
 @ Updating......
- +  aws:rds:Cluster db created 
- +  aws:rds:ClusterInstance dbInstance creating 
+ +  aws:rds:Cluster db created
+ +  aws:rds:ClusterInstance dbInstance creating
 @ Updating................
- +  aws:rds:ClusterInstance dbInstance created 
- +  pulumi:pulumi:Stack databaseMigration-dev1 created 
- 
+ +  aws:rds:ClusterInstance dbInstance created
+ +  pulumi:pulumi:Stack databaseMigration-dev1 created
+
 Outputs:
     dbName: "hellosql"
     dbPass: "hellosql"
@@ -113,19 +113,19 @@ Destroying (dev1)
 View Live: https://app.pulumi.com/EvanBoyle/databaseMigration/dev1/updates/16
 
 
- -  aws:rds:ClusterInstance dbInstance deleting 
+ -  aws:rds:ClusterInstance dbInstance deleting
 @ Destroying........
- -  aws:rds:ClusterInstance dbInstance deleted 
- -  aws:rds:Cluster db deleting 
+ -  aws:rds:ClusterInstance dbInstance deleted
+ -  aws:rds:Cluster db deleting
 @ Destroying......
- -  aws:rds:Cluster db deleted 
- -  aws:rds:SubnetGroup dbsubnet deleting 
- -  aws:ec2:SecurityGroup web-sg deleting 
- -  aws:rds:SubnetGroup dbsubnet deleted 
- -  aws:ec2:SecurityGroup web-sg deleted 
- -  pulumi:pulumi:Stack databaseMigration-dev1 deleting 
- -  pulumi:pulumi:Stack databaseMigration-dev1 deleted 
- 
+ -  aws:rds:Cluster db deleted
+ -  aws:rds:SubnetGroup dbsubnet deleting
+ -  aws:ec2:SecurityGroup web-sg deleting
+ -  aws:rds:SubnetGroup dbsubnet deleted
+ -  aws:ec2:SecurityGroup web-sg deleted
+ -  pulumi:pulumi:Stack databaseMigration-dev1 deleting
+ -  pulumi:pulumi:Stack databaseMigration-dev1 deleted
+
 Outputs:
   - dbName: "hellosql"
   - dbPass: "hellosql"
@@ -137,7 +137,7 @@ Resources:
 
 Duration: 2m55s
 
-The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained.
 If you want to remove the stack completely, run 'pulumi stack rm dev1'.
 Stack successfully destroyed
 ```

@@ -1,11 +1,11 @@
 # Pulumi Over HTTP - Static Websites as a RESTful API
 
-This application demonstrates how to run Automation API in an HTTP server to expose infrastructure as RESTful resources. In our case, we've defined and exposed a static website `site` that exposes all of the `CRUD` operations plus list. Users can hit our REST endpoint and create custom static websites by specifying the `content` field in the `POST` body. All of our infrastructure is defined in `inline` programs that are constructed and altered on the fly based on input parsed from user specified `POST` bodies. Be sure to read through the handlers to see how Automation API detect structured error cases such as update conflics (409), and missing stacks (404). 
+This application demonstrates how to run Automation API in an HTTP server to expose infrastructure as RESTful resources. In our case, we've defined and exposed a static website `site` that exposes all of the `CRUD` operations plus list. Users can hit our REST endpoint and create custom static websites by specifying the `content` field in the `POST` body. All the infrastructure is defined in `inline` programs that are constructed and altered on the fly based on input parsed from user-specified `POST` bodies. Be sure to read through the handlers to see how Automation API detect structured error cases such as update conflicts (409), and missing stacks (404).
 
 This example also has a VSCode debug configuration that enables setting breakpoints within both the Automation API code, and things like `.apply` calls within the Pulumi program.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later) 
+1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. install deps: `yarn install`
 
@@ -24,18 +24,18 @@ View Live: https://app.pulumi.com/EvanBoyle/pulumi_over_http/hello/updates/4
 
 
 
-    pulumi:pulumi:Stack pulumi_over_http-hello running 
+    pulumi:pulumi:Stack pulumi_over_http-hello running
 
-    aws:s3:Bucket s3-website-bucket  
+    aws:s3:Bucket s3-website-bucket
 
  ~  aws:s3:BucketObject index updating [diff: ~content]
 
-    aws:s3:BucketPolicy bucketPolicy  
+    aws:s3:BucketPolicy bucketPolicy
 
  ~  aws:s3:BucketObject index updated [diff: ~content]
 
-    pulumi:pulumi:Stack pulumi_over_http-hello  
- 
+    pulumi:pulumi:Stack pulumi_over_http-hello
+
 
 Outputs:
     websiteUrl: "s3-website-bucket-4394cbb.s3-website-us-west-2.amazonaws.com"
