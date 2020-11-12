@@ -1,6 +1,6 @@
 # Git Repo Program
 
-This program demonstrates how use automation API with a Pulumi program from git remote. This example deploys the [aws-go-s3 project from the pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-go-s3-folder). The Automation API takes care of all of the work of cloning and setting up the repo.
+This program demonstrates how to use Automation API with a Pulumi program from git remote. This example deploys the [aws-go-s3 project from the pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-go-s3-folder). The Automation API takes care of all of the work of cloning and setting up the repo.
 
 To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
@@ -20,17 +20,17 @@ Updating (dev)
 View Live: https://app.pulumi.com/EvanBoyle/aws-go-s3-folder/dev/updates/18
 
 
- +  pulumi:pulumi:Stack aws-go-s3-folder-dev creating 
- +  aws:s3:Bucket s3-website-bucket creating 
- +  aws:s3:Bucket s3-website-bucket created 
- +  aws:s3:BucketPolicy bucketPolicy creating 
- +  aws:s3:BucketObject index.html creating 
- +  aws:s3:BucketObject favicon.png creating 
- +  aws:s3:BucketPolicy bucketPolicy created 
- +  aws:s3:BucketObject index.html created 
- +  aws:s3:BucketObject favicon.png created 
- +  pulumi:pulumi:Stack aws-go-s3-folder-dev created 
- 
+ +  pulumi:pulumi:Stack aws-go-s3-folder-dev creating
+ +  aws:s3:Bucket s3-website-bucket creating
+ +  aws:s3:Bucket s3-website-bucket created
+ +  aws:s3:BucketPolicy bucketPolicy creating
+ +  aws:s3:BucketObject index.html creating
+ +  aws:s3:BucketObject favicon.png creating
+ +  aws:s3:BucketPolicy bucketPolicy created
+ +  aws:s3:BucketObject index.html created
+ +  aws:s3:BucketObject favicon.png created
+ +  pulumi:pulumi:Stack aws-go-s3-folder-dev created
+
 Outputs:
     bucketName: "s3-website-bucket-85aa86a"
     websiteUrl: "s3-website-bucket-85aa86a.s3-website-us-west-2.amazonaws.com"
@@ -58,17 +58,17 @@ Destroying (dev)
 View Live: https://app.pulumi.com/EvanBoyle/aws-go-s3-folder/dev/updates/20
 
 
- -  aws:s3:BucketPolicy bucketPolicy deleting 
- -  aws:s3:BucketObject favicon.png deleting 
- -  aws:s3:BucketObject index.html deleting 
- -  aws:s3:BucketObject favicon.png deleted 
- -  aws:s3:BucketObject index.html deleted 
- -  aws:s3:BucketPolicy bucketPolicy deleted 
- -  aws:s3:Bucket s3-website-bucket deleting 
- -  aws:s3:Bucket s3-website-bucket deleted 
- -  pulumi:pulumi:Stack aws-go-s3-folder-dev deleting 
- -  pulumi:pulumi:Stack aws-go-s3-folder-dev deleted 
- 
+ -  aws:s3:BucketPolicy bucketPolicy deleting
+ -  aws:s3:BucketObject favicon.png deleting
+ -  aws:s3:BucketObject index.html deleting
+ -  aws:s3:BucketObject favicon.png deleted
+ -  aws:s3:BucketObject index.html deleted
+ -  aws:s3:BucketPolicy bucketPolicy deleted
+ -  aws:s3:Bucket s3-website-bucket deleting
+ -  aws:s3:Bucket s3-website-bucket deleted
+ -  pulumi:pulumi:Stack aws-go-s3-folder-dev deleting
+ -  pulumi:pulumi:Stack aws-go-s3-folder-dev deleted
+
 Outputs:
   - bucketName: "s3-website-bucket-85aa86a"
   - websiteUrl: "s3-website-bucket-85aa86a.s3-website-us-west-2.amazonaws.com"
@@ -78,7 +78,7 @@ Resources:
 
 Duration: 3s
 
-The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained.
 If you want to remove the stack completely, run 'pulumi stack rm dev'.
 Stack successfully destroyed
 ```

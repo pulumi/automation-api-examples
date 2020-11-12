@@ -1,6 +1,6 @@
 # Pulumi Over HTTP - Static Websites as a RESTful API
 
-This application demonstrates how to run Automation API in an HTTP server to expose infrastructure as RESTful resources. In our case, we've defined and exposed a static website `site` that exposes all of the `CRUD` operations plus list. Users can hit our REST endpoint and create custom static websites by specifying the `content` field in the `POST` body. All of our infrastructure is defined in `inline` programs that are constructed and altered on the fly based on input parsed from user specified `POST` bodies. Be sure to read through the handlers to see how Automation API detect structured error cases such as update conflics (409), and missing stacks (404). 
+This application demonstrates how to run Automation API in an HTTP server to expose infrastructure as RESTful resources. In our case, we've defined and exposed a static website `site` that exposes all of the `CRUD` operations plus list. Users can hit our REST endpoint and create custom static websites by specifying the `content` field in the `POST` body. All of our infrastructure is defined in `inline` programs that are constructed and altered on the fly based on input parsed from user-specified `POST` bodies. Be sure to read through the handlers to see how Automation API detect structured error cases such as update conflicts (409), and missing stacks (404).
 
 To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
@@ -17,15 +17,15 @@ Updating (hello)
 View Live: https://app.pulumi.com/EvanBoyle/pulumi_over_http/hello/updates/1
 
 
- +  pulumi:pulumi:Stack pulumi_over_http-hello creating 
- +  aws:s3:Bucket s3-website-bucket creating 
- +  aws:s3:Bucket s3-website-bucket created 
- +  aws:s3:BucketObject index creating 
- +  aws:s3:BucketPolicy bucketPolicy creating 
- +  aws:s3:BucketObject index created 
- +  aws:s3:BucketPolicy bucketPolicy created 
- +  pulumi:pulumi:Stack pulumi_over_http-hello created 
- 
+ +  pulumi:pulumi:Stack pulumi_over_http-hello creating
+ +  aws:s3:Bucket s3-website-bucket creating
+ +  aws:s3:Bucket s3-website-bucket created
+ +  aws:s3:BucketObject index creating
+ +  aws:s3:BucketPolicy bucketPolicy creating
+ +  aws:s3:BucketObject index created
+ +  aws:s3:BucketPolicy bucketPolicy created
+ +  pulumi:pulumi:Stack pulumi_over_http-hello created
+
 Outputs:
     websiteUrl: "s3-website-bucket-549d9d3.s3-website-us-west-2.amazonaws.com"
 

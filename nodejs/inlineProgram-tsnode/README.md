@@ -1,11 +1,11 @@
 # Inline Program
 
-This program demonstrates how use automation API with an `inline` Pulumi program. Unline traditional Pulumi programs, inline functions don't require a seperate package on disk, with an `index.ts` and `Pulumi.yaml`. Inline programs are just functions, can can be authored in the same `index.ts` or be imported from anther package. This example deploys an AWS S3 website, with all the context and deployment automation defined in a single file.
+This program demonstrates how to use Automation API with an `inline` Pulumi program. Unlike traditional Pulumi programs, inline functions don't require a separate package on disk, with an `index.ts` and `Pulumi.yaml`. Inline programs are just functions, can be authored in the same `index.ts` or be imported from another package. This example deploys an AWS S3 website, with all the context and deployment automation defined in a single file.
 
-This example also has a VSCode debug configuration that enables setting breakpoints within both the Automation API code, and things like `.apply` calls within the Pulumi program.
+This example has a VSCode debug configuration that enables setting breakpoints within both the Automation API code, and things like `.apply` calls within the Pulumi program.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later) 
+1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. install deps: `yarn install`
 
@@ -30,7 +30,7 @@ View Live: https://app.pulumi.com/EvanBoyle/inlineNode/dev/updates/23
 
 
 
- 
+
 
 refresh complete
 updating stack...
@@ -42,18 +42,18 @@ View Live: https://app.pulumi.com/EvanBoyle/inlineNode/dev/updates/24
 
 
 
- +  pulumi:pulumi:Stack inlineNode-dev creating 
+ +  pulumi:pulumi:Stack inlineNode-dev creating
 
- +  aws:s3:Bucket s3-website-bucket creating 
+ +  aws:s3:Bucket s3-website-bucket creating
 
- +  aws:s3:Bucket s3-website-bucket created 
+ +  aws:s3:Bucket s3-website-bucket created
 
- +  aws:s3:BucketPolicy bucketPolicy creating 
+ +  aws:s3:BucketPolicy bucketPolicy creating
 
- +  aws:s3:BucketPolicy bucketPolicy created 
+ +  aws:s3:BucketPolicy bucketPolicy created
 
- +  pulumi:pulumi:Stack inlineNode-dev created 
- 
+ +  pulumi:pulumi:Stack inlineNode-dev created
+
 
 Outputs:
     websiteUrl: "s3-website-bucket-c18c31c.s3-website-us-west-2.amazonaws.com"
@@ -64,7 +64,7 @@ Resources:
 Duration: 6s
 
 
-update summary: 
+update summary:
 {
     "create": 3
 }
@@ -92,20 +92,20 @@ View Live: https://app.pulumi.com/EvanBoyle/inlineNode/dev/updates/25
 
 
 
- ~  pulumi:pulumi:Stack inlineNode-dev refreshing 
+ ~  pulumi:pulumi:Stack inlineNode-dev refreshing
 
-    pulumi:pulumi:Stack inlineNode-dev running 
+    pulumi:pulumi:Stack inlineNode-dev running
 
- ~  aws:s3:BucketPolicy bucketPolicy refreshing 
+ ~  aws:s3:BucketPolicy bucketPolicy refreshing
 
- ~  aws:s3:Bucket s3-website-bucket refreshing 
+ ~  aws:s3:Bucket s3-website-bucket refreshing
 
  ~  aws:s3:BucketPolicy bucketPolicy updated [diff: ~policy]
 
     aws:s3:Bucket s3-website-bucket  [diff: +accelerationStatus,arn,corsRules,grants,hostedZoneId,lifecycleRules,loggings,requestPayer,tags,versioning,websiteDomain,websiteEndpoint~website]
 
-    pulumi:pulumi:Stack inlineNode-dev  
- 
+    pulumi:pulumi:Stack inlineNode-dev
+
 
 Outputs:
     websiteUrl: "s3-website-bucket-c18c31c.s3-website-us-west-2.amazonaws.com"
@@ -127,18 +127,18 @@ View Live: https://app.pulumi.com/EvanBoyle/inlineNode/dev/updates/26
 
 
 
- -  aws:s3:BucketPolicy bucketPolicy deleting 
+ -  aws:s3:BucketPolicy bucketPolicy deleting
 
- -  aws:s3:BucketPolicy bucketPolicy deleted 
+ -  aws:s3:BucketPolicy bucketPolicy deleted
 
- -  aws:s3:Bucket s3-website-bucket deleting 
+ -  aws:s3:Bucket s3-website-bucket deleting
 
- -  aws:s3:Bucket s3-website-bucket deleted 
+ -  aws:s3:Bucket s3-website-bucket deleted
 
- -  pulumi:pulumi:Stack inlineNode-dev deleting 
+ -  pulumi:pulumi:Stack inlineNode-dev deleting
 
- -  pulumi:pulumi:Stack inlineNode-dev deleted 
- 
+ -  pulumi:pulumi:Stack inlineNode-dev deleted
+
 
 Outputs:
   - websiteUrl: "s3-website-bucket-c18c31c.s3-website-us-west-2.amazonaws.com"
@@ -149,7 +149,7 @@ Resources:
 Duration: 3s
 
 
-The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained.
 If you want to remove the stack completely, run 'pulumi stack rm dev'.
 
 stack destroy complete
