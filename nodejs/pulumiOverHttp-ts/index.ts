@@ -1,3 +1,4 @@
+import {ComponentResource, ComponentResourceOptions, Output} from "@pulumi/pulumi";
 import {
     LocalWorkspace,
     ConcurrentUpdateError,
@@ -8,55 +9,160 @@ import { s3 } from "@pulumi/aws";
 import { PolicyDocument } from "@pulumi/aws/iam";
 import * as express from "express";
 import { autoscaling } from "@pulumi/aws/types/enums";
+import * as gcp from '@pulumi/gcp'
+import * as pulumi from '@pulumi/pulumi'
 
 const projectName = "pulumi_over_http";
 
 // this function defines our pulumi S3 static website in terms of the content that the caller passes in.
 // this allows us to dynamically deploy websites based on user defined values from the POST body.
 const createPulumiProgram = (content: string) => async () => {
-    // Create a bucket and expose a website index document
-    const siteBucket = new s3.Bucket("s3-website-bucket", {
-        website: {
-            indexDocument: "index.html",
-        },
-    });
 
-    // here our HTML is defined based on what the caller curries in.
-    const indexContent = content;
+    // Create a GCP cluster Resource
+    class ClusterResource extends ComponentResource {
+        public kubeconfig: Output<string>;
 
-    // write our index.html into the site bucket
-    let object = new s3.BucketObject("index", {
-        bucket: siteBucket,
-        content: indexContent,
-        contentType: "text/html; charset=utf-8",
-        key: "index.html"
-    });
+        constructor(
+          name: string,
+          settings: {
+              provider: string;
+              region: string;
+              size: string;
+          },
+          opts: ComponentResourceOptions = {}
+        ) {
+            super('bpaas:cluster', name, {}, { ...opts });
+            const { provider, region, size } = settings;
 
-    // Create an S3 Bucket Policy to allow public read of all objects in bucket
-    function publicReadPolicyForBucket(bucketName): PolicyDocument {
-        return {
-            Version: "2012-10-17",
-            Statement: [{
-                Effect: "Allow",
-                Principal: "*",
-                Action: [
-                    "s3:GetObject"
-                ],
-                Resource: [
-                    `arn:aws:s3:::${bucketName}/*` // policy refers to bucket name explicitly
-                ]
-            }]
-        };
+            switch (provider) {
+                case 'GKE': {
+                    this.gkeCluster(name, region, size);
+                    break;
+                }
+                default: {
+                    throw new Error(`Unknown cluster provider! ${provider}`);
+                }
+            }
+        }
+
+        private gkeCluster(name: string, region: string, size: string) {
+            // Find the latest GKE Version
+            const engineVersion = gcp.container.getEngineVersions().then((v) => v.latestMasterVersion);
+            // Build the GKE cluster
+            const cluster = new gcp.container.Cluster(
+              name,
+              {
+                  location: region,
+                  minMasterVersion: engineVersion,
+                  nodeVersion: engineVersion,
+                  nodePools: [
+                      {
+                          nodeConfig: {
+                              machineType: 'e2-standard-2',
+                              diskType: 'pd-ssd',
+                              diskSizeGb: 20,
+                              shieldedInstanceConfig: {
+                                  enableIntegrityMonitoring: true,
+                              },
+                              oauthScopes: [
+                                  'https://www.googleapis.com/auth/compute',
+                                  'https://www.googleapis.com/auth/devstorage.read_only',
+                                  'https://www.googleapis.com/auth/logging.write',
+                                  'https://www.googleapis.com/auth/monitoring',
+                              ],
+                          },
+                          autoscaling: {
+                              minNodeCount: 1,
+                              maxNodeCount: 2,
+                          },
+                          initialNodeCount: 1,
+                          management: {
+                              autoUpgrade: true,
+                              autoRepair: true,
+                          },
+                          upgradeSettings: {
+                              maxSurge: 2,
+                              maxUnavailable: 1,
+                          },
+                      },
+                  ],
+                  addonsConfig: {
+                      httpLoadBalancing: {
+                          disabled: false,
+                      },
+                      horizontalPodAutoscaling: {
+                          disabled: true,
+                      },
+                      dnsCacheConfig: {
+                          enabled: false,
+                      },
+                  },
+                  clusterAutoscaling: {
+                      enabled: false,
+                      autoscalingProfile: 'OPTIMIZE_UTILIZATION',
+                  },
+                  verticalPodAutoscaling: {
+                      enabled: true,
+                  },
+                  enableShieldedNodes: true,
+                  clusterTelemetry: {
+                      type: 'ENABLED',
+                  },
+                  masterAuth: {
+                      clientCertificateConfig: {
+                          issueClientCertificate: true,
+                      },
+                  },
+              },
+              {
+                  ignoreChanges: ['initialNodeCount'],
+                  parent: this,
+              }
+            );
+            // Manufacture a GKE-style kubeconfig. Note that this is slightly "different"
+            // because of the way GKE requires gcloud to be in the picture for cluster
+            // authentication (rather than using the client cert/key directly).
+            this.kubeconfig = pulumi.all([cluster.name, cluster.endpoint, cluster.masterAuth]).apply(
+              ([name, endpoint, masterAuth]) => {
+                  const context = `${name}_${region}`;
+                  return `apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: ${masterAuth.clusterCaCertificate}
+    server: https://${endpoint}
+  name: ${context}
+contexts:
+- context:
+    cluster: ${context}
+    user: ${context}
+  name: ${context}
+current-context: ${context}
+kind: Config
+preferences: {}
+users:
+- name: ${context}
+  user:
+    auth-provider:
+      config:
+        cmd-args: config config-helper --format=json
+        cmd-path: gcloud
+        expiry-key: '{.credential.token_expiry}'
+        token-key: '{.credential.access_token}'
+      name: gcp
+`;
+              }
+            );
+        }
     }
 
-    // Set the access policy for the bucket so all objects are readable
-    let bucketPolicy = new s3.BucketPolicy("bucketPolicy", {
-        bucket: siteBucket.bucket, // refer to the bucket created earlier
-        policy: siteBucket.bucket.apply(publicReadPolicyForBucket) // use output property `siteBucket.bucket`
-    });
+    const cluster = new ClusterResource('pulumitest', {
+        provider: 'GKE',
+        region: 'europe-west1-b',
+        size: 'SMALL'
+    })
 
     return {
-        websiteUrl: siteBucket.websiteEndpoint,
+        kubeconfig: cluster.kubeconfig,
     };
 };
 // creates new sites
