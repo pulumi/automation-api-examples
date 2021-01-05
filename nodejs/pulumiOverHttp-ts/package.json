@@ -8,6 +8,7 @@
   "dependencies": {
     "@pulumi/aws": "^3.22.1",
     "@pulumi/gcp": "^4.6.0",
+    "@pulumi/kubernetes": "^2.7.5",
     "@pulumi/pulumi": "^2.16.2",
     "@types/express": "^4.17.9",
     "@types/node": "^14.14.20",

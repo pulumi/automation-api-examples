@@ -14,6 +14,7 @@ import { PolicyDocument } from "@pulumi/aws/iam";
 import * as express from "express";
 import { autoscaling } from "@pulumi/aws/types/enums";
 import * as gcp from "@pulumi/gcp";
+import * as k8s from "@pulumi/kubernetes";
 import * as pulumi from "@pulumi/pulumi";
 
 const projectName = "pulumi_over_http";
@@ -21,7 +22,6 @@ const projectName = "pulumi_over_http";
 // this function defines our pulumi S3 static website in terms of the content that the caller passes in.
 // this allows us to dynamically deploy websites based on user defined values from the POST body.
 const createPulumiProgram = (content: string) => async () => {
-  // Create a GCP cluster Resource
   class ClusterResource extends ComponentResource {
     public kubeconfig: Output<string>;
 
@@ -159,6 +159,134 @@ users:
         });
     }
   }
+  class NginxIngressResource extends ComponentResource {
+    public ingressEndpoint: pulumi.Output<string>;
+
+    constructor(
+      name: string,
+      namespace: string,
+      opts: pulumi.ComponentResourceOptions = {}
+    ) {
+      super("launchpad:chart:nginx-ingress", name, {}, { ...opts });
+
+      const settings = {
+        chart: "ingress-nginx",
+        version: "3.15.2",
+        fetchOpts: {
+          repo: "https://kubernetes.github.io/ingress-nginx",
+        },
+        namespace: namespace,
+        values: {
+          controller: {
+            config: {
+              "nginx-status-ipv4-whitelist": "0.0.0.0",
+              "http-snippet": `
+                  server {
+                      listen 18080;
+                      location /nginx_status {
+                          allow all;
+                          stub_status on;
+                      }
+                      location / {
+                          return 404;
+                      }
+                  }`,
+            },
+            podLabels: {
+              "tags.datadoghq.com/env": namespace,
+              "tags.datadoghq.com/service": "nginx-ingress",
+              "tags.datadoghq.com/version": "3.15.2",
+            },
+            scope: {
+              enabled: false,
+            },
+            extraEnvs: [
+              {
+                name: "DD_ENV",
+                valueFrom: {
+                  fieldRef: {
+                    fieldPath: `metadata.labels['tags.datadoghq.com/env']`,
+                  },
+                },
+              },
+              {
+                name: "DD_SERVICE",
+                valueFrom: {
+                  fieldRef: {
+                    fieldPath: `metadata.labels['tags.datadoghq.com/service']`,
+                  },
+                },
+              },
+              {
+                name: "DD_VERSION",
+                valueFrom: {
+                  fieldRef: {
+                    fieldPath: `metadata.labels['tags.datadoghq.com/version']`,
+                  },
+                },
+              },
+            ],
+            extraArgs: {
+              "default-ssl-certificate": `${namespace}/wildcard-ssl`,
+            },
+            annotations: {
+              "ad.datadoghq.com/controller.check_names": `["nginx","nginx_ingress_controller"]`,
+              "ad.datadoghq.com/controller.init_configs": `[{},{}]`,
+              "ad.datadoghq.com/controller.instances": `[{"nginx_status_url": "http://%%host%%:18080/nginx_status"},{"prometheus_url": "http://%%host%%:10254/metrics"}]`,
+              "ad.datadoghq.com/controller.logs": `[{"service": "controller", "source": "nginx-ingress-controller"}]`,
+            },
+            podAnnotations: {
+              "ad.datadoghq.com/controller.check_names": `["nginx","nginx_ingress_controller"]`,
+              "ad.datadoghq.com/controller.init_configs": `[{},{}]`,
+              "ad.datadoghq.com/controller.instances": `[{"nginx_status_url": "http://%%host%%:18080/nginx_status"},{"prometheus_url": "http://%%host%%:10254/metrics"}]`,
+              "ad.datadoghq.com/controller.logs": `[{"service": "controller", "source": "nginx-ingress-controller"}]`,
+            },
+            replicaCount: 2,
+            metrics: {
+              enabled: true,
+            },
+            admissionWebhooks: {
+              enabled: false,
+            },
+          },
+        },
+      };
+
+      const nginxIngress = new k8s.helm.v3.Chart(name, settings, {
+        provider: opts.provider,
+        parent: this,
+        ignoreChanges: ["status", "metadata"],
+      });
+
+      const controllerService = nginxIngress.getResource(
+        "v1/Service",
+        settings.namespace,
+        `${settings.namespace}-nginx-ingress-ingress-nginx-controller`
+      );
+
+      this.ingressEndpoint = controllerService.status.apply(
+        (status) =>
+          status.loadBalancer.ingress[0].ip ??
+          status.loadBalancer.ingress[0].hostname
+      );
+    }
+  }
+  class SharedResource extends ComponentResource {
+    constructor(name: string, opts: ComponentResourceOptions = {}) {
+      super("bpaas:shared", name, {}, { ...opts });
+
+      const namespace = new k8s.core.v1.Namespace(
+        `${name}-namespace`,
+        { metadata: { name: name } },
+        { provider: opts.provider, parent: this }
+      );
+
+      const ingress = new NginxIngressResource(`${name}-nginx-ingress`, name, {
+        provider: opts.provider,
+        parent: namespace,
+      });
+    }
+  }
 
   const cluster = new ClusterResource("pulumitest", {
     provider: "GKE",
@@ -166,8 +294,17 @@ users:
     size: "SMALL",
   });
 
+  const provider = new k8s.Provider("k8s", { kubeconfig: cluster.kubeconfig });
+
+  const shared = new SharedResource("pulumitest", {
+    parent: cluster,
+    provider: provider,
+  });
+
   return {
     kubeconfig: cluster.kubeconfig,
+    provider,
+    shared,
   };
 };
 // creates new sites
@@ -185,7 +322,7 @@ const createHandler: express.RequestHandler = async (req, res) => {
     await stack.setConfig("aws:region", { value: "us-west-2" });
     // deploy the stack, tailing the logs to console
     const upRes = await stack.up({ onOutput: console.info });
-    res.json({ id: stackName, kubeconfig: upRes.outputs.kubeconfig });
+    res.json({ id: stackName, outputs: upRes.outputs });
   } catch (e) {
     if (e instanceof StackAlreadyExistsError) {
       res.status(409).send(`stack "${stackName}" already exists`);
