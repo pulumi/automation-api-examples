@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Load the AWS credentials
-. env.vars
-
 echo '-----------------------------------------------'
 echo '| Create and update the stack                 |'
 echo '-----------------------------------------------'
