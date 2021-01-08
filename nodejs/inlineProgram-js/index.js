@@ -24,7 +24,7 @@ const run = async () => {
 </body></html>
 `
         // write our index.html into the site bucket
-        let object = new s3.BucketObject("index", {
+        let object = new aws.s3.BucketObject("index", {
             bucket: siteBucket,
             content: indexContent,
             contentType: "text/html; charset=utf-8",

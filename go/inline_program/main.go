@@ -24,7 +24,7 @@ func main() {
 
 	// define our program that creates our pulumi resources.
 	// we refer to this style as "inline" pulumi programs where both program + automation can be compiled in the same
-	// binary. no need for sepearate projects.
+	// binary. no need for separate projects.
 	deployFunc := func(ctx *pulumi.Context) error {
 		// similar go git_repo_program, our program defines a s3 website.
 		// here we create the bucket
