@@ -1,0 +1,3 @@
+name: automationS3website
+runtime: nodejs
+description: Pulumi project to set up S3 website
