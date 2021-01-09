@@ -40,3 +40,4 @@ Example  | Toolchain | Description |
 Example  | Description |
 --------- | --------- |
 [Inline Program](python/inline_program) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a single `main.py` and support full debugging capabilities. In this demo we deploy the same static S3 website adapted from the [Pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-py-s3-folder).
+[Cross-Language Program](python/cross_language) | This example shows how to use Automation API in `python` with an existing traditional CLI-driven Pulumi program written in a __different__ language, in this case `go`. We add an Automation API deployment program to our Fargate program that deploys a web service via a Fargate task behind a load balancer.

@@ -13,7 +13,7 @@ First, set up your virtual environment:
 2. ```shell
    $ venv/bin/python3 -m pip install --upgrade pip
    ```
-2. ```shell
+3. ```shell
    $ venv/bin/pip install -r requirements.txt
    ```
    
