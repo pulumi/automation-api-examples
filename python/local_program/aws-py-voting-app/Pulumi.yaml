@@ -1,0 +1,11 @@
+name: voting-app
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Voting app that uses containers
+template:
+  config:
+    aws:region:
+      description: The AWS region to deploy into
+      default: us-west-2

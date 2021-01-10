@@ -1,6 +1,6 @@
 # Inline Program
 
-This program demonstrates how use Automation API with an `inline` Pulumi program. Unlike traditional Pulumi programs, inline functions don't require a separate package on disk, with a `__main__.py` and `Pulumi.yaml`. Inline programs are just functions, can be authored in the same python file or be imported from anther package. This example deploys an AWS S3 website, with all the context and deployment automation defined in a single file.
+This program demonstrates how to use Automation API with an `inline` Pulumi program. Unlike traditional Pulumi programs, inline functions don't require a separate package on disk, with a `__main__.py` and `Pulumi.yaml`. Inline programs are just functions, can be authored in the same python file or be imported from anther package. This example deploys an AWS S3 website, with all the context and deployment automation defined in a single file.
 
 To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
@@ -16,12 +16,11 @@ First, set up your virtual environment:
 3. ```shell
    $ venv/bin/pip install -r requirements.txt
    ```
-   
 
 Running this program is just like any other Python program. No invocation through the Pulumi CLI required:
 
 ```shell
-$ python main.py
+$ venv/bin/python main.py
 Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin
@@ -58,7 +57,7 @@ URL: s3-website-bucket-bf7e357.s3-website-us-west-2.amazonaws.com
 To destroy the stack when you're done, invoke the program with an additional `destroy` argument:
 
 ```shell
-$ python main.py destroy
+$ venv/bin/python main.py destroy
 Created/Selected stack "dev"
 Installing the AWS plugin
 Successfully installed AWS plugin

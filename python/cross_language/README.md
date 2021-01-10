@@ -25,7 +25,7 @@ To run our automation program we `cd` to the `automation` directory, set up our 
    $ venv/bin/pip install -r requirements.txt
    ```
 4. ```shell
-   $ python main.py
+   $ venv/bin/python main.py
    successfully initialized stack
     setting up config
     config set
@@ -118,7 +118,7 @@ To run our automation program we `cd` to the `automation` directory, set up our 
 To destroy our stack, we run our automation program with an additional `destroy` argument:
 
 ```shell
-$ python main.py destroy
+$ venv/bin/python main.py destroy
 successfully initialized stack
 setting up config
 config set
