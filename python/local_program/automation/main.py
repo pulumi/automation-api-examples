@@ -23,7 +23,7 @@ subprocess.run([os.path.join("venv", "bin", "pip"), "install", "-r", "requiremen
 print("virtual environment is ready!")
 
 # Create our stack using a local program in the ../aws-py-voting-app directory
-stack = auto.LocalWorkspace.create_or_select_stack(stack_name="dev", work_dir=work_dir)
+stack = auto.create_or_select_stack(stack_name="dev", work_dir=work_dir)
 print("successfully initialized stack")
 
 print("setting up config")

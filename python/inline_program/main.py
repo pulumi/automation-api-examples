@@ -56,9 +56,9 @@ stack_name = "dev"
 
 # create or select a stack matching the specified name and project.
 # this will set up a workspace with everything necessary to run our inline program (pulumi_program)
-stack = auto.LocalWorkspace.create_or_select_stack(stack_name=stack_name,
-                                                   project_name=project_name,
-                                                   program=pulumi_program)
+stack = auto.create_or_select_stack(stack_name=stack_name,
+                                    project_name=project_name,
+                                    program=pulumi_program)
 
 print("successfully initialized stack")
 

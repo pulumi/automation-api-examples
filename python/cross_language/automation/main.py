@@ -14,7 +14,7 @@ stack_name = "dev"
 work_dir = os.path.join(os.path.dirname(__file__), "..", "fargate")
 
 # Create our stack using a local program in the ../fargate directory
-stack = auto.LocalWorkspace.create_or_select_stack(stack_name="dev", work_dir=work_dir)
+stack = auto.create_or_select_stack(stack_name="dev", work_dir=work_dir)
 print("successfully initialized stack")
 
 print("setting up config")

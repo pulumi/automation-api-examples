@@ -68,9 +68,9 @@ project_name = "database_migration"
 stack_name = "dev"
 
 # create (or select if one already exists) a stack that uses our inline program
-stack = auto.LocalWorkspace.create_or_select_stack(stack_name=stack_name,
-                                                   project_name=project_name,
-                                                   program=pulumi_program)
+stack = auto.create_or_select_stack(stack_name=stack_name,
+                                    project_name=project_name,
+                                    program=pulumi_program)
 
 print("successfully initialized stack")
 
