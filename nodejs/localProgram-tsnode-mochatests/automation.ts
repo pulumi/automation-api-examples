@@ -39,4 +39,4 @@ export async function getOuputs(): Promise<OutputMap> {
   return outputs;
 }
 
-export default {run, getOuputs};
+export default {deploy, getOuputs};
