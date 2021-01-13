@@ -77,7 +77,7 @@ func main() {
 
 		// provision our db
 		cluster, err := rds.NewCluster(ctx, "db", &rds.ClusterArgs{
-			Engine:              pulumi.String("aurora-mysql"),
+			Engine:              rds.EngineTypeAuroraMysql,
 			EngineVersion:       pulumi.String("5.7.mysql_aurora.2.03.2"),
 			DatabaseName:        dbName,
 			MasterUsername:      dbUser,
@@ -92,8 +92,8 @@ func main() {
 
 		_, err = rds.NewClusterInstance(ctx, "dbInstance", &rds.ClusterInstanceArgs{
 			ClusterIdentifier:  cluster.ClusterIdentifier,
-			InstanceClass:      pulumi.String("db.t3.small"),
-			Engine:             pulumi.String("aurora-mysql"),
+			InstanceClass:      rds.InstanceType_T3_Small,
+			Engine:             rds.EngineTypeAuroraMysql,
 			EngineVersion:      pulumi.String("5.7.mysql_aurora.2.03.2"),
 			PubliclyAccessible: pulumi.Bool(true),
 			DbSubnetGroupName:  subnetGroup.Name,
@@ -127,7 +127,7 @@ func main() {
 	fmt.Println("Installing the AWS plugin")
 
 	// for inline source programs, we must manage plugins ourselves
-	err = w.InstallPlugin(ctx, "aws", "v3.2.1")
+	err = w.InstallPlugin(ctx, "aws", "v3.23.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)

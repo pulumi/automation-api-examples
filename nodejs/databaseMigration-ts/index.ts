@@ -49,10 +49,10 @@ const run = async () => {
 
         // provision our db
         const cluster = new aws.rds.Cluster("db", {
-            engine: "aurora-mysql",
+            engine: aws.rds.EngineType.AuroraMysql,
             engineVersion: "5.7.mysql_aurora.2.03.2",
-            databaseName: dbUser,
-            masterUsername: dbName,
+            databaseName: dbName,
+            masterUsername: dbUser,
             masterPassword: dbPass,
             skipFinalSnapshot: true,
             dbSubnetGroupName: subnetGroup.name,
@@ -61,8 +61,8 @@ const run = async () => {
 
         const clusterInstance = new aws.rds.ClusterInstance("dbInstance", {
             clusterIdentifier: cluster.clusterIdentifier,
-            instanceClass: "db.t3.small",
-            engine: "aurora-mysql",
+            instanceClass: aws.rds.InstanceType.T3_Small,
+            engine: aws.rds.EngineType.AuroraMysql,
             engineVersion: "5.7.mysql_aurora.2.03.2",
             publiclyAccessible: true,
             dbSubnetGroupName: subnetGroup.name,
@@ -91,7 +91,7 @@ const run = async () => {
     await stack.workspace.installPlugin("aws", "v3.6.1");
     console.info("plugins installed");
     console.info("setting up config");
-    await stack.setConfig("aws:region", { value: "us-west-2" });
+    await stack.setConfig("aws:region", { value: aws.Region.USWest2 });
     console.info("config set");
     console.info("refreshing stack...");
     await stack.refresh({ onOutput: console.info });
@@ -147,7 +147,7 @@ const run = async () => {
         if (error) throw error;
         console.log("rows inserted!")
         console.log('Result: ', JSON.stringify(results));
-        console.log("querying to veryify data...")
+        console.log("querying to verify data...")
     });
 
     
@@ -155,7 +155,7 @@ const run = async () => {
     connection.query(`SELECT COUNT(*) FROM hello_pulumi;`, function (error, results, fields) {
         if (error) throw error;
         console.log('Result: ', JSON.stringify(results));
-        console.log("database, tables, and rows successfuly configured!")
+        console.log("database, tables, and rows successfully configured!")
     });
 
     connection.end();
