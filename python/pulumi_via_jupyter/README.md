@@ -4,6 +4,15 @@ This project explores running Pulumi through a Jupyter Notebook.
 
 ![screenshot](notebook-screenshot.png)
 
+### Notebooks
+
+This example contains two notebooks:
+
+1. `automation_api.ipynb`: (est. runtime 3 minutes) A simple overview of Automation API that demonstrates doing a basic deployment of a static website from within a Jupyter notebook. 
+2. `database_migration.ipynb`: (est. runtime 15 minutes) Set up data science infrastructure from your notebook. We create an AWS RDS SQL database, configure the schema, and load data.
+
+### Requirements
+
 To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
