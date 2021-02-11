@@ -2,10 +2,10 @@
 
 This repo provides full end to end examples and walk-throughs for the Pulumi Automation API. The Automation API is available in preview for `Go`, `Node.js` and `Python` with support for [`C#`](https://github.com/pulumi/pulumi/compare/auto/dotnet) under active development.
 
-Full docs for can be found here:
+Full docs for automation API can be found here:
 - [Go](https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v2/go/x/auto?tab=doc)
 - [Node.js](https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/pulumi/x/automation/)
-- Python [Coming soon] (see [examples](#python-examples) below)
+- [Python](https://www.pulumi.com/docs/reference/pkg/python/pulumi/#module-pulumi.x.automation)
 
 ## Content
 
@@ -45,3 +45,4 @@ Example  | Description |
 [Database Migration](python/database_migration) | This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single program using an `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
 [Local Program](python/local_program) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven app described in the [aws-py-voting-app](https://github.com/pulumi/examples/tree/master/aws-py-voting-app) example.
 [Pulumi Over HTTP - Infra as RESTful resources](python/pulumi_over_http) | This application demonstrates how to run Automation API in an HTTP server to expose infrastructure as RESTful resources. In our case, we've defined and exposed a static website `site` that exposes all of the `CRUD` operations plus list. Users can hit our REST endpoint and create custom static websites by specifying the `content` field in the `POST` body. All of our infrastructure is defined in `inline` programs that are constructed and altered on the fly based on input parsed from user specified `POST` bodies.
+[Pulumi Via Jupyter](python/pulumi_via_jupyter) | This example explores running Pulumi through a Jupyter Notebook.
