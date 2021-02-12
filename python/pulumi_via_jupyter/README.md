@@ -2,7 +2,9 @@
 
 This project explores running Pulumi through a Jupyter Notebook.
 
-![screenshot](notebook-screenshot.png)
+### Demo
+
+![demo](auto-api.gif)
 
 ### Notebooks
 
