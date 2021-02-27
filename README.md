@@ -46,3 +46,10 @@ Example  | Description |
 [Local Program](python/local_program) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven app described in the [aws-py-voting-app](https://github.com/pulumi/examples/tree/master/aws-py-voting-app) example.
 [Pulumi Over HTTP - Infra as RESTful resources](python/pulumi_over_http) | This application demonstrates how to run Automation API in an HTTP server to expose infrastructure as RESTful resources. In our case, we've defined and exposed a static website `site` that exposes all of the `CRUD` operations plus list. Users can hit our REST endpoint and create custom static websites by specifying the `content` field in the `POST` body. All of our infrastructure is defined in `inline` programs that are constructed and altered on the fly based on input parsed from user specified `POST` bodies.
 [Pulumi Via Jupyter](python/pulumi_via_jupyter) | This example explores running Pulumi through a Jupyter Notebook.
+
+### .NET Examples
+
+Example  | Description |
+--------- | --------- |
+[Inline Program](dotnet/InlineProgram) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a .NET console application and support full debugging capabilities. In this demo we deploy the same static C3 website adapted from the [Pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-py-s3-folder).
+[Cross-Language Program](dotnet/CrossLanguage) | This example shows how to use Automation API in `dotnet` with an existing traditional CLI-driven Pulumi program written in a __different__ language, in this case `go`. We add an Automation API deployment program to our Fargate program that deploys a web service via a Fargate task behind a load balancer.

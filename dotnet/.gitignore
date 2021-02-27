@@ -1,0 +1,28 @@
+
+# Visual Studio temp something
+.vs/
+
+# dotnet stuff
+project.lock.json
+
+# VS 2015+
+*.vc.vc.opendb
+*.vc.db
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
