@@ -52,4 +52,5 @@ Example  | Description |
 Example  | Description |
 --------- | --------- |
 [Inline Program](dotnet/InlineProgram) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a .NET console application and support full debugging capabilities. In this demo we deploy the same static C3 website adapted from the [Pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-py-s3-folder).
+[Local Program](dotnet/LocalProgram) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven S3 website program.
 [Cross-Language Program](dotnet/CrossLanguage) | This example shows how to use Automation API in `dotnet` with an existing traditional CLI-driven Pulumi program written in a __different__ language, in this case `go`. We add an Automation API deployment program to our Fargate program that deploys a web service via a Fargate task behind a load balancer.

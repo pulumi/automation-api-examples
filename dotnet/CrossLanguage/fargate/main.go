@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/base64"
 	"fmt"
-	"path/filepath"
 	"strings"
 
 	"github.com/pulumi/pulumi-aws/sdk/v3/go/aws/ec2"
@@ -139,7 +138,7 @@ func main() {
 
 		image, err := docker.NewImage(ctx, "my-image", &docker.ImageArgs{
 			Build: docker.DockerBuildArgs{
-				Context: pulumi.String(filepath.Join("..", "app")),
+				Context: pulumi.String("app"),
 			},
 			ImageName: repo.RepositoryUrl,
 			Registry: docker.ImageRegistryArgs{

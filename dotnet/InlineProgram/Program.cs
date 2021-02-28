@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Pulumi;
 using Pulumi.Automation;
 
 namespace InlineProgram
@@ -35,29 +36,39 @@ namespace InlineProgram
 ";
 
                 // write our index.html into the site bucket
-                new Pulumi.Aws.S3.BucketObject(
+                var @object = new Pulumi.Aws.S3.BucketObject(
                     "index",
                     new Pulumi.Aws.S3.BucketObjectArgs
                     {
-                        Bucket = siteBucket.Id, // reference to the s3 bucket object
+                        Bucket = siteBucket.BucketName, // reference to the s3 bucket object
                         Content = indexContent,
                         Key = "index.html", // set the key of the object
                         ContentType = "text/html; charset=utf-8", // set the MIME type of the file
                     });
 
-                var bucketPolicy = siteBucket.Arn.Apply(bucketArn =>
+                var bucketPolicyDocument = siteBucket.Arn.Apply(bucketArn =>
                 {
-                    return $@"
-{{
-    ""Version"": ""2012-10-17"",
-    ""Statement"": {{
-        ""Effect"": ""Allow"",
-        ""Principal"": ""*"",
-        ""Action"": [""s3:GetObject""],
-        ""Resource"": ""{bucketArn}/*""
-    }}
-}}
-";
+                    return Output.Create(Pulumi.Aws.Iam.GetPolicyDocument.InvokeAsync(
+                        new Pulumi.Aws.Iam.GetPolicyDocumentArgs
+                        {
+                            Statements = new List<Pulumi.Aws.Iam.Inputs.GetPolicyDocumentStatementArgs>
+                            {
+                                new Pulumi.Aws.Iam.Inputs.GetPolicyDocumentStatementArgs
+                                {
+                                    Effect = "Allow",
+                                    Principals = new List<Pulumi.Aws.Iam.Inputs.GetPolicyDocumentStatementPrincipalArgs>
+                                    {
+                                        new Pulumi.Aws.Iam.Inputs.GetPolicyDocumentStatementPrincipalArgs
+                                        {
+                                            Identifiers = new List<string> { "*" },
+                                            Type = "AWS",
+                                        },
+                                    },
+                                    Actions = new List<string> { "s3:GetObject" },
+                                    Resources = new List<string> { $"{bucketArn}/*" },
+                                },
+                            },
+                        }));
                 });
 
                 // set the access policy for the bucket so all objects are readable
@@ -65,8 +76,8 @@ namespace InlineProgram
                     "bucket-policy",
                     new Pulumi.Aws.S3.BucketPolicyArgs
                     {
-                        Bucket = siteBucket.Id,
-                        Policy = bucketPolicy,
+                        Bucket = siteBucket.BucketName,
+                        Policy = bucketPolicyDocument.Apply(x => x.Json),
                     });
 
                 // export the website url
