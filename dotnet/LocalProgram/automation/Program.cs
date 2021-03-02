@@ -33,19 +33,19 @@ namespace LocalProgram
             Console.WriteLine("config set");
 
             Console.WriteLine("refreshing stack...");
-            await stack.RefreshAsync(new RefreshOptions { OnOutput = (str) => Console.WriteLine(str) });
+            await stack.RefreshAsync(new RefreshOptions { OnOutput = Console.WriteLine });
             Console.WriteLine("refresh complete");
 
             if (destroy)
             {
                 Console.WriteLine("destroying stack...");
-                await stack.DestroyAsync(new DestroyOptions { OnOutput = (str) => Console.WriteLine(str) });
+                await stack.DestroyAsync(new DestroyOptions { OnOutput = Console.WriteLine });
                 Console.WriteLine("stack destroy complete");
             }
             else
             {
                 Console.WriteLine("updating stack...");
-                var result = await stack.UpAsync(new UpOptions { OnOutput = (str) => Console.WriteLine(str) });
+                var result = await stack.UpAsync(new UpOptions { OnOutput = Console.WriteLine });
 
                 if (result.Summary.ResourceChanges != null)
                 {
