@@ -1,0 +1,3 @@
+name: website
+runtime: dotnet
+description: A Pulumi AWS .NET program that deploys a static website.
