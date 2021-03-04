@@ -13,7 +13,7 @@ To run this example you'll need a few pre-reqs:
 Running this program is just like any other .NET console application. You can run `dotnet run` from the project directory, or you could run the resulting `.exe` from the build directory in the `bin` folder.
 
 ```shell
-$ venv/LocalProgram/automation dotnet run
+C:\code\pulumi-automation-examples\LocalProgram\automation> dotnet run
 successfully initialized stack
 setting up config...
 config set
@@ -67,7 +67,7 @@ website url: s3-website-bucket-122e0d2.s3-website-us-west-2.amazonaws.com
 To destroy our stack, we run our automation program with an additional `destroy` argument:
 
 ```shell
-$ venv/LocalProgram/automation dotnet run destroy
+C:\code\pulumi-automation-examples\LocalProgram\automation> dotnet run destroy
 successfully initialized stack
 setting up config...
 config set

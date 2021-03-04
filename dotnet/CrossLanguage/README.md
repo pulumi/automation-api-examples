@@ -14,7 +14,7 @@ To run this example you'll need a few pre-reqs:
 To run our automation program we `cd` to the `automation` directory...
 
 ```shell
-$ venv/CrossLanguage/automation dotnet run
+C:\code\pulumi-automation-examples\CrossLanguage\automation> dotnet run
 successfully initialized stack
 setting up config...
 config set
@@ -97,7 +97,7 @@ website url: web-lb-7508879-552272703.us-west-2.elb.amazonaws.com
 To destroy the stack when you're done, invoke the program with an additional `destroy` argument:
 
 ```shell
-$ venv/CrossLanguage/automation dotnet run destroy
+C:\code\pulumi-automation-examples\CrossLanguage\automation> dotnet run destroy
 successfully initialized stack
 setting up config...
 config set

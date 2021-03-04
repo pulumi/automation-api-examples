@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.23" />
-    <PackageReference Include="Pulumi.Automation" Version="2.22.0-alpha.1614645792" />
+    <PackageReference Include="Pulumi.Automation" Version="2.22.0-preview" />
     <PackageReference Include="Pulumi.Aws" Version="3.30.1" />
   </ItemGroup>
 

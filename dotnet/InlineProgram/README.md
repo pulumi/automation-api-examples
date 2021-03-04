@@ -10,7 +10,7 @@ To run this example you'll need a few pre-reqs:
 Running this program is just like any other .NET console application. You can run `dotnet run` from the project directory, or you could run the resulting `.exe` from the build directory in the `bin` folder.
 
 ```shell
-$ venv/InlineProgram dotnet run
+C:\code\pulumi-automation-examples\InlineProgram> dotnet run
 successfully initialized stack
 installing plugins...
 plugins installed
@@ -85,7 +85,7 @@ website url: s3-website-bucket-4b4d633.s3-website-us-west-2.amazonaws.com
 To destroy our stack, we run our automation program with an additional `destroy` argument:
 
 ```shell
-$ venv/InlineProgram dotnet run destroy
+C:\code\pulumi-automation-examples\InlineProgram> dotnet run destroy
 successfully initialized stack
 installing plugins...
 plugins installed

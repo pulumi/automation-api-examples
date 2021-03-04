@@ -10,7 +10,7 @@ To run this example you'll need a few pre-reqs:
 Running this program is just like any other .NET console application. You can run `dotnet run` from the project directory, or you could run the resulting `.exe` from the build directory in the `bin` folder.
 
 ```shell
-$ venv/DatabaseMigration dotnet run
+C:\code\pulumi-automation-examples\DatabaseMigration> dotnet run
 successfully initialized stack
 installing plugins...
 plugins installed
@@ -96,7 +96,7 @@ database, table, and rows successfully configured
 To destroy the stack when you're done, invoke the program with an additional `destroy` argument:
 
 ```shell
-$ venv/DatabaseMigration dotnet run destroy
+C:\code\pulumi-automation-examples\DatabaseMigration> dotnet run destroy
 successfully initialized stack
 installing plugins...
 plugins installed
