@@ -1,0 +1,14 @@
+{
+  "name": "pulumi-automation-sdk-ssh-tunnel",
+  "version": "0.0.1",
+  "scripts": {
+    "pulumi": "./node_modules/ts-node/dist/bin.js pulumi.ts"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^3.34.2",
+    "@pulumi/pulumi": "^2.23.1"
+  }
+}
