@@ -125,19 +125,19 @@ namespace DatabaseMigration
             Console.WriteLine("config set");
 
             Console.WriteLine("refreshing stack...");
-            await stack.RefreshAsync(new RefreshOptions { OnOutput = Console.WriteLine });
+            await stack.RefreshAsync(new RefreshOptions { OnStandardOutput = Console.WriteLine });
             Console.WriteLine("refresh complete");
 
             if (destroy)
             {
                 Console.WriteLine("destroying stack...");
-                await stack.DestroyAsync(new DestroyOptions { OnOutput = Console.WriteLine });
+                await stack.DestroyAsync(new DestroyOptions { OnStandardOutput = Console.WriteLine });
                 Console.WriteLine("stack destroy complete");
                 return;
             }
 
             Console.WriteLine("updating stack...");
-            var result = await stack.UpAsync(new UpOptions { OnOutput = Console.WriteLine });
+            var result = await stack.UpAsync(new UpOptions { OnStandardOutput = Console.WriteLine });
 
             if (result.Summary.ResourceChanges != null)
             {
