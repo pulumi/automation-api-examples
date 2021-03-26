@@ -12,6 +12,7 @@ if len(args) > 0:
         destroy = True
 
 stack_name = "dev"
+
 work_dir = os.path.join(os.path.dirname(__file__), "..", "aws-py-voting-app")
 
 print("preparing virtual environment...")

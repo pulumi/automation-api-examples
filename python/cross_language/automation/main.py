@@ -11,6 +11,7 @@ if len(args) > 0:
         destroy = True
 
 stack_name = "dev"
+
 work_dir = os.path.join(os.path.dirname(__file__), "..", "fargate")
 
 # Create our stack using a local program in the ../fargate directory

@@ -20,19 +20,41 @@ env:
   AWS_ACCESS_KEY_ID: ' ${{ secrets.AWS_ACCESS_KEY_ID }}'
   AWS_REGION: us-west-2
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-  DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
-  GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-  GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
-  GOOGLE_REGION: us-central1
-  GOOGLE_ZONE: us-central1-a
-  PACKET_AUTH_TOKEN: ${{ secrets.PACKET_AUTH_TOKEN }}
-  PR_COMMIT_SHA: ${{ github.event.client_payload.pull_request.head.sha }}
-  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-  PULUMI_API: https://api.pulumi-staging.io
-  PULUMI_TEST_OWNER: moolumi
+  PULUMI_CONFIG_PASSPHRASE: password
 
 jobs:
+  dotnet-local-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install DotNet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{matrix.dotnet-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Deploy app
+        run: dotnet run
+        working-directory: dotnet/LocalProgram/automation
+      - name: Destroy app
+        run: dotnet run destroy
+        working-directory: dotnet/LocalProgram/automation
+    strategy:
+      matrix:
+        dotnet-version:
+          - 3.1.x
   dotnet-inline-program:
     runs-on: ubuntu-latest
     steps:
@@ -43,14 +65,662 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
       - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
       - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
       - name: Deploy app
         run: dotnet run
-        working-directory: automation
+        working-directory: dotnet/InlineProgram
       - name: Destroy app
         run: dotnet run destroy
-        working-directory: automation
+        working-directory: dotnet/InlineProgram
     strategy:
       matrix:
         dotnet-version:
           - 3.1.x
+  dotnet-database-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install DotNet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{matrix.dotnet-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Deploy app
+        run: dotnet run
+        working-directory: dotnet/DatabaseMigration
+      - name: Destroy app
+        run: dotnet run destroy
+        working-directory: dotnet/DatabaseMigration
+    strategy:
+      matrix:
+        dotnet-version:
+          - 3.1.x
+  dotnet-crosslanguage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install DotNet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{matrix.dotnet-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Deploy app
+        run: dotnet run
+        working-directory: dotnet/CrossLanguage/automation
+      - name: Destroy app
+        run: dotnet run destroy
+        working-directory: dotnet/CrossLanguage/automation
+    strategy:
+      matrix:
+        dotnet-version:
+          - 3.1.x
+        go-version:
+          - 1.16.x
+  python-crosslanguage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{matrix.python-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: pip install -r requirements.txt
+        working-directory: python/cross_language/automation
+      - name: Deploy app
+        run: python main.py
+        working-directory: python/cross_language/automation
+      - name: Destroy app
+        run: python main.py destroy
+        working-directory: python/cross_language/automation
+    strategy:
+      matrix:
+        python-version:
+          - 3.7.x
+        go-version:
+          - 1.16.x
+  python-database-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{matrix.python-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: pip install -r requirements.txt
+        working-directory: python/database_migration
+      - name: Deploy app
+        run: python main.py
+        working-directory: python/database_migration
+      - name: Destroy app
+        run: python main.py destroy
+        working-directory: python/database_migration
+    strategy:
+      matrix:
+        python-version:
+          - 3.7.x
+        go-version:
+          - 1.16.x
+  python-inline-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{matrix.python-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: pip install -r requirements.txt
+        working-directory: python/inline_program
+      - name: Deploy app
+        run: python main.py
+        working-directory: python/inline_program
+      - name: Destroy app
+        run: python main.py destroy
+        working-directory: python/inline_program
+    strategy:
+      matrix:
+        python-version:
+          - 3.7.x
+        go-version:
+          - 1.16.x
+  python-local-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{matrix.python-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: pip install -r requirements.txt
+        working-directory: python/local_program/automation
+      - name: Deploy app
+        run: python main.py
+        working-directory: python/local_program/automation
+      - name: Destroy app
+        run: python main.py destroy
+        working-directory: python/local_program/automation
+    strategy:
+      matrix:
+        python-version:
+          - 3.7.x
+        go-version:
+          - 1.16.x
+  go-database-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: go mod download
+        working-directory: go/database_migration
+      - name: Deploy app
+        run: go run main.go
+        working-directory: go/database_migration
+      - name: Destroy app
+        run: go run main.go destroy
+        working-directory: go/database_migration
+    strategy:
+      matrix:
+        go-version:
+          - 1.16.x
+  go-git-repo-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: go mod download
+        working-directory: go/git_repo_program
+      - name: Deploy app
+        run: go run main.go
+        working-directory: go/git_repo_program
+      - name: Destroy app
+        run: go run main.go destroy
+        working-directory: go/git_repo_program
+    strategy:
+      matrix:
+        go-version:
+          - 1.16.x
+  go-inline-local-hybrid:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Deploy app
+        run: go run main.go
+        working-directory: go/inline_local_hybrid/automation
+      - name: Test CLI Output
+        run: pulumi stack
+        working-directory: go/inline_local_hybrid/cli
+      - name: Destroy app
+        run: go run main.go destroy
+        working-directory: go/inline_local_hybrid/automation
+    strategy:
+      matrix:
+        go-version:
+          - 1.16.x
+  go-local-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Deploy app
+        run: go run main.go
+        working-directory: go/local_program/automation
+      - name: Destroy app
+        run: go run main.go destroy
+        working-directory: go/local_program/automation
+    strategy:
+      matrix:
+        go-version:
+          - 1.16.x
+  go-inline-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Deploy app
+        run: go run main.go
+        working-directory: go/inline_program
+      - name: Destroy app
+        run: go run main.go destroy
+        working-directory: go/inline_program
+    strategy:
+      matrix:
+        go-version:
+          - 1.16.x
+  node-inline-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: yarn install
+        working-directory: nodejs/crossLanguage-tsnode/automation
+      - name: Deploy app
+        run: yarn start
+        working-directory: nodejs/crossLanguage-tsnode/automation
+      - name: Destroy app
+        run: yarn start destroy
+        working-directory: nodejs/crossLanguage-tsnode/automation
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+        go-version:
+          - 1.16.x
+  node-database-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: yarn install
+        working-directory: nodejs/databaseMigration-ts
+      - name: Deploy app
+        run: yarn start
+        working-directory: nodejs/databaseMigration-ts
+      - name: Destroy app
+        run: yarn start destroy
+        working-directory: nodejs/databaseMigration-ts
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+        go-version:
+          - 1.16.x
+  node-inline-program-js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: yarn install
+        working-directory: nodejs/inlineProgram-js
+      - name: Deploy app
+        run: yarn start
+        working-directory: nodejs/inlineProgram-js
+      - name: Destroy app
+        run: yarn start destroy
+        working-directory: nodejs/inlineProgram-js
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+        go-version:
+          - 1.16.x
+  node-inline-program-ts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: yarn install
+        working-directory: nodejs/inlineProgram-ts
+      - name: Deploy app
+        run: yarn start
+        working-directory: nodejs/inlineProgram-ts
+      - name: Destroy app
+        run: yarn start destroy
+        working-directory: nodejs/inlineProgram-ts
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+        go-version:
+          - 1.16.x
+  node-inline-program-tsnode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: yarn install
+        working-directory: nodejs/inlineProgram-tsnode
+      - name: Deploy app
+        run: yarn start
+        working-directory: nodejs/inlineProgram-tsnode
+      - name: Destroy app
+        run: yarn start destroy
+        working-directory: nodejs/inlineProgram-tsnode
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+        go-version:
+          - 1.16.x
+  node-local-program-tsnode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: yarn install
+        working-directory: nodejs/localProgram-tsnode/automation
+      - name: Deploy app
+        run: yarn start
+        working-directory: nodejs/localProgram-tsnode/automation
+      - name: Destroy app
+        run: yarn start destroy
+        working-directory: nodejs/localProgram-tsnode/automation
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+        go-version:
+          - 1.16.x
