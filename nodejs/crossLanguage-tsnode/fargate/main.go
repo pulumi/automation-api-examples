@@ -192,7 +192,7 @@ func main() {
 					ContainerPort:  pulumi.Int(80),
 				},
 			},
-		}, pulumi.DependsOn([]pulumi.Resource{webListener}))
+		}, pulumi.DependsOn([]pulumi.Resource{webListener, webLb}))
 
 		// Export the resulting web address.
 		ctx.Export("url", webLb.DnsName)
