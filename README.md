@@ -62,6 +62,6 @@ Project | Description |
 --- | ---
 [Ploy](https://github.com/jaxxstorm/ploy) | Ploy is CLI to deploy a Docker image on your machine locally to a Kubernetes cluster.
 [Halloumi](https://github.com/pulumi/halloumi) | Pulumi + Heroku = Halloumi. You write your application, we run it in the cloud.
-[Static Site Platyform](https://github.com/komalali/static-site-platyform) | A webapp framework for building your own Infrastructure Platform.
+[Self Service Platyform](https://github.com/komalali/self-service-platyform) | A webapp framework for building your own Infrastructure Platform.
 
 If you have a project using Automation API that you'd like to showcase here please submit a PR!
