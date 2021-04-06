@@ -55,3 +55,13 @@ Example  | Description |
 [Local Program](dotnet/LocalProgram) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven S3 website program.
 [Cross-Language Program](dotnet/CrossLanguage) | This example shows how to use Automation API in `dotnet` with an existing traditional CLI-driven Pulumi program written in a __different__ language, in this case `go`. We add an Automation API deployment program to our Fargate program that deploys a web service via a Fargate task behind a load balancer.
 [Database Migration](dotnet/DatabaseMigration) | This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single program using an `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
+
+## Other projects using Automation API
+
+Project | Description |
+--- | ---
+[Ploy](https://github.com/jaxxstorm/ploy) | Ploy is CLI to deploy a Docker image on your machine locally to a Kubernetes cluster.
+[Halloumi](https://github.com/pulumi/halloumi) | Pulumi + Heroku = Halloumi. You write your application, we run it in the cloud.
+[Static Site Platyform](https://github.com/komalali/static-site-platyform) | A webapp framework for building your own Infrastructure Platform.
+
+If you have a project using Automation API that you'd like to showcase here please submit a PR!
