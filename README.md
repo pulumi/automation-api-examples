@@ -60,7 +60,7 @@ Example  | Description |
 
 Project | Description |
 --- | ---
-[Ploy](https://github.com/jaxxstorm/ploy) | Ploy is CLI to deploy a Docker image on your machine locally to a Kubernetes cluster.
+[Ploy](https://github.com/jaxxstorm/ploy) | Ploy is a CLI used to deploy a local Docker image to an EKS cluster.
 [Halloumi](https://github.com/pulumi/halloumi) | Pulumi + Heroku = Halloumi. You write your application, we run it in the cloud.
 [Self Service Platyform](https://github.com/komalali/self-service-platyform) | A webapp framework for building your own Infrastructure Platform.
 
