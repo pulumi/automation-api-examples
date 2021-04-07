@@ -6,11 +6,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
-	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto/optdestroy"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/workspace"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 // Reap cleans up all vmgr stacks that are older than the specified threshold
@@ -31,12 +31,12 @@ func Reap(threshold time.Duration) {
 		os.Exit(1)
 	}
 
-	err = w.InstallPlugin(ctx, "azure", "v3.19.0")
+	err = w.InstallPlugin(ctx, "azure", "v4.0.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)
 	}
-	err = w.InstallPlugin(ctx, "random", "v2.3.1")
+	err = w.InstallPlugin(ctx, "random", "v4.0.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)

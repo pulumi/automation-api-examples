@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 
 	"github.com/pulumi/automation-api-examples/go/inline_local_hybrid/infra"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto/optdestroy"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto/optup"
 )
 
 func main() {
@@ -46,7 +46,7 @@ func main() {
 
 	w := s.Workspace()
 	// for inline source programs, we must manage plugins ourselves
-	err = w.InstallPlugin(ctx, "aws", "v3.2.1")
+	err = w.InstallPlugin(ctx, "aws", "v4.0.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)

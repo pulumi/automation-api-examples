@@ -4,7 +4,7 @@ This program demonstrates how to use Automation API with an `inline` Pulumi prog
 but uses a custom secrets provider, which requires setting the configuration and re-using it on subsequent runs.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.25.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. The .NET SDK, this console application is targetting .NET Core 3.1.
 4. An AWS KMS key for the secrets provider, which you will replace for `secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";` in `Program.cs`

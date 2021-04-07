@@ -8,7 +8,7 @@ This example demonstrates adding an Automation API driver to an existing Pulumi 
 - `/automation`: an `index.ts` containing our Automation API deployment driver. This can be run like any normal `typescript` program: `yarn run start` will invoke our program with `ts-node`.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. Go 1.14 or later.
 2. The AWS CLI, with appropriate credentials.
 3. Docker

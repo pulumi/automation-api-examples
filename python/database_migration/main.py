@@ -2,7 +2,7 @@ import sys
 import json
 import pulumi
 import pulumi_aws as aws
-from pulumi.x import automation as auto
+from pulumi import automation as auto
 from mysql.connector import connect
 
 
@@ -76,7 +76,7 @@ print("successfully initialized stack")
 
 # for inline programs, we must manage plugins ourselves
 print("installing plugins...")
-stack.workspace.install_plugin("aws", "v3.20.0")
+stack.workspace.install_plugin("aws", "v4.0.0")
 print("plugins installed")
 
 # set stack configuration specifying the AWS region to deploy

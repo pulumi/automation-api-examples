@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/pulumi/automation-api-examples/go/inline_local_hybrid/infra"
-	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 // this is our pulumi CLI driver.

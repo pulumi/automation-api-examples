@@ -1,12 +1,12 @@
 import pulumi
-from pulumi.x import automation as auto
+from pulumi import automation as auto
 from pulumi_aws import s3
 from flask import Flask, request, make_response, jsonify
 
 
 def ensure_plugins():
     ws = auto.LocalWorkspace()
-    ws.install_plugin("aws", "v3.23.0")
+    ws.install_plugin("aws", "v4.0.0")
 
 
 ensure_plugins()

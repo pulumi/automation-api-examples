@@ -8,7 +8,7 @@ This program demonstrates how to setup a project to get the best of both worlds 
 
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 
 First we'll run our automation program:
@@ -65,7 +65,7 @@ $ pulumi stack
 Current stack is dev:
     Owner: EvanBoyle
     Last updated: 1 minute ago (2020-09-01 19:59:54.837555 -0700 PDT)
-    Pulumi version: v2.10.1
+    Pulumi version: v3.0.0
 Current stack resources (5):
     TYPE                                     NAME
     pulumi:pulumi:Stack                      hybridS3Project-EvanBoyle/hybridS3Project/dev

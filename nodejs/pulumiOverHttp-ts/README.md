@@ -5,7 +5,7 @@ This application demonstrates how to run Automation API in an HTTP server to exp
 This example also has a VSCode debug configuration that enables setting breakpoints within both the Automation API code, and things like `.apply` calls within the Pulumi program.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. install deps: `yarn install`
 

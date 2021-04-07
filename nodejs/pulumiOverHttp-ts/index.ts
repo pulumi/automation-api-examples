@@ -3,7 +3,7 @@ import {
     ConcurrentUpdateError,
     StackAlreadyExistsError,
     StackNotFoundError
-} from "@pulumi/pulumi/x/automation";
+} from "@pulumi/pulumi/automation";
 import { s3 } from "@pulumi/aws";
 import { PolicyDocument } from "@pulumi/aws/iam";
 import * as express from "express";
@@ -168,7 +168,7 @@ const deleteHandler: express.RequestHandler = async (req, res) => {
 };
 const ensurePlugins = async () => {
     const ws = await LocalWorkspace.create({});
-    await ws.installPlugin("aws", "v3.2.1");
+    await ws.installPlugin("aws", "v4.0.0");
 };
 
 // install necessary plugins once upon boot

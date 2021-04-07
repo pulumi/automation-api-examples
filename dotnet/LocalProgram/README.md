@@ -6,7 +6,7 @@ This example demonstrates adding an Automation API driver to an existing Pulumi 
 - `/website`: a Pulumi program using the dotnet runtime, which deploys a simple static website.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.20.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. The .NET SDK, this console application is targetting .NET Core 3.1.
 

@@ -3,7 +3,7 @@
 This program demonstrates how use Automation API with an `inline` Pulumi program. Unlike traditional Pulumi programs, inline functions don't require a separate package on disk, with a `main.go` and `Pulumi.yaml`. Inline programs are just functions, can be authored in the same `main.go` or be imported from anther package. This example deploys an AWS S3 website, with all the context and deployment automation defined in a single file.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 
 Running this program is just like any other Go program. No invocation through the Pulumi CLI required:

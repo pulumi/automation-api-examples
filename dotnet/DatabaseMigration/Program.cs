@@ -116,7 +116,7 @@ namespace DatabaseMigration
 
             // for inline programs, we must manage plugins ourselves
             Console.WriteLine("installing plugins...");
-            await stack.Workspace.InstallPluginAsync("aws", "v3.30.1");
+            await stack.Workspace.InstallPluginAsync("aws", "v4.0.0");
             Console.WriteLine("plugins installed");
 
             // set stack configuration specifying the region to deploy
