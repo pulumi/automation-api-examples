@@ -1,6 +1,6 @@
 # automation-api-examples
 
-This repo provides full end to end examples and walk-throughs for the Pulumi Automation API. The Automation API is available in preview for `Go`, `Node.js` and `Python` with support for [`C#`](https://github.com/pulumi/pulumi/compare/auto/dotnet) under active development.
+This repo provides full end to end examples and walk-throughs for the Pulumi Automation API. The Automation API is available in preview for all of Pulumi's supported languages, `Go`, `Node.js` and `Python` and `C#`.
 
 Full docs for automation API can be found here:
 - [Go](https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v2/go/x/auto?tab=doc)
