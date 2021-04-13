@@ -1,6 +1,6 @@
 # Inline Program
 
-This program demonstrates how use Automation API with an `inline` Pulumi program and custom secrets provider. This examples build on the basic example in `inlineProgram-ts`
+This program demonstrates how to use Automation API with an `inline` Pulumi program and custom secrets provider. This example builds on the basic example in `inlineProgram-ts`
 but uses a local backend and custom secrets provider, which requires setting the configuration and re-using it on subsequent runs.
 
 This example has a VSCode debug configuration that enables setting breakpoints within both the Automation API code, and things like `.apply` calls within the Pulumi program.

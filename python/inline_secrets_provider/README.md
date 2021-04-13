@@ -1,6 +1,6 @@
 # Inline Program
 
-This program demonstrates how use Automation API with an `inline` Pulumi program and custom secrets provider. This examples build on the basic example in `inline_program`
+This program demonstrates how to use Automation API with an `inline` Pulumi program and custom secrets provider. This example builds on the basic example in `inline_program`
 but uses a local backend and custom secrets provider, which requires setting the configuration and re-using it on subsequent runs.
 
 To run this example you'll need a few pre-reqs:
@@ -9,11 +9,6 @@ To run this example you'll need a few pre-reqs:
 3. An AWS KMS key, which you will replace for `secrets_provider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";` in `main.py`
 4. Either have `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` set in your environment such that it can use the above key or set as additional `env_vars`
 to the local workspace options.
-
-To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
-2. The AWS CLI, with appropriate credentials.
-
 First, set up your virtual environment:
 1. ```shell
    $ python3 -m venv venv

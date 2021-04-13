@@ -1,6 +1,6 @@
 # Inline Program
 
-This program demonstrates how use Automation API with an `inline` Pulumi program and custom secrets provider. This examples build on the basic example in `inline_program`
+This program demonstrates how to use Automation API with an `inline` Pulumi program and custom secrets provider. This example builds on the basic example in `inline_program`
 but uses a custom secrets provider, which requires saving the secrets provider configuration and re-using it on subsequent runs.
 
 To run this example you'll need a few pre-reqs:
