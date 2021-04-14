@@ -833,7 +833,7 @@ jobs:
       - name: Login Local
         run: pulumi login --local
       - run: yarn install
-        working-directory: nodejs/inlineSecretsProvider-tsnode
+        working-directory: nodejs/inlineSecretsProvider-ts
       - name: Setup local directory
         run: mkdir ~/.pulumi-local
       - name: Generate KMS key
@@ -843,10 +843,10 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
       - name: Deploy app
         run: yarn start
-        working-directory: nodejs/inlineSecretsProvider-tsnode
+        working-directory: nodejs/inlineSecretsProvider-ts
       - name: Destroy app
         run: yarn start destroy
-        working-directory: nodejs/inlineSecretsProvider-tsnode
+        working-directory: nodejs/inlineSecretsProvider-ts
       - name: Delete the KMS key
         run: "aws kms schedule-key-deletion --key-id $KMS_KEY --pending-window-in-days 7"
     strategy:
