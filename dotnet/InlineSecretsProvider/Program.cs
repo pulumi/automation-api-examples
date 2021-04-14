@@ -95,6 +95,10 @@ namespace InlineProgram
             var stackName = "dev";
             var secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";
 
+            if (secretsProvider == "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2") {
+                throw new Exception("Update secretsProvider to use an actual AWS KMS key.");
+            }
+
             // create or select a stack matching the specified name and project
             // this will set up a workspace with everything necessary to run our inline program (program)
             var stackArgs = new InlineProgramArgs(projectName, stackName, program);

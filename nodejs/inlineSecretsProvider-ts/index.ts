@@ -73,6 +73,10 @@ const run = async () => {
 
     // create (or select if one already exists) a stack that uses our inline program
     const secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";
+    if (secretsProvider === "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2") {
+        throw new Error("Provide an actual KMS key for secretsProvider");
+    }
+
     const stack = await LocalWorkspace.createOrSelectStack(args, {
         projectSettings: {
             name: args.projectName,

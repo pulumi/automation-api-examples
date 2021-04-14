@@ -7,7 +7,7 @@ To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation ([v2.25.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. The .NET SDK, this console application is targetting .NET Core 3.1.
-4. An AWS KMS key for the secrets provider.
+4. An AWS KMS key for the secrets provider, which you will replace for `secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";` in `Program.cs`
 5. Either have `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` set in your environment such that it can use the above key or set as additional `stackArgs.EnvironmentVariables`
 
 Running this program is just like any other .NET console application. You can run `dotnet run` from the project directory, or you could run the resulting `.exe` from the build directory in the `bin` folder.

@@ -63,6 +63,9 @@ project_settings=auto.ProjectSettings(
     backend={"url": "file://~/.pulumi-local"})
 
 secrets_provider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2"
+if secrets_provider == "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2":
+    raise Exception("Please provide an actual KMS key for secrets_provider")
+
 stack_settings=auto.StackSettings(
     secrets_provider=secrets_provider)
 
