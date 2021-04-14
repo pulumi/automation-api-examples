@@ -506,6 +506,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Login Local
         run: pulumi login --local
+      - name: Setup local directory
+        run: mkdir ~/.pulumi-local
       - name: Deploy app
         run: go run main.go
         working-directory: go/inline_secrets_provider
