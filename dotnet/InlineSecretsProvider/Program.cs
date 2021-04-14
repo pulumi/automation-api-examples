@@ -94,6 +94,10 @@ namespace InlineProgram
             var projectName = "inline_s3_project";
             var stackName = "dev";
             var secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";
+            var kmsEnv = System.Environment.GetEnvironmentVariable("KMS_KEY");
+            if (kmsEnv != null) {
+                secretsProvider = kmsEnv;
+            }
 
             if (secretsProvider == "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2") {
                 throw new Exception("Update secretsProvider to use an actual AWS KMS key.");

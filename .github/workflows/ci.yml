@@ -87,6 +87,45 @@ jobs:
       matrix:
         dotnet-version:
           - 3.1.x
+  dotnet-inline-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install DotNet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{matrix.dotnet-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Generate KMS key
+        run: |
+          echo "KMS_KEY<<EOF" >> $GITHUB_ENV
+          aws kms create-key --output text --query KeyMetadata.Arn >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Deploy app
+        run: dotnet run
+        working-directory: dotnet/InlineSecretsProvider
+      - name: Destroy app
+        run: dotnet run destroy
+        working-directory: dotnet/InlineSecretsProvider
+      - name: Delete the KMS key
+        run: "aws kms schedule-key-deletion --key-id $KMS_KEY --pending-window-in-days 7"
+    strategy:
+      matrix:
+        dotnet-version:
+          - 3.1.x
   dotnet-database-migration:
     runs-on: ubuntu-latest
     steps:
