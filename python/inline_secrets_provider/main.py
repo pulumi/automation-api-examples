@@ -1,5 +1,6 @@
 import sys
 import json
+import os
 import pulumi
 from pulumi.x import automation as auto
 from pulumi_aws import s3
@@ -63,6 +64,9 @@ project_settings=auto.ProjectSettings(
     backend={"url": "file://~/.pulumi-local"})
 
 secrets_provider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2"
+kms_env = os.environ.get("KMS_KEY")
+if kms_env:
+    secrets_provider = kms_env
 if secrets_provider == "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2":
     raise Exception("Please provide an actual KMS key for secrets_provider")
 

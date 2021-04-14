@@ -316,6 +316,55 @@ jobs:
           - 3.7.x
         go-version:
           - 1.16.x
+  python-inline-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{matrix.python-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: pip install -r requirements.txt
+        working-directory: python/inline_secrets_provider
+      - name: Setup local directory
+        run: mkdir ~/.pulumi-local
+      - name: Generate KMS key
+        run: |
+          echo "KMS_KEY<<EOF" >> $GITHUB_ENV
+          aws kms create-key --output text --query KeyMetadata.Arn >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Deploy app
+        run: python main.py
+        working-directory: python/inline_secrets_provider
+      - name: Destroy app
+        run: python main.py destroy
+        working-directory: python/inline_secrets_provider
+      - name: Delete the KMS key
+        run: "aws kms schedule-key-deletion --key-id $KMS_KEY --pending-window-in-days 7"
+    strategy:
+      matrix:
+        python-version:
+          - 3.7.x
+        go-version:
+          - 1.16.x
   python-local-program:
     runs-on: ubuntu-latest
     steps:
@@ -751,6 +800,55 @@ jobs:
       - name: Destroy app
         run: yarn start destroy
         working-directory: nodejs/inlineProgram-tsnode
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+        go-version:
+          - 1.16.x
+  node-inline-secrets-provider-ts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: yarn install
+        working-directory: nodejs/inlineSecretsProvider-tsnode
+      - name: Setup local directory
+        run: mkdir ~/.pulumi-local
+      - name: Generate KMS key
+        run: |
+          echo "KMS_KEY<<EOF" >> $GITHUB_ENV
+          aws kms create-key --output text --query KeyMetadata.Arn >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Deploy app
+        run: yarn start
+        working-directory: nodejs/inlineSecretsProvider-tsnode
+      - name: Destroy app
+        run: yarn start destroy
+        working-directory: nodejs/inlineSecretsProvider-tsnode
+      - name: Delete the KMS key
+        run: "aws kms schedule-key-deletion --key-id $KMS_KEY --pending-window-in-days 7"
     strategy:
       matrix:
         node-version:

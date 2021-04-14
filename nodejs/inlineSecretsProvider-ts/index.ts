@@ -72,7 +72,11 @@ const run = async () => {
     };
 
     // create (or select if one already exists) a stack that uses our inline program
-    const secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";
+    let secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";
+    if (process.env.KMS_KEY) {
+        secretsProvider = process.env.KMS_KEY;
+    }
+
     if (secretsProvider === "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2") {
         throw new Error("Provide an actual KMS key for secretsProvider");
     }
