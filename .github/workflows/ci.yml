@@ -112,7 +112,7 @@ jobs:
       - name: Generate KMS key
         run: |
           echo "KMS_KEY<<EOF" >> $GITHUB_ENV
-          aws kms create-key --output text --query KeyMetadata.Arn >> $GITHUB_ENV
+          aws kms create-key --output text --query KeyMetadata.KeyId >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
       - name: Deploy app
         run: dotnet run

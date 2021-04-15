@@ -94,9 +94,9 @@ namespace InlineProgram
             var projectName = "inline_s3_project";
             var stackName = "dev";
             var secretsProvider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2";
-            var kmsEnv = System.Environment.GetEnvironmentVariable("KMS_KEY");
-            if (kmsEnv != null) {
-                secretsProvider = kmsEnv;
+            var keyId = System.Environment.GetEnvironmentVariable("KMS_KEY");
+            if (keyId != null) {
+                secretsProvider = "awskms://" + keyId + "?region=" + System.Environment.GetEnvironmentVariable("AWS_REGION");
             }
 
             if (secretsProvider == "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2") {

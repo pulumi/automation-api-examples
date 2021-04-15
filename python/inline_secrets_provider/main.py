@@ -66,7 +66,7 @@ project_settings=auto.ProjectSettings(
 secrets_provider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2"
 kms_env = os.environ.get("KMS_KEY")
 if kms_env:
-    secrets_provider = kms_env
+    secrets_provider = f"awskms://{kms_env}?region={os.environ.get('AWS_REGION')}"
 if secrets_provider == "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2":
     raise Exception("Please provide an actual KMS key for secrets_provider")
 
