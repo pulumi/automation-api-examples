@@ -107,7 +107,7 @@ namespace InlineProgram
 
             // set stack configuration specifying the region to deploy
             Console.WriteLine("setting up config...");
-            await stack.SetConfigValueAsync("aws:region", new ConfigValue("us-west-2"));
+            await stack.SetConfigAsync("aws:region", new ConfigValue("us-west-2"));
             Console.WriteLine("config set");
 
             Console.WriteLine("refreshing stack...");
