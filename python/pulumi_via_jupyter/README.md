@@ -16,7 +16,7 @@ This example contains two notebooks:
 ### Requirements
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 
 ### Set up your virtual environment

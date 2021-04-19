@@ -1,4 +1,4 @@
-import { LocalProgramArgs, LocalWorkspace } from "@pulumi/pulumi/x/automation";
+import { LocalProgramArgs, LocalWorkspace } from "@pulumi/pulumi/automation";
 import * as upath from "upath";
 
 const process = require('process');

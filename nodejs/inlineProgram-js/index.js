@@ -1,4 +1,4 @@
-const auto = require("@pulumi/pulumi/x/automation");
+const auto = require("@pulumi/pulumi/automation");
 const aws = require("@pulumi/aws");
 const process = require('process');
 
@@ -71,7 +71,7 @@ const run = async () => {
 
     console.info("successfully initialized stack");
     console.info("installing plugins...");
-    await stack.workspace.installPlugin("aws", "v3.6.1");
+    await stack.workspace.installPlugin("aws", "v4.0.0");
     console.info("plugins installed");
     console.info("setting up config");
     await stack.setConfig("aws:region", { value: "us-west-2" });

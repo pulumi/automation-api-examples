@@ -2,7 +2,7 @@ import sys
 import json
 import os
 import pulumi
-from pulumi.x import automation as auto
+from pulumi import automation as auto
 from pulumi_aws import s3
 
 
@@ -28,16 +28,16 @@ def pulumi_program():
                     content_type="text/html; charset=utf-8")  # set the MIME type of the file
 
     # Set the access policy for the bucket so all objects are readable
-    s3.BucketPolicy("bucket-policy", bucket=site_bucket.id, policy={
+    s3.BucketPolicy("bucket-policy", bucket=site_bucket.id, policy=site_bucket.id.apply(lambda id: json.dumps({
         "Version": "2012-10-17",
         "Statement": {
             "Effect": "Allow",
             "Principal": "*",
             "Action": ["s3:GetObject"],
             # Policy refers to bucket explicitly
-            "Resource": [pulumi.Output.concat("arn:aws:s3:::", site_bucket.id, "/*")]
+            "Resource": [f"arn:aws:s3:::{id}/*"]
         },
-    })
+    })))
 
     # Export a secret
     pulumi.export("secret", pulumi.Output.secret("hello world"))
@@ -86,7 +86,7 @@ print("successfully initialized stack")
 
 # for inline programs, we must manage plugins ourselves
 print("installing plugins...")
-stack.workspace.install_plugin("aws", "v3.37.0")
+stack.workspace.install_plugin("aws", "v4.0.0")
 print("plugins installed")
 
 # set stack configuration specifying the AWS region to deploy

@@ -1,4 +1,4 @@
-import { InlineProgramArgs, LocalWorkspace } from "@pulumi/pulumi/x/automation";
+import { InlineProgramArgs, LocalWorkspace } from "@pulumi/pulumi/automation";
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as pulumi from "@pulumi/pulumi";
@@ -88,7 +88,7 @@ const run = async () => {
 
     console.info("successfully initialized stack");
     console.info("installing plugins...");
-    await stack.workspace.installPlugin("aws", "v3.6.1");
+    await stack.workspace.installPlugin("aws", "v4.0.0");
     console.info("plugins installed");
     console.info("setting up config");
     await stack.setConfig("aws:region", { value: aws.Region.USWest2 });

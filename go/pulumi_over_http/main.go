@@ -9,13 +9,13 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/pulumi/pulumi-aws/sdk/v3/go/aws/s3"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/tokens"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/workspace"
-	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optdestroy"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"
+	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto/optdestroy"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto/optup"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/workspace"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 // define request/response types for various REST ops

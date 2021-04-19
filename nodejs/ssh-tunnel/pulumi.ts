@@ -1,4 +1,4 @@
-import * as auto from "@pulumi/pulumi/x/automation";
+import * as auto from "@pulumi/pulumi/automation";
 import * as child_process from "child_process";
 import * as fs from "fs";
 

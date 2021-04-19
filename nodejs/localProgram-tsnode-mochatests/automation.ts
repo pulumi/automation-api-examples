@@ -2,7 +2,7 @@ import {
   LocalProgramArgs,
   LocalWorkspace,
   OutputMap
-} from "@pulumi/pulumi/x/automation";
+} from "@pulumi/pulumi/automation";
 import * as upath from "upath";
 
 const args: LocalProgramArgs = {

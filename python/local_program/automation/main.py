@@ -2,7 +2,7 @@ import sys
 import json
 import os
 import subprocess
-from pulumi.x import automation as auto
+from pulumi import automation as auto
 
 # To destroy our program, we can run python main.py destroy
 destroy = False

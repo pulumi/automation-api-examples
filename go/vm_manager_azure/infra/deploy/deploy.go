@@ -8,12 +8,12 @@ import (
 	"time"
 
 	"github.com/pulumi/automation-api-examples/go/vm_manager_azure/infra/webserver"
-	"github.com/pulumi/pulumi-azure/sdk/v3/go/azure/core"
-	"github.com/pulumi/pulumi-azure/sdk/v3/go/azure/network"
-	"github.com/pulumi/pulumi-random/sdk/v2/go/random"
-	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto"
-	"github.com/pulumi/pulumi/sdk/v2/go/x/auto/optup"
+	"github.com/pulumi/pulumi-azure/sdk/v4/go/azure/core"
+	"github.com/pulumi/pulumi-azure/sdk/v4/go/azure/network"
+	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto"
+	"github.com/pulumi/pulumi/sdk/v3/go/auto/optup"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func Deploy() {
@@ -26,12 +26,12 @@ func Deploy() {
 
 	w := s.Workspace()
 
-	err = w.InstallPlugin(ctx, "azure", "v3.19.0")
+	err = w.InstallPlugin(ctx, "azure", "v4.0.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)
 	}
-	err = w.InstallPlugin(ctx, "random", "v2.3.1")
+	err = w.InstallPlugin(ctx, "random", "v4.0.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)

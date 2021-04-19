@@ -2,7 +2,7 @@
 
 ## Requirements
 
-1. Pulumi CLI installed ([v2.12.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. Pulumi CLI installed ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 1. AWS CLI with appropriate credentials set up
 
 ## To run tests

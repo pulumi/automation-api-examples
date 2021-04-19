@@ -228,12 +228,16 @@ github.com/pulumi/pulumi-aws/sdk/v3 v3.2.1 h1:w+nt2873oYjwjD9SmirQTivEeN2hIpBBlp
 github.com/pulumi/pulumi-aws/sdk/v3 v3.2.1/go.mod h1:Tiu0MSxPkufZDbNTXNMb8cKiIRWLt+7spM3DPuzLcBc=
 github.com/pulumi/pulumi-aws/sdk/v3 v3.36.0 h1:iwHWk2LtDMfVyg8yLAqkn1c8gA0d+GLarmBq5qqq3+A=
 github.com/pulumi/pulumi-aws/sdk/v3 v3.36.0/go.mod h1:RLQWCCARvzFKmDsgcLeqcM7Occ20uBF3SZKaPPc4/9s=
+github.com/pulumi/pulumi-aws/sdk/v4 v4.0.0 h1:hotld6lXp7a1LiPsAgcp3BrGgvj3O/IB5QzdPukyC34=
+github.com/pulumi/pulumi-aws/sdk/v4 v4.0.0/go.mod h1:TCdXM+R0dW0CFco+lb3Q7qRYWmYxDbJ7EPWYzRVHWMw=
 github.com/pulumi/pulumi/sdk/v2 v2.2.1/go.mod h1:QNbWpL4gvf3X0lUFT7TXA2Jo1ff/Ti2l97AyFGYwvW4=
 github.com/pulumi/pulumi/sdk/v2 v2.10.1 h1:MDRQVoXfPJEcLDtx/U7beJKloM2o8+fbRhvF3XJEuU4=
 github.com/pulumi/pulumi/sdk/v2 v2.10.1/go.mod h1:EED7KCDOohYIewUppsav5KHTFTmfYGqUFib1uRvYdWQ=
 github.com/pulumi/pulumi/sdk/v2 v2.20.0/go.mod h1:fCFhRV6NmidWetmgDPA76efL+s0JqLlS54JJIwfOt+o=
 github.com/pulumi/pulumi/sdk/v2 v2.24.1 h1:bmFDjdlYinnjQu5jeR+D4+k8aQuEhxIfJ/N3nOSaYiY=
 github.com/pulumi/pulumi/sdk/v2 v2.24.1/go.mod h1:sHQdzD0/cIopR5uLeoikXi1pNBv5SwA4M617VqdIA3E=
+github.com/pulumi/pulumi/sdk/v3 v3.0.0 h1:zkragE05t1Rco/ymfqMU4UXdEmKMmOH0SXhUKQxujxQ=
+github.com/pulumi/pulumi/sdk/v3 v3.0.0/go.mod h1:GBHyQ7awNQSRmiKp/p8kIKrGrMOZeA/k2czoM/GOqds=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af h1:gu+uRPtBe88sKxUCEXRoeCvVG90TJmwhiqRpvdhQFng=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=
 github.com/russross/blackfriday/v2 v2.0.1 h1:lPqVAte+HuHNfhJ/0LC98ESWRz8afy9tM/0RK8m9o+Q=

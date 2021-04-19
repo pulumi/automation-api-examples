@@ -7,8 +7,8 @@
   "author": "EvanBoyle",
   "license": "MIT",
   "dependencies": {
-    "@pulumi/aws": "^3.6.1",
-    "@pulumi/pulumi": "^2.12.0"
+    "@pulumi/aws": "^4.0.0",
+    "@pulumi/pulumi": "^3.0.0"
   },
   "scripts": {
     "start": "node index.js"

@@ -6,7 +6,7 @@ This example demonstrates adding an Automation API driver to an existing Pulumi 
 - `/automation`: a `main.py` containing our Automation API deployment driver. This can be run like any normal python program: `python main.py`
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v2.10.1](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 3. Docker
 
