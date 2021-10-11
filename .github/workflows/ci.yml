@@ -33,7 +33,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -67,7 +67,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -101,7 +101,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -142,7 +142,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -180,7 +180,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -220,7 +220,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -262,7 +262,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -304,7 +304,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -346,7 +346,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -397,7 +397,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -435,7 +435,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -471,7 +471,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -507,7 +507,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -544,7 +544,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -578,7 +578,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -612,7 +612,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -628,12 +628,19 @@ jobs:
         run: pulumi login --local
       - name: Setup local directory
         run: mkdir ~/.pulumi-local
+      - name: Generate KMS key
+        run: |
+          echo "KMS_KEY<<EOF" >> $GITHUB_ENV
+          aws kms create-key --output text --query KeyMetadata.KeyId >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Deploy app
         run: go run main.go
         working-directory: go/inline_secrets_provider
       - name: Destroy app
         run: go run main.go destroy
         working-directory: go/inline_secrets_provider
+      - name: Delete the KMS key
+        run: "aws kms schedule-key-deletion --key-id $KMS_KEY --pending-window-in-days 7"
     strategy:
       matrix:
         go-version:
@@ -652,7 +659,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -694,7 +701,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -736,7 +743,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -778,7 +785,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -820,7 +827,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -862,7 +869,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -913,7 +920,7 @@ jobs:
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
         with:
-          pulumi-version: 3.0.0
+          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

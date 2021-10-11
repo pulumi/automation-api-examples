@@ -99,16 +99,30 @@ func main() {
 		},
 	})
 
-	// Setup a passphrase secrets provider and use an environment variable to pass in the passphrase.
-	secretsProvider := auto.SecretsProvider("passphrase")
-	envvars := auto.EnvVars(map[string]string{
-		// In a real program, you would feed in the password securely or via the actual environment.
-		"PULUMI_CONFIG_PASSPHRASE": "password",
+	// Setup a kms secrets provider and use an environment variable to pass in the key.
+	var secretsProvider auto.LocalWorkspaceOption
+	kmsKey := os.Getenv("KMS_KEY")
+	region := os.Getenv("AWS_REGION")
+	var secretsProviderKey string
+	if kmsKey != "" {
+		secretsProviderKey = fmt.Sprintf("awskms://%s?region=%s", kmsKey, region)
+		secretsProvider = auto.SecretsProvider(secretsProviderKey)
+	} else {
+		fmt.Printf("KMS key not found\n")
+		os.Exit(1)
+	}
+
+	stackSettings := auto.Stacks(map[string]workspace.ProjectStack{
+		stackName: {SecretsProvider: secretsProviderKey},
 	})
 
 	// create or select a stack matching the specified name and project.
 	// this will set up a workspace with everything necessary to run our inline program (deployFunc)
-	s, err := auto.UpsertStackInlineSource(ctx, stackName, projectName, deployFunc, project, secretsProvider, envvars)
+	s, err := auto.UpsertStackInlineSource(ctx, stackName, projectName, deployFunc, project, secretsProvider, stackSettings)
+	if err != nil {
+		fmt.Printf("Failed to upsert stack: %v\n", err)
+		os.Exit(1)
+	}
 
 	fmt.Printf("Created/Selected stack %q\n", stackName)
 
@@ -117,7 +131,7 @@ func main() {
 	fmt.Println("Installing the AWS plugin")
 
 	// for inline source programs, we must manage plugins ourselves
-	err = w.InstallPlugin(ctx, "aws", "v4.0.0")
+	err = w.InstallPlugin(ctx, "aws", "v4.23.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)
