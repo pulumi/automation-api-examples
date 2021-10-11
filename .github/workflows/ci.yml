@@ -645,6 +645,42 @@ jobs:
       matrix:
         go-version:
           - 1.16.x
+  go-inline-program-secrets-passphrase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+        with:
+          pulumi-version: 3.14.0
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - name: Setup local directory
+        run: mkdir ~/.pulumi-local
+      - name: Deploy app
+        run: go run main.go
+        working-directory: go/inline_passphrase_secrets_provider
+      - name: Destroy app
+        run: go run main.go destroy
+        working-directory: go/inline_passphrase_secrets_provider
+    strategy:
+      matrix:
+        go-version:
+          - 1.16.x
   node-inline-program:
     runs-on: ubuntu-latest
     steps:

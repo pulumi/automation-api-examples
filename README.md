@@ -23,6 +23,9 @@ Example   | Description |
 [Multi-Stack Orchestration](go/multi_stack_orchestration) | This example shows how to use Automation API to tame the complexity of multiple stacks with dependent stack outputs. We decompose our S3 static website into two stacks, one that manages the bucket, and another that manages the `index.html` file. Both of these are defined as inline programs, and are deployed and destroyed together via a single `main.go`
 [Pulumi Over HTTP - Infra as RESTful resources](go/pulumi_over_http) | This application demonstrates how to run Automation API in an HTTP server to expose infrastructure as RESTful resources. In our case, we've defined and exposed a static website `site` that exposes all of the `CRUD` operations plus list. Users can hit our REST endpoint and create custom static websites by specifying the `content` field in the `POST` body. All of our infrastructure is defined in `inline` programs that are constructed and altered on the fly based on input parsed from user-specified `POST` bodies.
 [Database Migration](go/database_migration) | This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single program using an `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
+[Cloud-backed Secret Provider](go/inline_secrets_provider) | This example demonstrates an inline program using a cloud-backed (KMS) secret provider.
+[Passphrase Secret Provider](go/inline_passphrase_secrets_provider) | This example demonstrates an inline program using a passphrase secret provider.
+
 
 ### Node.js Examples
 
