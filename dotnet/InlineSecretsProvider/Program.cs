@@ -112,14 +112,14 @@ namespace InlineProgram
                     SecretsProvider = secretsProvider
                 }
             };
-            
+
             var stack = await LocalWorkspace.CreateOrSelectStackAsync(stackArgs);
-            
+
             Console.WriteLine("successfully initialized stack");
 
             // for inline programs, we must manage plugins ourselves
             Console.WriteLine("installing plugins...");
-            await stack.Workspace.InstallPluginAsync("aws", "v4.0.0");
+            await stack.Workspace.InstallPluginAsync("aws", "v4.24.1");
             Console.WriteLine("plugins installed");
 
             // set stack configuration specifying the region to deploy

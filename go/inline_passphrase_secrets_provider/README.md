@@ -4,7 +4,7 @@ This program demonstrates how to use Automation API with an `inline` Pulumi prog
 but uses a custom secrets provider, which requires saving the secrets provider configuration and re-using it on subsequent runs.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v3.14.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
+1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
 
 Running this program is just like any other Go program. No invocation through the Pulumi CLI required:
