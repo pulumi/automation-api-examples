@@ -59,6 +59,7 @@ Example  | Description |
 [Local Program](dotnet/LocalProgram) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven S3 website program.
 [Cross-Language Program](dotnet/CrossLanguage) | This example shows how to use Automation API in `dotnet` with an existing traditional CLI-driven Pulumi program written in a __different__ language, in this case `go`. We add an Automation API deployment program to our Fargate program that deploys a web service via a Fargate task behind a load balancer.
 [Database Migration](dotnet/DatabaseMigration) | This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single program using an `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
+[Pulumi Plan with Preview Up](dotnet/PreviewUpProgram/) | This example shows how to use Pulumi plan option to preview changes and then apply that set of changes in two separate steps to allow validation of changes. https://www.pulumi.com/blog/announcing-public-preview-update-plans/
 
 ## Other projects using Automation API
 
