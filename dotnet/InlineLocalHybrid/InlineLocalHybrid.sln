@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InlineLocalHybrid.Infra", "InlineLocalHybrid.Infra\InlineLocalHybrid.Infra.csproj", "{DC41FCD4-EF7A-4D33-8248-DBAA7E4AE964}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlineLocalHybrid.Infra", "InlineLocalHybrid.Infra\InlineLocalHybrid.Infra.csproj", "{DC41FCD4-EF7A-4D33-8248-DBAA7E4AE964}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InlineLocalHybrid.CLI", "InlineLocalHybrid.CLI\InlineLocalHybrid.CLI.csproj", "{0513E22A-41BB-4123-B1B8-614F89C90AD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlineLocalHybrid.CLI", "InlineLocalHybrid.CLI\InlineLocalHybrid.CLI.csproj", "{0513E22A-41BB-4123-B1B8-614F89C90AD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InlineLocalHybrid.Automation", "InlineLocalHybrid.Automation\InlineLocalHybrid.Automation.csproj", "{A6681C97-C33C-40B1-86D2-BCDBAD388C34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InlineLocalHybrid.Automation", "InlineLocalHybrid.Automation\InlineLocalHybrid.Automation.csproj", "{A6681C97-C33C-40B1-86D2-BCDBAD388C34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{32887BE1-83DA-4F8C-9F74-5945516B21B2}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
