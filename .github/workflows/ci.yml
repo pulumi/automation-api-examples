@@ -32,8 +32,6 @@ jobs:
           dotnet-version: ${{matrix.dotnet-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -66,8 +64,6 @@ jobs:
           dotnet-version: ${{matrix.dotnet-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -100,8 +96,6 @@ jobs:
           dotnet-version: ${{matrix.dotnet-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -141,8 +135,6 @@ jobs:
           dotnet-version: ${{matrix.dotnet-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -179,8 +171,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -219,8 +209,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -261,8 +249,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -303,8 +289,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -345,8 +329,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -396,8 +378,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -434,8 +414,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -470,8 +448,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -506,8 +482,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -543,8 +517,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -577,8 +549,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -611,8 +581,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -654,8 +622,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -694,8 +660,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -736,8 +700,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -778,8 +740,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -820,8 +780,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -862,8 +820,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -904,8 +860,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -955,8 +909,6 @@ jobs:
           go-version: ${{matrix.go-version}}
       - name: Install Latest Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        with:
-          pulumi-version: 3.14.0
       - run: echo "Currently Pulumi $(pulumi version) is installed"
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
