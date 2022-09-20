@@ -365,6 +365,32 @@ jobs:
           - 3.9.x
         go-version:
           - 1.16.x
+  python-testing-local-program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{matrix.python-version}}
+      - name: Install Latest Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - run: echo "Currently Pulumi $(pulumi version) is installed"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-duration-seconds: 3600
+          role-session-name: examples@githubActions
+          role-to-assume: ${{ secrets.AWS_CI_ROLE_ARN }}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: pip install -r requirements.txt
+        working-directory: python/testing_local_program
+      - run: python -m unittest
+        working-directory: python/testing_local_program
   python-local-program:
     runs-on: ubuntu-latest
     steps:
