@@ -1,0 +1,6 @@
+name: testing_infrastructure
+description: Small program to test with automation api
+runtime:
+    name: python
+    options:
+        virtualenv: venv
