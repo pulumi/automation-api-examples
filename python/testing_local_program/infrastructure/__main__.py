@@ -24,15 +24,6 @@ uploaded_content = s3.BucketObject('index_html',
     key="index.html"
 )
 
-# policy_document = bucket.id.apply(lambda bucket_name : iam.get_policy_document_output(statements=[
-#     iam.GetPolicyDocumentStatementArgs(
-#         principals=["*"],
-#         actions=["s3:GetObject"],
-#         resources=[f"arn:aws:s3:::{bucket_name}/*"]
-#     )
-# ])
-# )
-
 policy_document = iam.get_policy_document_output(statements=[iam.GetPolicyDocumentStatementArgs(
     principals=[iam.GetPolicyDocumentStatementPrincipalArgs(
         type="*",
