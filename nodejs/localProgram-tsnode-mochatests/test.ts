@@ -14,7 +14,7 @@ after(async () => {
 describe("Test infrastructure deployment", () => {
   it("should return correct html", async () => {
     await automation
-      .getOuputs()
+      .getOutputs()
       .then((result) => result.url.value)
       .then((url) => {
         expect(url).to.be.a("string");
@@ -29,7 +29,7 @@ describe("Test infrastructure deployment", () => {
 
   it("should not return a 404", async () => {
     await automation
-      .getOuputs()
+      .getOutputs()
       .then((result) => result.url.value)
       .then((url) => {
         expect(url).to.be.a("string");
