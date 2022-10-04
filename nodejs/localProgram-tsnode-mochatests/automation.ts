@@ -31,7 +31,7 @@ export async function destroy() {
   await stack.destroy({onOutput: console.log});
 }
 
-export async function getOuputs(): Promise<OutputMap> {
+export async function getOutputs(): Promise<OutputMap> {
   const stack = await LocalWorkspace.createOrSelectStack(args);
 
   var outputs = stack.outputs();
@@ -39,4 +39,4 @@ export async function getOuputs(): Promise<OutputMap> {
   return outputs;
 }
 
-export default {deploy, getOuputs};
+export default {deploy, getOutputs};
