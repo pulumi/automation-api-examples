@@ -8,7 +8,7 @@ This example demonstrates adding an Automation API driver to an existing Pulumi 
 To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
-3. The .NET SDK, this console application is targetting .NET Core 3.1.
+3. The .NET SDK, this console application is targetting .NET Core 6.0.
 
 Running this program is just like any other .NET console application. You can run `dotnet run` from the project directory, or you could run the resulting `.exe` from the build directory in the `bin` folder.
 
@@ -37,7 +37,7 @@ View Live: https://app.pulumi.com/joshstudt/website/dev/updates/19
     pulumi:pulumi:Stack website-dev  running 'dotnet build -nologo .'
     pulumi:pulumi:Stack website-dev    Determining projects to restore...
     pulumi:pulumi:Stack website-dev    Restored C:\git\pulumi-automation-examples\dotnet\LocalProgram\website\Website.csproj (in 500 ms).
-    pulumi:pulumi:Stack website-dev    Website -> C:\git\pulumi-automation-examples\dotnet\LocalProgram\website\bin\Debug\netcoreapp3.1\Website.dll
+    pulumi:pulumi:Stack website-dev    Website -> C:\git\pulumi-automation-examples\dotnet\LocalProgram\website\bin\Debug\net6.0\Website.dll
     pulumi:pulumi:Stack website-dev
     pulumi:pulumi:Stack website-dev  Build succeeded.
     pulumi:pulumi:Stack website-dev  'dotnet build -nologo .' completed successfully
