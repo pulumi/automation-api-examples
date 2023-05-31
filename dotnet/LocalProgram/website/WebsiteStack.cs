@@ -57,8 +57,8 @@ namespace Website
                 }
             );
 
-            var exampleBucketPublicAccessBlock = new Pulumi.Aws.S3.BucketPublicAccessBlock(
-                "exampleBucketPublicAccessBlock", 
+            var bucketPublicAccessBlock = new Pulumi.Aws.S3.BucketPublicAccessBlock(
+                "accessBlock", 
                 new Pulumi.Aws.S3.BucketPublicAccessBlockArgs
                 {
                     Bucket = siteBucket.BucketName,
@@ -98,6 +98,9 @@ namespace Website
                 {
                     Bucket = siteBucket.BucketName,
                     Policy = bucketPolicyDocument.Apply(x => x.Json),
+                }, new CustomResourceOptions
+                {
+                    DependsOn = {bucketOwnership, bucketPublicAccessBlock}
                 });
 
             // export url
