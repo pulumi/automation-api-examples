@@ -34,6 +34,25 @@ namespace InlineProgram
     </body>
 </html>
 ";
+            var bucketOwnership = new Pulumi.Aws.S3.BucketOwnershipControls(
+                "ownership",
+                new Pulumi.Aws.S3.BucketOwnershipControlsArgs
+                {
+                    Bucket = siteBucket.BucketName,
+                    Rule = new Pulumi.Aws.S3.Inputs.BucketOwnershipControlsRuleArgs
+                    {
+                        ObjectOwnership = "ObjectWriter"
+                    }
+                }
+            );
+
+            var exampleBucketPublicAccessBlock = new Pulumi.Aws.S3.BucketPublicAccessBlock(
+                "accessBlock", 
+                new Pulumi.Aws.S3.BucketPublicAccessBlockArgs
+                {
+                    Bucket = siteBucket.BucketName,
+                    BlockPublicAcls = false,
+                });
 
                 // write our index.html into the site bucket
                 var @object = new Pulumi.Aws.S3.BucketObject(
