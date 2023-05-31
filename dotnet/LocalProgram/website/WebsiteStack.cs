@@ -44,6 +44,27 @@ namespace Website
                     Key = "index.html",
                 });
 
+            // Add controls to allow access to bucket objects
+            var bucketOwnership = new Pulumi.Aws.S3.BucketOwnershipControls(
+                "ownership",
+                new Pulumi.Aws.S3.BucketOwnershipControlsArgs
+                {
+                    Bucket = siteBucket.BucketName,
+                    Rule = new Pulumi.Aws.S3.Inputs.BucketOwnershipControlsRuleArgs
+                    {
+                        ObjectOwnership = "ObjectWriter"
+                    }
+                }
+            );
+
+            var exampleBucketPublicAccessBlock = new Pulumi.Aws.S3.BucketPublicAccessBlock(
+                "exampleBucketPublicAccessBlock", 
+                new Pulumi.Aws.S3.BucketPublicAccessBlockArgs
+                {
+                    Bucket = siteBucket.BucketName,
+                    BlockPublicAcls = false,
+                });
+
             // create an S3 bucket policy to allow public read of all objects in bucket
             var bucketPolicyDocument = siteBucket.Arn.Apply(bucketArn =>
             {
