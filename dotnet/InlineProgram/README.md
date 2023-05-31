@@ -5,7 +5,7 @@ This program demonstrates how to use Automation API with an `inline` Pulumi prog
 To run this example you'll need a few pre-reqs:
 1. A Pulumi CLI installation ([v3.0.0](https://www.pulumi.com/docs/get-started/install/versions/) or later)
 2. The AWS CLI, with appropriate credentials.
-3. The .NET SDK, this console application is targetting .NET Core 3.1.
+3. The .NET SDK, this console application is targetting .NET Core 6.0.
 
 Running this program is just like any other .NET console application. You can run `dotnet run` from the project directory, or you could run the resulting `.exe` from the build directory in the `bin` folder.
 
@@ -19,67 +19,49 @@ config set
 refreshing stack...
 Refreshing (dev)
 
-View Live: https://app.pulumi.com/joshstudt/inline_s3_project/dev/updates/13
+View Live: https://app.pulumi.com/pierskarsenbarg/inline_s3_project/dev/updates/1
 
 
 
 Resources:
 
-Duration: 0s
+Duration: 1s
 
 refresh complete
 updating stack...
-info: Microsoft.Hosting.Lifetime[0]
-      Now listening on: http://0.0.0.0:56333
-info: Microsoft.Hosting.Lifetime[0]
-      Application started. Press Ctrl+C to shut down.
-info: Microsoft.Hosting.Lifetime[0]
-      Hosting environment: Production
-info: Microsoft.Hosting.Lifetime[0]
-      Content root path: C:\git\pulumi-automation-examples\dotnet\InlineProgram
 Updating (dev)
 
-View Live: https://app.pulumi.com/joshstudt/inline_s3_project/dev/updates/14
+View Live: https://app.pulumi.com/pierskarsenbarg/inline_s3_project/dev/updates/2
 
-info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
-      Request starting HTTP/2 POST http://127.0.0.1:56333/pulumirpc.LanguageRuntime/GetRequiredPlugins application/grpc
-info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
-      Executing endpoint 'gRPC - /pulumirpc.LanguageRuntime/GetRequiredPlugins'
-info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
-      Executed endpoint 'gRPC - /pulumirpc.LanguageRuntime/GetRequiredPlugins'
 
-info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished in 75.0978ms 200 application/grpc
-info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
-      Request starting HTTP/2 POST http://127.0.0.1:56333/pulumirpc.LanguageRuntime/Run application/grpc
-info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
-      Executing endpoint 'gRPC - /pulumirpc.LanguageRuntime/Run'
- +  pulumi:pulumi:Stack inline_s3_project-dev creating
- +  aws:s3:Bucket s3-website-bucket creating
- +  aws:s3:Bucket s3-website-bucket created
- +  aws:s3:BucketPolicy bucket-policy creating
- +  aws:s3:BucketObject index creating
- +  aws:s3:BucketPolicy bucket-policy created
- +  aws:s3:BucketObject index created
-info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
-      Executed endpoint 'gRPC - /pulumirpc.LanguageRuntime/Run'
-info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished in 14559.5266ms 200 application/grpc
- +  pulumi:pulumi:Stack inline_s3_project-dev created
+ +  pulumi:pulumi:Stack inline_s3_project-dev creating (0s) 
+@ Updating.........
+ +  aws:s3:Bucket s3-website-bucket creating (0s) 
+@ Updating.........
+ +  aws:s3:Bucket s3-website-bucket created (5s) 
+ +  aws:s3:BucketOwnershipControls ownership creating (0s) 
+ +  aws:s3:BucketPublicAccessBlock accessBlock creating (0s) 
+ +  aws:s3:BucketObject index creating (0s) 
+@ Updating.....
+ +  aws:s3:BucketPolicy bucket-policy creating (0s) 
+ +  aws:s3:BucketOwnershipControls ownership created (1s) 
+ +  aws:s3:BucketPublicAccessBlock accessBlock created (1s) 
+ +  aws:s3:BucketObject index created (1s) 
+ +  aws:s3:BucketPolicy bucket-policy created (0.78s) 
+@ Updating....
+ +  pulumi:pulumi:Stack inline_s3_project-dev created (12s) 
 
 Outputs:
-    website_url: "s3-website-bucket-4b4d633.s3-website-us-west-2.amazonaws.com"
+    website_url: "s3-website-bucket-f280e43.s3-website-us-west-2.amazonaws.com"
 
 Resources:
-    + 4 created
+    + 6 created
 
-Duration: 15s
+Duration: 16s
 
-info: Microsoft.Hosting.Lifetime[0]
-      Application is shutting down...
 update summary:
-    Create: 4
-website url: s3-website-bucket-4b4d633.s3-website-us-west-2.amazonaws.com
+    Create: 6
+website url: s3-website-bucket-f280e43.s3-website-us-west-2.amazonaws.com
 ```
 
 To destroy our stack, we run our automation program with an additional `destroy` argument:
@@ -94,53 +76,67 @@ config set
 refreshing stack...
 Refreshing (dev)
 
-View Live: https://app.pulumi.com/joshstudt/inline_s3_project/dev/updates/15
+View Live: https://app.pulumi.com/pierskarsenbarg/inline_s3_project/dev/updates/3
 
 
- ~  pulumi:pulumi:Stack inline_s3_project-dev refreshing
-    pulumi:pulumi:Stack inline_s3_project-dev running
- ~  aws:s3:BucketPolicy bucket-policy refreshing
- ~  aws:s3:BucketObject index refreshing
- ~  aws:s3:Bucket s3-website-bucket refreshing
- ~  aws:s3:BucketPolicy bucket-policy updated [diff: ~policy]
-    aws:s3:BucketObject index  [diff: +bucketKeyEnabled,cacheControl,contentDisposition,contentEncoding,contentLanguage,etag,metadata,objectLockLegalHoldStatus,objectLockMode,objectLockRetainUntilDate,serverSideEncryption,storageClass,tags,websiteRedirect]
-    aws:s3:Bucket s3-website-bucket  [diff: +accelerationStatus,arn,corsRules,grants,hostedZoneId,lifecycleRules,loggings,requestPayer,tags,versioning,websiteDomain,websiteEndpoint~website]
-    pulumi:pulumi:Stack inline_s3_project-dev
+ ~  pulumi:pulumi:Stack inline_s3_project-dev refreshing (0s) 
+ ~  aws:s3:BucketOwnershipControls ownership refreshing (0s) 
+ ~  aws:s3:BucketPublicAccessBlock accessBlock refreshing (0s) 
+ ~  aws:s3:BucketObject index refreshing (0s) 
+ ~  aws:s3:BucketPolicy bucket-policy refreshing (0s) 
+ ~  aws:s3:Bucket s3-website-bucket refreshing (0s) 
+    pulumi:pulumi:Stack inline_s3_project-dev running 
+@ Refreshing......
+    aws:s3:BucketPolicy bucket-policy  
+    aws:s3:BucketPublicAccessBlock accessBlock  
+@ Refreshing....
+    aws:s3:BucketOwnershipControls ownership  
+    aws:s3:BucketObject index  
+@ Refreshing......
+    aws:s3:Bucket s3-website-bucket  
+    pulumi:pulumi:Stack inline_s3_project-dev  
 
 Outputs:
-    website_url: "s3-website-bucket-4b4d633.s3-website-us-west-2.amazonaws.com"
+    website_url: "s3-website-bucket-f280e43.s3-website-us-west-2.amazonaws.com"
 
 Resources:
-    ~ 1 updated
-    3 unchanged
+    6 unchanged
 
-Duration: 8s
+Duration: 7s
 
 refresh complete
 destroying stack...
 Destroying (dev)
 
-View Live: https://app.pulumi.com/joshstudt/inline_s3_project/dev/updates/16
+View Live: https://app.pulumi.com/pierskarsenbarg/inline_s3_project/dev/updates/4
 
 
- -  aws:s3:BucketPolicy bucket-policy deleting
- -  aws:s3:BucketObject index deleting
- -  aws:s3:BucketObject index deleted
- -  aws:s3:BucketPolicy bucket-policy deleted
- -  aws:s3:Bucket s3-website-bucket deleting
- -  aws:s3:Bucket s3-website-bucket deleted
- -  pulumi:pulumi:Stack inline_s3_project-dev deleting
- -  pulumi:pulumi:Stack inline_s3_project-dev deleted
+ -  aws:s3:BucketOwnershipControls ownership deleting (0s) 
+ -  aws:s3:BucketObject index deleting (0s) 
+ -  aws:s3:BucketPolicy bucket-policy deleting (0s) 
+ -  aws:s3:BucketPublicAccessBlock accessBlock deleting (0s) 
+@ Destroying......
+ -  aws:s3:BucketObject index deleted (2s) 
+ -  aws:s3:BucketPolicy bucket-policy deleted (2s) 
+ -  aws:s3:BucketPublicAccessBlock accessBlock deleted (3s) 
+@ Destroying....
+ -  aws:s3:BucketOwnershipControls ownership deleted (3s) 
+ -  aws:s3:Bucket s3-website-bucket deleting (0s) 
+ -  aws:s3:Bucket s3-website-bucket deleted (0.62s) 
+@ Destroying....
+ -  pulumi:pulumi:Stack inline_s3_project-dev deleting (0s) 
+@ Destroying....
+ -  pulumi:pulumi:Stack inline_s3_project-dev deleted 
 
 Outputs:
-  - website_url: "s3-website-bucket-4b4d633.s3-website-us-west-2.amazonaws.com"
+  - website_url: "s3-website-bucket-f280e43.s3-website-us-west-2.amazonaws.com"
 
 Resources:
-    - 4 deleted
+    - 6 deleted
 
-Duration: 3s
+Duration: 7s
 
-The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained.
-If you want to remove the stack completely, run 'pulumi stack rm dev'.
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+If you want to remove the stack completely, run `pulumi stack rm dev`.
 stack destroy complete
 ```
