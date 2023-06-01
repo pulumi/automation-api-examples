@@ -54,7 +54,7 @@ jobs:
     strategy:
       matrix:
         dotnet-version:
-          - 3.1.x
+          - 6.0.x
   dotnet-inline-program:
     runs-on: ubuntu-latest
     steps:
@@ -86,7 +86,7 @@ jobs:
     strategy:
       matrix:
         dotnet-version:
-          - 3.1.x
+          - 6.0.x
   dotnet-inline-secrets:
     runs-on: ubuntu-latest
     steps:
@@ -125,7 +125,7 @@ jobs:
     strategy:
       matrix:
         dotnet-version:
-          - 3.1.x
+          - 6.0.x
   dotnet-database-migration:
     runs-on: ubuntu-latest
     steps:
@@ -157,7 +157,7 @@ jobs:
     strategy:
       matrix:
         dotnet-version:
-          - 3.1.x
+          - 6.0.x
   dotnet-crosslanguage:
     runs-on: ubuntu-latest
     steps:
@@ -193,9 +193,9 @@ jobs:
     strategy:
       matrix:
         dotnet-version:
-          - 3.1.x
+          - 6.0.x
         go-version:
-          - 1.16.x
+          - 1.19.x
   python-crosslanguage:
     runs-on: ubuntu-latest
     steps:

@@ -70,7 +70,7 @@ namespace DatabaseMigration
                     new Pulumi.Aws.Rds.ClusterArgs
                     {
                         Engine = Pulumi.Aws.Rds.EngineType.AuroraMysql,
-                        EngineVersion = "5.7.mysql_aurora.2.10.2",
+                        EngineVersion = "8.0.mysql_aurora.3.03.1",
                         DatabaseName = dbName,
                         MasterUsername = dbUser,
                         MasterPassword = dbPassword,
@@ -84,9 +84,9 @@ namespace DatabaseMigration
                     new Pulumi.Aws.Rds.ClusterInstanceArgs
                     {
                         ClusterIdentifier = cluster.ClusterIdentifier,
-                        InstanceClass = Pulumi.Aws.Rds.InstanceType.T3_Small,
+                        InstanceClass = Pulumi.Aws.Rds.InstanceType.T3_Medium,
                         Engine = Pulumi.Aws.Rds.EngineType.AuroraMysql.ToString(),
-                        EngineVersion = "5.7.mysql_aurora.2.10.2",
+                        EngineVersion = "8.0.mysql_aurora.3.03.1",
                         PubliclyAccessible = true,
                         DbSubnetGroupName = subnetGroup.Name,
                     });
@@ -116,7 +116,7 @@ namespace DatabaseMigration
 
             // for inline programs, we must manage plugins ourselves
             Console.WriteLine("installing plugins...");
-            await stack.Workspace.InstallPluginAsync("aws", "v4.24.1");
+            await stack.Workspace.InstallPluginAsync("aws", "v5.41.0");
             Console.WriteLine("plugins installed");
 
             // set stack configuration specifying the region to deploy

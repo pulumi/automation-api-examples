@@ -46,6 +46,26 @@ namespace InlineProgram
                         ContentType = "text/html; charset=utf-8", // set the MIME type of the file
                     });
 
+                var bucketOwnership = new Pulumi.Aws.S3.BucketOwnershipControls(
+                    "ownership",
+                    new Pulumi.Aws.S3.BucketOwnershipControlsArgs
+                    {
+                        Bucket = siteBucket.BucketName,
+                        Rule = new Pulumi.Aws.S3.Inputs.BucketOwnershipControlsRuleArgs
+                        {
+                            ObjectOwnership = "ObjectWriter"
+                        }
+                    }
+                );
+
+                var bucketPublicAccessBlock = new Pulumi.Aws.S3.BucketPublicAccessBlock(
+                    "accessBlock", 
+                    new Pulumi.Aws.S3.BucketPublicAccessBlockArgs
+                    {
+                        Bucket = siteBucket.BucketName,
+                        BlockPublicAcls = false,
+                });
+
                 var bucketPolicyDocument = siteBucket.Arn.Apply(bucketArn =>
                 {
                     return Output.Create(Pulumi.Aws.Iam.GetPolicyDocument.InvokeAsync(
@@ -78,6 +98,9 @@ namespace InlineProgram
                     {
                         Bucket = siteBucket.BucketName,
                         Policy = bucketPolicyDocument.Apply(x => x.Json),
+                    }, new CustomResourceOptions
+                    {
+                        DependsOn = {bucketPublicAccessBlock, bucketOwnership}
                     });
 
                 // export the website url
@@ -119,7 +142,7 @@ namespace InlineProgram
 
             // for inline programs, we must manage plugins ourselves
             Console.WriteLine("installing plugins...");
-            await stack.Workspace.InstallPluginAsync("aws", "v4.24.1");
+            await stack.Workspace.InstallPluginAsync("aws", "v5.41.0");
             Console.WriteLine("plugins installed");
 
             // set stack configuration specifying the region to deploy
