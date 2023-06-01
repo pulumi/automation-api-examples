@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/ecs"
 	elb "github.com/pulumi/pulumi-aws/sdk/v5/go/aws/elasticloadbalancingv2"
 	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/iam"
-	"github.com/pulumi/pulumi-docker/sdk/v3/go/docker"
+	"github.com/pulumi/pulumi-docker/sdk/v4/go/docker"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -113,7 +113,9 @@ func main() {
 			return err
 		}
 
-		repo, err := ecr.NewRepository(ctx, "foo", &ecr.RepositoryArgs{})
+		repo, err := ecr.NewRepository(ctx, "foo", &ecr.RepositoryArgs{
+			ForceDelete: pulumi.Bool(true),
+		})
 		if err != nil {
 			return err
 		}
@@ -137,11 +139,11 @@ func main() {
 		repoPass := repoCreds.Index(pulumi.Int(1))
 
 		image, err := docker.NewImage(ctx, "my-image", &docker.ImageArgs{
-			Build: docker.DockerBuildArgs{
+			Build: &docker.DockerBuildArgs{
 				Context: pulumi.String("app"),
 			},
 			ImageName: repo.RepositoryUrl,
-			Registry: docker.ImageRegistryArgs{
+			Registry: &docker.RegistryArgs{
 				Server:   repo.RepositoryUrl,
 				Username: repoUser,
 				Password: repoPass,
