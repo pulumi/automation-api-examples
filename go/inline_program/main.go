@@ -54,6 +54,18 @@ func main() {
 			return err
 		}
 
+		//Disable block public access settings. More info https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteAccessPermissionsReqd.html
+		publicAccessBlock, err := s3.NewBucketPublicAccessBlock(ctx, "s3-website-bucket-public-access-block", &s3.BucketPublicAccessBlockArgs{
+			Bucket:                siteBucket.ID(), // refer to the bucket created earlier
+			BlockPublicAcls:       pulumi.Bool(false),
+			BlockPublicPolicy:     pulumi.Bool(false),
+			IgnorePublicAcls:      pulumi.Bool(false),
+			RestrictPublicBuckets: pulumi.Bool(false),
+		})
+		if err != nil {
+			return err
+		}
+
 		// Set the access policy for the bucket so all objects are readable.
 		if _, err := s3.NewBucketPolicy(ctx, "bucketPolicy", &s3.BucketPolicyArgs{
 			Bucket: siteBucket.ID(), // refer to the bucket created earlier
@@ -72,7 +84,7 @@ func main() {
 					},
 				},
 			}),
-		}); err != nil {
+		}, pulumi.DependsOn([]pulumi.Resource{publicAccessBlock})); err != nil {
 			return err
 		}
 
