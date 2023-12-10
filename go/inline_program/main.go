@@ -103,6 +103,10 @@ func main() {
 	// create or select a stack matching the specified name and project.
 	// this will set up a workspace with everything necessary to run our inline program (deployFunc)
 	s, err := auto.UpsertStackInlineSource(ctx, stackName, projectName, deployFunc)
+	if err != nil {
+		fmt.Printf("Failed to set up a workspace: %v\n", err)
+		os.Exit(1)
+	}
 
 	fmt.Printf("Created/Selected stack %q\n", stackName)
 
