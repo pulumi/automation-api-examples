@@ -12,6 +12,6 @@
     "ts-node": "^9.0.0"
   },
   "scripts": {
-    "start": "./node_modules/ts-node/dist/bin.js index.ts"
+    "run": "./node_modules/ts-node/dist/bin.js index.ts"
   }
 }
