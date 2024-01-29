@@ -35,6 +35,15 @@ func WebsiteDeployFunc(ctx *pulumi.Context) error {
 		return err
 	}
 
+	// Allow public ACLs for the bucket
+	accessBlock, err := s3.NewBucketPublicAccessBlock(ctx, "public-access-block", &s3.BucketPublicAccessBlockArgs{
+		Bucket:          siteBucket.ID(),
+		BlockPublicAcls: pulumi.Bool(false),
+	})
+	if err != nil {
+		return err
+	}
+
 	// Set the access policy for the bucket so all objects are readable.
 	if _, err := s3.NewBucketPolicy(ctx, "bucketPolicy", &s3.BucketPolicyArgs{
 		Bucket: siteBucket.ID(), // refer to the bucket created earlier
@@ -53,7 +62,7 @@ func WebsiteDeployFunc(ctx *pulumi.Context) error {
 				},
 			},
 		}),
-	}); err != nil {
+	}, pulumi.DependsOn([]pulumi.Resource{accessBlock})); err != nil {
 		return err
 	}
 

@@ -50,7 +50,7 @@ const run = async () => {
         // provision our db
         const cluster = new aws.rds.Cluster("db", {
             engine: aws.rds.EngineType.AuroraMysql,
-            engineVersion: "5.7.mysql_aurora.2.10.2",
+            engineVersion: "5.7.mysql_aurora.2.12.1",
             databaseName: dbName,
             masterUsername: dbUser,
             masterPassword: dbPass,
@@ -63,7 +63,7 @@ const run = async () => {
             clusterIdentifier: cluster.clusterIdentifier,
             instanceClass: aws.rds.InstanceType.T3_Small,
             engine: aws.rds.EngineType.AuroraMysql,
-            engineVersion: "5.7.mysql_aurora.2.10.2",
+            engineVersion: "5.7.mysql_aurora.2.12.1",
             publiclyAccessible: true,
             dbSubnetGroupName: subnetGroup.name,
         });
@@ -135,7 +135,7 @@ const run = async () => {
         console.log('Result: ', JSON.stringify(results));
         console.log("seeding initial data...")
     });
-    
+
     // seed the table with some data to start
     connection.query(`
     INSERT IGNORE INTO hello_pulumi (id, color)
@@ -150,7 +150,7 @@ const run = async () => {
         console.log("querying to verify data...")
     });
 
-    
+
     // read the data back
     connection.query(`SELECT COUNT(*) FROM hello_pulumi;`, function (error, results, fields) {
         if (error) throw error;
