@@ -33,9 +33,16 @@ policy_document = iam.get_policy_document_output(statements=[iam.GetPolicyDocume
     resources=[bucket.arn.apply(lambda bucket_arn: f"{bucket_arn}/*")]
 )])
 
+# Allow public ACLs for the bucket
+public_access_block = s3.BucketPublicAccessBlock("exampleBucketPublicAccessBlock",
+    bucket=bucket.id,
+    block_public_acls=False,
+)
+
 bucket_policy = s3.BucketPolicy("bucket_policy",
-    bucket=bucket.bucket,
-    policy=policy_document.json
+    bucket=bucket.id,
+    policy=policy_document.json,
+    opts=pulumi.ResourceOptions(depends_on=[public_access_block])
 )
 
 # # Export the name of the bucket

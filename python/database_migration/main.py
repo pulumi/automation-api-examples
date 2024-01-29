@@ -35,7 +35,7 @@ def pulumi_program():
     # provision our db
     cluster = aws.rds.Cluster("db",
                               engine=aws.rds.EngineType.AURORA_MYSQL,
-                              engine_version="5.7.mysql_aurora.2.10.2",
+                              engine_version="5.7.mysql_aurora.2.12.1",
                               database_name=db_name,
                               master_username=db_user,
                               master_password=db_pass,
@@ -47,7 +47,7 @@ def pulumi_program():
                                                cluster_identifier=cluster.cluster_identifier,
                                                instance_class=aws.rds.InstanceType.T3_SMALL,
                                                engine=aws.rds.EngineType.AURORA_MYSQL,
-                                               engine_version="5.7.mysql_aurora.2.10.2",
+                                               engine_version="5.7.mysql_aurora.2.12.1",
                                                publicly_accessible=True,
                                                db_subnet_group_name=subnet_group.name)
 

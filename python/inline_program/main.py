@@ -26,6 +26,12 @@ def pulumi_program():
                     key="index.html",  # set the key of the object
                     content_type="text/html; charset=utf-8")  # set the MIME type of the file
 
+    # Allow public ACLs for the bucket
+    public_access_block = s3.BucketPublicAccessBlock("exampleBucketPublicAccessBlock",
+        bucket=site_bucket.id,
+        block_public_acls=False,
+    )
+
     # Set the access policy for the bucket so all objects are readable
     s3.BucketPolicy("bucket-policy", bucket=site_bucket.id, policy=site_bucket.id.apply(lambda id: json.dumps({
         "Version": "2012-10-17",
@@ -36,7 +42,7 @@ def pulumi_program():
             # Policy refers to bucket explicitly
             "Resource": [f"arn:aws:s3:::{id}/*"]
         },
-    })))
+    })), opts=pulumi.ResourceOptions(depends_on=[public_access_block]))
 
     # Export the website URL
     pulumi.export("website_url", site_bucket.website_endpoint)
