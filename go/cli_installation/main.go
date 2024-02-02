@@ -60,7 +60,7 @@ func main() {
 
 	// You can also retrieve an already installed version using NewPulumiCommand.
 	// This will return an error if no pulumi binary can be found or a binary
-	// is found but the version is not compatible with the requested version.
+	// is found but the version is older than the requested version.
 	//
 	//   pulumiCommand, err := auto.NewPulumiCommand(&auto.PulumiCommandOptions{
 	// 	   Version: semver.MustParse("3.104.1"),
