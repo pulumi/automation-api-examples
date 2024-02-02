@@ -96,7 +96,7 @@ func main() {
 	// wire up our update to stream progress to stdout
 	stdoutStreamer := optup.ProgressStreams(os.Stdout)
 
-	// run the update to deploy our s3 website
+	// run the update
 	res, err := s.Up(ctx, stdoutStreamer)
 	if err != nil {
 		fmt.Printf("Failed to update stack: %v\n\n", err)
