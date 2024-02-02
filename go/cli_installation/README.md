@@ -21,7 +21,7 @@ View Live: https://app.pulumi.com/julienp/autoInstall/dev/updates/5
 @ Updating....
  +  pulumi:pulumi:Stack autoInstall-dev created (3s)
 Outputs:
-    pet.id: "sweet-kangaroo"
+    pet.id: "capable-swine"
 
 Resources:
     + 2 created
@@ -51,7 +51,7 @@ View Live: https://app.pulumi.com/julienp/autoInstall/dev/updates/6
 @ Destroying....
  -  pulumi:pulumi:Stack autoInstall-dev deleted (0.92s)
 Outputs:
-  - pet.id: "sweet-kangaroo"
+  - pet.id: "capable-swine"
 
 Resources:
     - 2 deleted
