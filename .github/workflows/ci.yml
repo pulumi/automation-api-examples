@@ -499,6 +499,28 @@ jobs:
       matrix:
         go-version:
           - 1.20.x
+  go-cli-installation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{matrix.go-version}}
+      - uses: actions/checkout@v2
+      - name: Login Local
+        run: pulumi login --local
+      - run: go mod download
+        working-directory: go/cli_installation
+      - name: Deploy app
+        run: go run main.go
+        working-directory: go/cli_installation
+      - name: Destroy app
+        run: go run main.go destroy
+        working-directory: go/cli_installation
+    strategy:
+      matrix:
+        go-version:
+          - 1.20.x
   go-inline-local-hybrid:
     runs-on: ubuntu-latest
     steps:
