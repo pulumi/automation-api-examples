@@ -1,0 +1,5 @@
+pulumi
+fastapi
+uvicorn[standard]
+pydantic
+pulumi-aws
