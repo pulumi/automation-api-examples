@@ -28,6 +28,20 @@ def create_pulumi_program(content: str):
                     key="index.html",
                     content_type="text/html; charset=utf-8")
 
+
+    # Adding controls to allow access to bucket objects
+    s3.BucketOwnershipControls("ownership_controls",
+                               bucket=site_bucket.bucket,
+                               rule=s3.BucketOwnershipControlsRuleArgs(
+                                    object_ownership="ObjectWriter"
+                               )
+                               )
+    
+    s3.BucketPublicAccessBlock("public_access_block",
+                               bucket=site_bucket.bucket,
+                               block_public_acls=False
+                               )
+
     # Set the access policy for the bucket so all objects are readable
     s3.BucketPolicy("bucket-policy",
                     bucket=site_bucket.id,
