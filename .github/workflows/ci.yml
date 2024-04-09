@@ -732,7 +732,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
+          - 20.x
         go-version:
           - 1.16.x
   node-database-migration:
@@ -772,7 +772,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
+          - 20.x
         go-version:
           - 1.16.x
   node-inline-program-js:
@@ -812,7 +812,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
+          - 20.x
         go-version:
           - 1.16.x
   node-inline-program-ts:
@@ -852,7 +852,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
+          - 20.x
         go-version:
           - 1.16.x
   node-inline-program-tsnode:
@@ -892,7 +892,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
+          - 20.x
         go-version:
           - 1.16.x
   node-inline-secrets-provider-ts:
@@ -941,7 +941,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
+          - 20.x
         go-version:
           - 1.16.x
   node-local-program-tsnode:
@@ -981,6 +981,6 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
+          - 20.x
         go-version:
           - 1.16.x
