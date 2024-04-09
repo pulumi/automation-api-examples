@@ -971,6 +971,8 @@ jobs:
       - name: Login Local
         run: pulumi login --local
       - run: yarn install
+        working-directory: nodejs/localProgram-tsnode/website
+      - run: yarn install
         working-directory: nodejs/localProgram-tsnode/automation
       - name: Deploy app
         run: yarn start
