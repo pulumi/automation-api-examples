@@ -9,7 +9,7 @@ To run this example you'll need a few pre-reqs:
 Running this program is just like any other Go program. No invocation through the Pulumi CLI required:
 
 ```shell
-$ go run main.go destroy
+$ go run main.go 
 Created/Selected stack "dev1"
 Installing the AWS plugin
 Successfully installed AWS plugin
