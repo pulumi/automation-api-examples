@@ -67,7 +67,7 @@ stack_name = "dev"
 project_settings=auto.ProjectSettings(
     name=project_name,
     runtime="python",
-    backend={"url": "file://~/.pulumi-local"})
+    backend=auto.ProjectBackend(url="file://~/.pulumi-local"))
 
 secrets_provider = "awskms://aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?region=us-west-2"
 kms_env = os.environ.get("KMS_KEY")
