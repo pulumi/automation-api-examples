@@ -1,5 +1,4 @@
 {
-    "name": "remote-deployment",
     "devDependencies": {
         "@types/node": "^14"
     },
