@@ -1,6 +1,4 @@
 {
-  "name": "inlineProgram",
-  "version": "1.0.0",
   "main": "index.ts",
   "repository": "github.com/pulumi/automation-api-examples",
   "author": "EvanBoyle",

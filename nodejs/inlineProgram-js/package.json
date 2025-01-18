@@ -1,6 +1,4 @@
 {
-  "name": "inline_program",
-  "version": "1.0.0",
   "main": "index.js",
   "type": "commonjs",
   "repository": "github.com/pulumi/automation-api-examples",
