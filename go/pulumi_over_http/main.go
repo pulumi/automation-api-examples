@@ -338,7 +338,7 @@ func ensurePlugins() {
 		fmt.Printf("Failed to setup and run http server: %v\n", err)
 		os.Exit(1)
 	}
-	err = w.InstallPlugin(ctx, "aws", "v3.2.1")
+	err = w.InstallPlugin(ctx, "aws", "v4.0.0")
 	if err != nil {
 		fmt.Printf("Failed to install program plugins: %v\n", err)
 		os.Exit(1)
