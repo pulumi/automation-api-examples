@@ -64,6 +64,13 @@ Example  | Description |
 [Database Migration](dotnet/DatabaseMigration) | This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single program using an `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
 [Remote Deployment](dotnet/RemoteDeployment) | This example demonstrates how to use Automation API to run Pulumi programs remotely with Pulumi Deployments. In this case a static S3 website from the [Pulumi examples repo](https://github.com/pulumi/examples/tree/master/aws-ts-s3-folder).
 
+
+### Java Examples
+
+Example  | Description |
+--------- | --------- |
+[Inline Program](java/InlineProgram) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a Java console application and support full debugging capabilities. In this demo we deploy a static S3 website.
+
 ## Other projects using Automation API
 
 Project | Description |
