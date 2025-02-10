@@ -1,0 +1,7 @@
+name: website
+description: A minimal AWS Java Pulumi program
+runtime: java
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-java

@@ -3,9 +3,11 @@
 This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
 
 To run this example you'll need a few pre-reqs:
-1. A Pulumi CLI installation ([v3.149.0](https://www.pulumi.com/docs/iac/download-install/) or later)
-2. The AWS CLI, with appropriate credentials.
-3. Install [Java 11 or later](https://www.oracle.com/java/technologies/downloads) and [Apache Maven 3.6.1 or later](https://maven.apache.org/install.html).
+1. [A Pulumi CLI installation (v3.149.0 or later)](https://www.pulumi.com/docs/iac/download-install/).
+2. [AWS CLI and credentials](https://www.pulumi.com/docs/iac/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account).
+3. [Java 11 or later](https://www.oracle.com/java/technologies/downloads).
+4. [Maven 3.6.1 or later](https://maven.apache.org/install.html), to install dependencies, build, and run the Java program.
+
 
 Running this program is just like any other Java program with Maven. You can run `mvn -q compile exec:java` from the project directory.
 
