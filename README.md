@@ -71,6 +71,7 @@ Example  | Description |
 --------- | --------- |
 [Inline Program](java/inlineProgram) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a Java console application and support full debugging capabilities. In this demo we deploy a static S3 website.
 [Local Program](java/localProgram) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven S3 website program.
+[Database Migration](java/databaseMigration) | This example provisions an AWS Aurora SQL database and executes a database "migration" using the resulting connection info. This migration creates a table, inserts a few rows of data, and reads the data back to verify the setup. This is all done in a single program using an `inline` Pulumi program. With Automation API you can orchestrate complex workflows that go beyond infrastructure provisioning and into application management, database setup, etc.
 
 ## Other projects using Automation API
 
