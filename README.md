@@ -69,8 +69,8 @@ Example  | Description |
 
 Example  | Description |
 --------- | --------- |
-[Inline Program](java/InlineProgram) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a Java console application and support full debugging capabilities. In this demo we deploy a static S3 website.
-[Local Program](java/LocalProgram) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven S3 website program.
+[Inline Program](java/inlineProgram) | Use Automation API with an `inline` Pulumi program. Inline programs are self contained in a Java console application and support full debugging capabilities. In this demo we deploy a static S3 website.
+[Local Program](java/localProgram) | This example shows how to use Automation API with an existing traditional CLI-driven Pulumi program. We add an Automation API deployment program to our existing CLI-driven S3 website program.
 
 ## Other projects using Automation API
 
