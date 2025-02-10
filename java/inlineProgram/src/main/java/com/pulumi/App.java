@@ -1,7 +1,7 @@
 package com.pulumi;
 
 import com.pulumi.aws.s3.inputs.BucketOwnershipControlsRuleArgs;
-import com.pulumi.experimental.automation.*;
+import com.pulumi.automation.*;
 import com.pulumi.aws.s3.BucketV2;
 import com.pulumi.aws.s3.BucketObject;
 import com.pulumi.aws.s3.BucketObjectArgs;
@@ -20,14 +20,12 @@ public class App {
         var stackName = "dev";
 
         var destroy = args.length > 0 && args[0].equals("destroy");
-        try {
-            var stack = LocalWorkspace.createOrSelectStack(projectName, stackName, App::pulumiProgram);
-
+        try (var stack = LocalWorkspace.createOrSelectStack(projectName, stackName, App::pulumiProgram)) {
             System.out.println("Successfully initialized stack");
 
             // Install required Pulumi plugins
             System.out.println("Installing plugins...");
-            stack.getWorkspace().installPlugin("aws", "v5.41.0");
+            stack.workspace().installPlugin("aws", "v6.68.0");
             System.out.println("Plugins installed");
 
             // Set AWS region
@@ -48,15 +46,15 @@ public class App {
                 System.out.println("Updating stack...");
                 var result = stack.up(UpOptions.builder().onStandardOutput(System.out::println).build());
 
-                if (result.getSummary().getResourceChanges() != null) {
+                var changes = result.summary().resourceChanges();
+                if (!changes.isEmpty()) {
                     System.out.println("Update summary:");
-                    result.getSummary().getResourceChanges()
-                            .forEach((key, value) -> System.out.println("    " + key + ": " + value));
+                    changes.forEach((key, value) -> System.out.printf("    %s: %d%n", key, value));
                 }
 
-                System.out.println("Website URL: " + result.getOutputs().get("website_url").getValue());
+                System.out.println("Website URL: " + result.outputs().get("website_url").value());
             }
-        } catch (AutomationException ex) {
+        } catch (Exception ex) {
             // Print the exception message
             System.err.println("An exception occured while running the inline Pulumi program: " + ex.getMessage());
 
@@ -89,15 +87,13 @@ public class App {
                 .blockPublicAcls(false)
                 .build());
 
-        String indexContent = """
-                <html>
-                    <head><title>Hello S3</title><meta charset="UTF-8"></head>
-                    <body>
-                        <p>Hello, world!</p>
-                        <p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a></p>
-                    </body>
-                </html>
-                """;
+        String indexContent = "<html>\n" +
+                "    <head><title>Hello S3</title><meta charset=\"UTF-8\"></head>\n" +
+                "    <body>\n" +
+                "        <p>Hello, world!</p>\n" +
+                "        <p>Made with ❤️ with <a href=\"https://pulumi.com\">Pulumi</a></p>\n" +
+                "    </body>\n" +
+                "</html>";
 
         var indexHtml = new BucketObject("index.html", BucketObjectArgs.builder()
                 .bucket(siteBucket.id())
