@@ -23,11 +23,12 @@ import com.pulumi.aws.rds.ClusterInstanceArgs;
 import com.pulumi.aws.rds.SubnetGroup;
 import com.pulumi.aws.rds.SubnetGroupArgs;
 import com.pulumi.aws.rds.enums.EngineType;
-import com.pulumi.experimental.automation.ConfigValue;
-import com.pulumi.experimental.automation.DestroyOptions;
-import com.pulumi.experimental.automation.LocalWorkspace;
-import com.pulumi.experimental.automation.RefreshOptions;
-import com.pulumi.experimental.automation.UpOptions;
+import com.pulumi.automation.ConfigValue;
+import com.pulumi.automation.DestroyOptions;
+import com.pulumi.automation.LocalWorkspace;
+import com.pulumi.automation.RefreshOptions;
+import com.pulumi.automation.UpOptions;
+import com.pulumi.automation.UpResult;
 
 public class App {
     public static void main(String[] args) {
@@ -119,7 +120,7 @@ public class App {
 
             // For inline programs, we must manage plugins ourselves
             System.out.println("installing plugins...");
-            stack.getWorkspace().installPlugin("aws", "v6.68.0");
+            stack.workspace().installPlugin("aws", "v6.68.0");
             System.out.println("plugins installed");
 
             // Set stack configuration specifying the region to deploy
@@ -148,20 +149,20 @@ public class App {
                     .onStandardOutput(System.out::println)
                     .build());
 
-            var changes = result.getSummary().getResourceChanges();
+            var changes = result.summary().resourceChanges();
             if (!changes.isEmpty()) {
                 System.out.println("update summary:");
                 changes.forEach((key, value) -> {
-                    System.out.printf("    %s: $d%n", key, value);
+                    System.out.printf("    %s: %d%n", key, value);
                 });
             }
 
-            System.out.printf("db host url: %s%n", result.getOutputs().get("host").getValue());
+            System.out.printf("db host url: %s%n", outputValue(result, "host"));
             configureDatabase(
-                    (String) result.getOutputs().get("host").getValue(),
-                    (String) result.getOutputs().get("db_name").getValue(),
-                    (String) result.getOutputs().get("db_user").getValue(),
-                    (String) result.getOutputs().get("db_pass").getValue());
+                    outputValue(result, "host"),
+                    outputValue(result, "db_name"),
+                    outputValue(result, "db_user"),
+                    outputValue(result, "db_pass"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,5 +219,9 @@ public class App {
 
             System.out.println("database, table, and rows successfully configured");
         }
+    }
+
+    static String outputValue(UpResult result, String key) {
+        return (String) result.outputs().get(key).value();
     }
 }
