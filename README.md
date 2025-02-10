@@ -1,12 +1,13 @@
 # automation-api-examples
 
-This repo provides full end to end examples and walk-throughs for the Pulumi Automation API. The Automation API is available for `Go`, `Node.js`, `Python` and `C#`.
+This repo provides full end to end examples and walk-throughs for the Pulumi Automation API. The Automation API is available for `Go`, `Node.js`, `Python`, `C#`, and `Java`.
 
 Full docs for automation API can be found here:
 - [Go](https://pkg.go.dev/github.com/pulumi/pulumi/sdk/v3/go/auto?tab=doc)
 - [Node.js](https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/pulumi/automation/)
 - [Python](https://www.pulumi.com/docs/reference/pkg/python/pulumi/#module-pulumi.automation)
 - [C#](https://www.pulumi.com/docs/reference/pkg/python/pulumi/#module-pulumi.automation)
+- [Java](https://www.pulumi.com/docs/reference/pkg/java/com/pulumi/automation/package-summary.html)
 
 ## Content
 
