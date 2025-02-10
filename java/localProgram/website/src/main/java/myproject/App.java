@@ -1,7 +1,6 @@
 package myproject;
 
 import com.pulumi.Pulumi;
-import com.pulumi.core.Output;
 import com.pulumi.aws.s3.BucketV2;
 import com.pulumi.aws.s3.BucketObject;
 import com.pulumi.aws.s3.BucketObjectArgs;
@@ -40,15 +39,13 @@ public class App {
                 .blockPublicAcls(false)
                 .build());
 
-        String indexContent = """
-                <html>
-                    <head><title>Hello S3</title><meta charset="UTF-8"></head>
-                    <body>
-                        <p>Hello, world!</p>
-                        <p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a></p>
-                    </body>
-                </html>
-                """;
+        String indexContent = "<html>\n" +
+                "    <head><title>Hello S3</title><meta charset=\"UTF-8\"></head>\n" +
+                "    <body>\n" +
+                "        <p>Hello, world!</p>\n" +
+                "        <p>Made with ❤️ with <a href=\"https://pulumi.com\">Pulumi</a></p>\n" +
+                "    </body>\n" +
+                "</html>";
 
         var indexHtml = new BucketObject("index.html", BucketObjectArgs.builder()
                 .bucket(siteBucket.id())

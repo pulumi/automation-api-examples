@@ -6,9 +6,9 @@ This example demonstrates adding an Automation API driver to an existing Pulumi 
 - `/website`: a Pulumi program using the Java runtime, which deploys a simple static website.
 
 To run this example you'll need a few pre-reqs:
-1. [A Pulumi CLI installation (v3.158.0 or later)](https://www.pulumi.com/docs/iac/get-started/aws/begin/#install-pulumi)
+1. [A Pulumi CLI installation (v3.149.0 or later)](https://www.pulumi.com/docs/iac/download-install/).
 2. [AWS CLI and credentials](https://www.pulumi.com/docs/iac/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account).
-3. [Java 15 or later](https://www.oracle.com/java/technologies/downloads).
+3. [Java 11 or later](https://www.oracle.com/java/technologies/downloads).
 4. [Maven 3.6.1 or later](https://maven.apache.org/install.html), to install dependencies, build, and run the Java program.
 
 Running this program is just like any other Java console application. You can run `mvn exec:java` from the project directory, or you could run the resulting `.jar` directly from the `target` directory.
