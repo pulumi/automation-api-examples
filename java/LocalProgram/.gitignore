@@ -1,0 +1,7 @@
+# Java app
+.gradle/
+.settings/
+.project
+.classpath
+target/
+*-test/
