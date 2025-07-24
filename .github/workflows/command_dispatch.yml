@@ -1,7 +1,17 @@
+permissions: write-all # Equivalent to default permissions plus id-token: write
+env:
+  ESC_ACTION_OIDC_AUTH: true
+  ESC_ACTION_OIDC_ORGANIZATION: pulumi
+  ESC_ACTION_OIDC_REQUESTED_TOKEN_TYPE: urn:pulumi:token-type:access_token:organization
+  ESC_ACTION_ENVIRONMENT: imports/github-secrets
+  ESC_ACTION_EXPORT_ENVIRONMENT_VARIABLES: false
 jobs:
   command-dispatch-for-testing:
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch secrets from ESC
+        id: esc-secrets
+        uses: pulumi/esc-action@v1
       - uses: actions/checkout@v2
       - name: Run Build
         uses: peter-evans/slash-command-dispatch@v2
@@ -11,7 +21,7 @@ jobs:
           permission: write
           reaction-token: ${{ secrets.GITHUB_TOKEN }}
           repository: pulumi/automation-api-examples
-          token: ${{ secrets.EVENT_PAT }}
+          token: ${{ steps.esc-secrets.outputs.EVENT_PAT }}
 name: Command Dispatch for testing
 "on":
   issue_comment:
