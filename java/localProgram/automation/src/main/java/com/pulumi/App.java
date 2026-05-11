@@ -42,7 +42,7 @@ public class App {
             }
         } catch (Exception ex) {
             // Print the exception message
-            System.err.println("An exception occured while running the inline Pulumi program: " + ex.getMessage());
+            System.err.println("An exception occurred while running the inline Pulumi program: " + ex.getMessage());
 
             System.err.print("Stack trace: ");
             ex.printStackTrace();
