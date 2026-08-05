@@ -1,0 +1,7 @@
+name: hybridS3Project
+runtime: python
+description: A static website hosted on AWS S3
+config:
+  aws:region:
+    description: The AWS region to deploy into
+    default: us-west-2
