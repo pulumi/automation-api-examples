@@ -51,11 +51,19 @@ const run = async () => {
             };
         }
 
+        const publicAccessBlock = new s3.BucketPublicAccessBlock("publicAccessBlock", {
+            bucket: siteBucket.id,
+            blockPublicAcls: false,
+            blockPublicPolicy: false,
+            ignorePublicAcls: false,
+            restrictPublicBuckets: false,
+        });
+
         // Set the access policy for the bucket so all objects are readable
         let bucketPolicy = new s3.BucketPolicy("bucketPolicy", {
             bucket: siteBucket.bucket, // refer to the bucket created earlier
             policy: siteBucket.bucket.apply(publicReadPolicyForBucket) // use output property `siteBucket.bucket`
-        });
+        }, { dependsOn: [publicAccessBlock] });
 
         return {
             websiteUrl: siteBucket.websiteEndpoint,
