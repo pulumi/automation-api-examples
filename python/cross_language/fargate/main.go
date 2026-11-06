@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ec2"
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ecr"
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ecs"
-	elb "github.com/pulumi/pulumi-aws/sdk/v4/go/aws/elasticloadbalancingv2"
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/iam"
-	"github.com/pulumi/pulumi-docker/sdk/v3/go/docker"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ec2"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ecr"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ecs"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/iam"
+	elb "github.com/pulumi/pulumi-aws/sdk/v6/go/aws/lb"
+	"github.com/pulumi/pulumi-docker/sdk/v4/go/docker"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -23,7 +23,9 @@ func main() {
 		if err != nil {
 			return err
 		}
-		subnet, err := ec2.GetSubnetIds(ctx, &ec2.GetSubnetIdsArgs{VpcId: vpc.Id})
+		subnet, err := ec2.GetSubnets(ctx, &ec2.GetSubnetsArgs{
+			Filters: []ec2.GetSubnetsFilter{{Name: "vpc-id", Values: []string{vpc.Id}}},
+		})
 		if err != nil {
 			return err
 		}
@@ -120,8 +122,8 @@ func main() {
 		}
 
 		repoCreds := repo.RegistryId.ApplyT(func(rid string) ([]string, error) {
-			creds, err := ecr.GetCredentials(ctx, &ecr.GetCredentialsArgs{
-				RegistryId: rid,
+			creds, err := ecr.GetAuthorizationToken(ctx, &ecr.GetAuthorizationTokenArgs{
+				RegistryId: &rid,
 			})
 			if err != nil {
 				return nil, err
@@ -142,7 +144,7 @@ func main() {
 				Context: pulumi.String(filepath.Join("..", "app")),
 			},
 			ImageName: repo.RepositoryUrl,
-			Registry: docker.ImageRegistryArgs{
+			Registry: docker.RegistryArgs{
 				Server:   repo.RepositoryUrl,
 				Username: repoUser,
 				Password: repoPass,
@@ -152,7 +154,7 @@ func main() {
 			return err
 		}
 
-		containerDef := image.ImageName.ApplyT(func(name string) (string, error) {
+		containerDef := image.RepoDigest.ApplyT(func(name string) (string, error) {
 			fmtstr := `[{
 				"name": "my-app",
 				"image": %q,
