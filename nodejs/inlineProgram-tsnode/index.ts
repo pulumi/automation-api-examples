@@ -35,7 +35,7 @@ const run = async () => {
         });
 
         // Create an S3 Bucket Policy to allow public read of all objects in bucket
-        function publicReadPolicyForBucket(bucketName): PolicyDocument {
+        function publicReadPolicyForBucket(bucketName: string): PolicyDocument {
             return {
                 Version: "2012-10-17",
                 Statement: [{
