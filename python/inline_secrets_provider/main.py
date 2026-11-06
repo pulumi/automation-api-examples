@@ -1,5 +1,6 @@
 import sys
 import json
+from importlib.metadata import version
 import os
 import pulumi
 from pulumi import automation as auto
@@ -92,7 +93,7 @@ print("successfully initialized stack")
 
 # for inline programs, we must manage plugins ourselves
 print("installing plugins...")
-stack.workspace.install_plugin("aws", "v4.0.0")
+stack.workspace.install_plugin("aws", version("pulumi-aws"))
 print("plugins installed")
 
 # set stack configuration specifying the AWS region to deploy

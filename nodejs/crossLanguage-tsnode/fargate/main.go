@@ -119,7 +119,7 @@ func main() {
 			return err
 		}
 
-		repoCreds := repo.RegistryId.ApplyStringArray(func(rid string) ([]string, error) {
+		repoCreds := repo.RegistryId.ApplyT(func(rid string) ([]string, error) {
 			creds, err := ecr.GetCredentials(ctx, &ecr.GetCredentialsArgs{
 				RegistryId: rid,
 			})
@@ -133,7 +133,7 @@ func main() {
 			}
 
 			return strings.Split(string(data), ":"), nil
-		})
+		}).(pulumi.StringArrayOutput)
 		repoUser := repoCreds.Index(pulumi.Int(0))
 		repoPass := repoCreds.Index(pulumi.Int(1))
 
@@ -149,7 +149,7 @@ func main() {
 			},
 		})
 
-		containerDef := image.ImageName.ApplyString(func(name string) (string, error) {
+		containerDef := image.ImageName.ApplyT(func(name string) (string, error) {
 			fmtstr := `[{
 				"name": "my-app",
 				"image": %q,
@@ -160,7 +160,7 @@ func main() {
 				}]
 			}]`
 			return fmt.Sprintf(fmtstr, name), nil
-		})
+		}).(pulumi.StringOutput)
 
 		// Spin up a load balanced service running NGINX.
 		appTask, err := ecs.NewTaskDefinition(ctx, "app-task", &ecs.TaskDefinitionArgs{

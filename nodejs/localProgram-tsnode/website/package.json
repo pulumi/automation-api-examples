@@ -1,9 +1,10 @@
 {
     "name": "website",
     "devDependencies": {
-        "@types/node": "^10.0.0"
+        "@types/node": "^24.0.0"
     },
     "dependencies": {
+        "typescript": "^5.9.3",
         "@pulumi/pulumi": "^3.0.0",
         "@pulumi/aws": "^6.0.0"
     }
