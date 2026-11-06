@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ec2"
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ecr"
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/ecs"
-	elb "github.com/pulumi/pulumi-aws/sdk/v4/go/aws/elasticloadbalancingv2"
-	"github.com/pulumi/pulumi-aws/sdk/v4/go/aws/iam"
-	"github.com/pulumi/pulumi-docker/sdk/v3/go/docker"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ec2"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ecr"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ecs"
+	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/iam"
+	elb "github.com/pulumi/pulumi-aws/sdk/v6/go/aws/lb"
+	"github.com/pulumi/pulumi-docker/sdk/v4/go/docker"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -23,7 +23,9 @@ func main() {
 		if err != nil {
 			return err
 		}
-		subnet, err := ec2.GetSubnetIds(ctx, &ec2.GetSubnetIdsArgs{VpcId: vpc.Id})
+		subnet, err := ec2.GetSubnets(ctx, &ec2.GetSubnetsArgs{
+			Filters: []ec2.GetSubnetsFilter{{Name: "vpc-id", Values: []string{vpc.Id}}},
+		})
 		if err != nil {
 			return err
 		}
@@ -114,14 +116,14 @@ func main() {
 			return err
 		}
 
-		repo, err := ecr.NewRepository(ctx, "foo", &ecr.RepositoryArgs{})
+		repo, err := ecr.NewRepository(ctx, "foo", &ecr.RepositoryArgs{ForceDelete: pulumi.Bool(true)})
 		if err != nil {
 			return err
 		}
 
-		repoCreds := repo.RegistryId.ApplyStringArray(func(rid string) ([]string, error) {
-			creds, err := ecr.GetCredentials(ctx, &ecr.GetCredentialsArgs{
-				RegistryId: rid,
+		repoCreds := repo.RegistryId.ApplyT(func(rid string) ([]string, error) {
+			creds, err := ecr.GetAuthorizationToken(ctx, &ecr.GetAuthorizationTokenArgs{
+				RegistryId: &rid,
 			})
 			if err != nil {
 				return nil, err
@@ -133,7 +135,7 @@ func main() {
 			}
 
 			return strings.Split(string(data), ":"), nil
-		})
+		}).(pulumi.StringArrayOutput)
 		repoUser := repoCreds.Index(pulumi.Int(0))
 		repoPass := repoCreds.Index(pulumi.Int(1))
 
@@ -142,14 +144,14 @@ func main() {
 				Context: pulumi.String(filepath.Join("..", "app")),
 			},
 			ImageName: repo.RepositoryUrl,
-			Registry: docker.ImageRegistryArgs{
+			Registry: docker.RegistryArgs{
 				Server:   repo.RepositoryUrl,
 				Username: repoUser,
 				Password: repoPass,
 			},
 		})
 
-		containerDef := image.ImageName.ApplyString(func(name string) (string, error) {
+		containerDef := image.RepoDigest.ApplyT(func(name string) (string, error) {
 			fmtstr := `[{
 				"name": "my-app",
 				"image": %q,
@@ -160,7 +162,7 @@ func main() {
 				}]
 			}]`
 			return fmt.Sprintf(fmtstr, name), nil
-		})
+		}).(pulumi.StringOutput)
 
 		// Spin up a load balanced service running NGINX.
 		appTask, err := ecs.NewTaskDefinition(ctx, "app-task", &ecs.TaskDefinitionArgs{

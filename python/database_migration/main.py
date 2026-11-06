@@ -1,5 +1,6 @@
 import sys
 import json
+from importlib.metadata import version
 import pulumi
 import pulumi_aws as aws
 from pulumi import automation as auto
@@ -9,7 +10,8 @@ from mysql.connector import connect
 # This is our pulumi program in "inline function" form
 def pulumi_program():
     default_vpc = aws.ec2.get_vpc(default=True)
-    public_subnet_ids = aws.ec2.get_subnet_ids(vpc_id=default_vpc.id)
+    public_subnet_ids = aws.ec2.get_subnets(filters=[aws.ec2.GetSubnetsFilterArgs(
+        name="vpc-id", values=[default_vpc.id])])
     subnet_group = aws.rds.SubnetGroup("db_subnet", subnet_ids=public_subnet_ids.ids)
 
     # make a public security group for our cluster for the migration
@@ -35,7 +37,7 @@ def pulumi_program():
     # provision our db
     cluster = aws.rds.Cluster("db",
                               engine=aws.rds.EngineType.AURORA_MYSQL,
-                              engine_version="5.7.mysql_aurora.2.12.1",
+                              engine_version="8.0",
                               database_name=db_name,
                               master_username=db_user,
                               master_password=db_pass,
@@ -45,9 +47,9 @@ def pulumi_program():
 
     cluster_instance = aws.rds.ClusterInstance("db_instance",
                                                cluster_identifier=cluster.cluster_identifier,
-                                               instance_class=aws.rds.InstanceType.T3_SMALL,
+                                               instance_class=aws.rds.InstanceType.T3_MEDIUM,
                                                engine=aws.rds.EngineType.AURORA_MYSQL,
-                                               engine_version="5.7.mysql_aurora.2.12.1",
+                                               engine_version=cluster.engine_version,
                                                publicly_accessible=True,
                                                db_subnet_group_name=subnet_group.name)
 
@@ -76,7 +78,7 @@ print("successfully initialized stack")
 
 # for inline programs, we must manage plugins ourselves
 print("installing plugins...")
-stack.workspace.install_plugin("aws", "v4.0.0")
+stack.workspace.install_plugin("aws", version("pulumi-aws"))
 print("plugins installed")
 
 # set stack configuration specifying the AWS region to deploy

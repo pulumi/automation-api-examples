@@ -70,7 +70,7 @@ namespace DatabaseMigration
                     new Pulumi.Aws.Rds.ClusterArgs
                     {
                         Engine = Pulumi.Aws.Rds.EngineType.AuroraMysql,
-                        EngineVersion = "8.0.mysql_aurora.3.03.1",
+                        EngineVersion = "8.0",
                         DatabaseName = dbName,
                         MasterUsername = dbUser,
                         MasterPassword = dbPassword,
@@ -86,7 +86,7 @@ namespace DatabaseMigration
                         ClusterIdentifier = cluster.ClusterIdentifier,
                         InstanceClass = Pulumi.Aws.Rds.InstanceType.T3_Medium,
                         Engine = Pulumi.Aws.Rds.EngineType.AuroraMysql.ToString(),
-                        EngineVersion = "8.0.mysql_aurora.3.03.1",
+                        EngineVersion = cluster.EngineVersion,
                         PubliclyAccessible = true,
                         DbSubnetGroupName = subnetGroup.Name,
                     });

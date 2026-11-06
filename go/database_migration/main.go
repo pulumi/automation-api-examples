@@ -78,7 +78,7 @@ func main() {
 		// provision our db
 		cluster, err := rds.NewCluster(ctx, "db", &rds.ClusterArgs{
 			Engine:              rds.EngineTypeAuroraMysql,
-			EngineVersion:       pulumi.String("5.7.mysql_aurora.2.12.1"),
+			EngineVersion:       pulumi.String("8.0"),
 			DatabaseName:        dbName,
 			MasterUsername:      dbUser,
 			MasterPassword:      dbPass,
@@ -92,9 +92,9 @@ func main() {
 
 		_, err = rds.NewClusterInstance(ctx, "dbInstance", &rds.ClusterInstanceArgs{
 			ClusterIdentifier:  cluster.ClusterIdentifier,
-			InstanceClass:      rds.InstanceType_T3_Small,
+			InstanceClass:      rds.InstanceType_T3_Medium,
 			Engine:             rds.EngineTypeAuroraMysql,
-			EngineVersion:      pulumi.String("5.7.mysql_aurora.2.12.1"),
+			EngineVersion:      cluster.EngineVersion,
 			PubliclyAccessible: pulumi.Bool(true),
 			DbSubnetGroupName:  subnetGroup.Name,
 		})

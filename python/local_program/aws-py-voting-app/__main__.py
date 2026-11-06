@@ -1,7 +1,6 @@
 # Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
 
 import json
-import base64
 import pulumi
 import pulumi_aws as aws
 import pulumi_docker as docker
@@ -99,7 +98,8 @@ task_policy_attachment = aws.iam.RolePolicyAttachment("app-access-policy", role=
 
 # Creating storage space to upload a docker image of our app to
 app_ecr_repo = aws.ecr.Repository("app-ecr-repo",
-                                  image_tag_mutability="MUTABLE")
+                                  image_tag_mutability="MUTABLE",
+                                  force_delete=True)
 
 # Attaching an application life cycle policy to the storage
 app_lifecycle_policy = aws.ecr.LifecyclePolicy("app-lifecycle-policy",
@@ -223,19 +223,19 @@ flask_listener = aws.alb.Listener("flask-listener",
 # Creating a Docker image from "./frontend/Dockerfile", which we will use
 # to upload our app
 def get_registry_info(rid):
-    creds = aws.ecr.get_credentials(registry_id=rid)
-    decoded = base64.b64decode(creds.authorization_token).decode()
-    parts = decoded.split(':')
-    if len(parts) != 2:
-        raise Exception("Invalid credentials")
-    return docker.ImageRegistry(creds.proxy_endpoint, parts[0], parts[1])
+    creds = aws.ecr.get_authorization_token(registry_id=rid)
+    return docker.RegistryArgs(
+        server=creds.proxy_endpoint,
+        username=creds.user_name,
+        password=creds.password,
+    )
 
 
 app_registry = app_ecr_repo.registry_id.apply(get_registry_info)
 
 flask_image = docker.Image("flask-dockerimage",
                            image_name=app_ecr_repo.repository_url,
-                           build="./frontend",
+                           build=docker.DockerBuildArgs(context="./frontend"),
                            skip_push=False,
                            registry=app_registry)
 
@@ -248,7 +248,7 @@ flask_task_definition = aws.ecs.TaskDefinition("flask-task-definition",
                                                requires_compatibilities=["FARGATE"],
                                                execution_role_arn=app_exec_role.arn,
                                                task_role_arn=app_task_role.arn,
-                                               container_definitions=pulumi.Output.all(flask_image.image_name,
+                                               container_definitions=pulumi.Output.all(flask_image.repo_digest,
                                                                                        redis_endpoint).apply(
                                                    lambda args: json.dumps([{
                                                        "name": "flask-container",

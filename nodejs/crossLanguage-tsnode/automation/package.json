@@ -4,10 +4,11 @@
   "author": "EvanBoyle",
   "license": "MIT",
   "dependencies": {
+    "typescript": "^5.9.3",
     "@pulumi/aws": "^4.0.0",
     "@pulumi/pulumi": "^3.0.0",
-    "@types/node": "^14.11.7",
-    "ts-node": "^9.0.0",
+    "@types/node": "^24.0.0",
+    "ts-node": "^10.9.2",
     "upath": "^2.0.0"
   },
   "scripts": {

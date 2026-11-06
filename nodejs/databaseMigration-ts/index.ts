@@ -50,7 +50,7 @@ const run = async () => {
         // provision our db
         const cluster = new aws.rds.Cluster("db", {
             engine: aws.rds.EngineType.AuroraMysql,
-            engineVersion: "5.7.mysql_aurora.2.12.1",
+            engineVersion: "8.0",
             databaseName: dbName,
             masterUsername: dbUser,
             masterPassword: dbPass,
@@ -61,9 +61,9 @@ const run = async () => {
 
         const clusterInstance = new aws.rds.ClusterInstance("dbInstance", {
             clusterIdentifier: cluster.clusterIdentifier,
-            instanceClass: aws.rds.InstanceType.T3_Small,
+            instanceClass: aws.rds.InstanceType.T3_Medium,
             engine: aws.rds.EngineType.AuroraMysql,
-            engineVersion: "5.7.mysql_aurora.2.12.1",
+            engineVersion: cluster.engineVersion,
             publiclyAccessible: true,
             dbSubnetGroupName: subnetGroup.name,
         });
