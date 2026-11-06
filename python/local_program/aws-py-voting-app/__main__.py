@@ -98,7 +98,8 @@ task_policy_attachment = aws.iam.RolePolicyAttachment("app-access-policy", role=
 
 # Creating storage space to upload a docker image of our app to
 app_ecr_repo = aws.ecr.Repository("app-ecr-repo",
-                                  image_tag_mutability="MUTABLE")
+                                  image_tag_mutability="MUTABLE",
+                                  force_delete=True)
 
 # Attaching an application life cycle policy to the storage
 app_lifecycle_policy = aws.ecr.LifecyclePolicy("app-lifecycle-policy",

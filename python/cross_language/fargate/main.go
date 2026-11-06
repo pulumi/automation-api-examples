@@ -116,7 +116,7 @@ func main() {
 			return err
 		}
 
-		repo, err := ecr.NewRepository(ctx, "foo", &ecr.RepositoryArgs{})
+		repo, err := ecr.NewRepository(ctx, "foo", &ecr.RepositoryArgs{ForceDelete: pulumi.Bool(true)})
 		if err != nil {
 			return err
 		}
